@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Recuperar contraseña</title>
+
+<style>
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0b0b0b;
+font-family:Poppins;
+color:white;
+}
+
+.box{
+background:#111;
+padding:40px;
+border-radius:12px;
+width:350px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+background:#1c1c1c;
+border:none;
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+background:white;
+border:none;
+color:black;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Recuperar contraseña</h2>
+
+<input type="email" id="email" placeholder="Correo">
+
+<button onclick="send()">Enviar código</button>
+
+</div>
+
+<script>
+
+async function send(){
+
+const email=document.getElementById("email").value
+
+const res=await fetch("http://127.0.0.1:8000/send-code",{
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email})
+})
+
+alert("Código enviado al correo")
+
+}
+
+</script>
+
+</body>
+</html>

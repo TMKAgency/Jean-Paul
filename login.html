@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TMK Agency Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0a0a0a,#1a1a1a);
+color:white;
+}
+
+.container{
+background:#111;
+padding:40px;
+border-radius:12px;
+width:360px;
+box-shadow:0 0 40px rgba(255,255,255,0.05);
+animation:fade 0.6s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1}
+}
+
+.logo{
+text-align:center;
+font-size:22px;
+font-weight:600;
+margin-bottom:25px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:6px;
+background:#1c1c1c;
+color:white;
+outline:none;
+transition:0.3s;
+}
+
+input:focus{
+box-shadow:0 0 0 2px white;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:white;
+color:black;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#eaeaea;
+}
+
+.links{
+margin-top:15px;
+display:flex;
+justify-content:space-between;
+font-size:13px;
+}
+
+.links a{
+color:#ccc;
+text-decoration:none;
+cursor:pointer;
+}
+
+.links a:hover{
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">TMK Agency</div>
+
+<input type="email" id="email" placeholder="Correo corporativo">
+
+<input type="password" id="password" placeholder="Contraseña">
+
+<button onclick="login()">Iniciar sesión</button>
+
+<div class="links">
+<a onclick="forgot()">Olvidé contraseña</a>
+<a href="register.html">Crear contraseña</a>
+</div>
+
+</div>
+
+<script>
+
+async function login(){
+
+const email=document.getElementById("email").value
+const password=document.getElementById("password").value
+
+const res=await fetch("http://127.0.0.1:8000/login",{
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email,password})
+})
+
+const data=await res.json()
+
+if(data.success){
+
+localStorage.setItem("email", email) // 🔥 NECESARIO
+
+window.location="index.html"
+
+}else{
+alert(data.message)
+}
+
+}
+
+function forgot(){
+window.location="forgot.html"
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Crear contraseña</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0b0b0b;
+font-family:Poppins;
+color:white;
+}
+
+.card{
+background:#111;
+padding:40px;
+border-radius:12px;
+width:350px;
+box-shadow:0 0 40px rgba(255,255,255,0.05);
+}
+
+h2{
+text-align:center;
+margin-bottom:25px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:6px;
+background:#1c1c1c;
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+background:white;
+color:black;
+border:none;
+border-radius:6px;
+font-weight:600;
+cursor:pointer;
+}
+
+button:hover{
+background:#eee;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Crear contraseña</h2>
+
+<input type="email" id="email" placeholder="Correo corporativo">
+
+<input type="password" id="password" placeholder="Nueva contraseña">
+
+<button onclick="register()">Guardar contraseña</button>
+
+</div>
+
+<script>
+
+async function register(){
+
+const email=document.getElementById("email").value
+const password=document.getElementById("password").value
+
+const res=await fetch("http://127.0.0.1:8000/register",{
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email,password})
+})
+
+const data=await res.json()
+
+alert(data.message) // 🔥 usar mensaje real del backend
+
+window.location="login.html"
+
+}
+
+</script>
+
+</body>
+</html>

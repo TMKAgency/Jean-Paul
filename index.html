@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TMK Agency</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+height:100vh;
+display:flex;
+background:linear-gradient(135deg,#050505,#0e0e0e);
+color:white;
+overflow:hidden;
+}
+
+/* LEFT PANEL */
+
+.left{
+width:35%;
+background:rgba(15,15,15,0.9);
+border-right:1px solid #1f1f1f;
+padding:35px;
+display:flex;
+flex-direction:column;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+margin-bottom:30px;
+color:#d4af37;
+}
+
+.user{
+font-size:14px;
+color:#bbb;
+margin-bottom:30px;
+}
+
+.tasks{
+flex:1;
+overflow:auto;
+}
+
+.task{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#1b1b1b;
+padding:14px;
+border-radius:8px;
+margin-bottom:10px;
+}
+
+.task.completed span{
+text-decoration:line-through;
+color:#666;
+}
+
+.task-left{
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.task button{
+background:none;
+border:none;
+color:#888;
+cursor:pointer;
+font-size:16px;
+}
+
+.task button:hover{
+color:red;
+}
+
+.add{
+margin-top:15px;
+display:flex;
+gap:10px;
+}
+
+.add input{
+flex:1;
+padding:12px;
+background:#1e1e1e;
+border:none;
+border-radius:6px;
+color:white;
+}
+
+.add button{
+padding:12px 18px;
+background:#d4af37;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* RIGHT */
+
+.right{
+width:65%;
+display:flex;
+flex-direction:column;
+}
+
+.aiHeader{
+padding:20px 30px;
+background:#0f0f0f;
+border-bottom:1px solid #1f1f1f;
+color:#d4af37;
+}
+
+.chat{
+flex:1;
+padding:30px;
+overflow:auto;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.message{
+max-width:70%;
+padding:14px 18px;
+border-radius:12px;
+}
+
+.userMsg{
+align-self:flex-end;
+background:white;
+color:black;
+}
+
+.aiMsg{
+align-self:flex-start;
+background:linear-gradient(135deg,#d4af37,#f3d27a);
+color:black;
+}
+
+.inputArea{
+display:flex;
+padding:20px;
+background:#0f0f0f;
+gap:10px;
+}
+
+.inputArea input{
+flex:1;
+padding:14px;
+background:#1c1c1c;
+border:none;
+border-radius:8px;
+color:white;
+}
+
+.inputArea button{
+padding:14px 24px;
+background:linear-gradient(135deg,#d4af37,#f3d27a);
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="left">
+
+<div class="logo">TMK Agency</div>
+
+<div class="user" id="userEmail"></div>
+
+<h3>Tareas</h3>
+
+<div class="tasks" id="tasks"></div>
+
+<div class="add">
+<input id="taskInput" placeholder="Nueva tarea">
+<button onclick="addTask()">Agregar</button>
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="aiHeader">Jean Paul — IA</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="inputArea">
+<input id="message" placeholder="Habla con Jean Paul...">
+<button onclick="send()">Enviar</button>
+</div>
+
+</div>
+
+<script>
+
+    const API = "http://127.0.0.1:8000"
+    
+    let userEmail = null
+    
+    // ======================
+    // INIT SEGURO
+    // ======================
+    
+    window.onload = () => {
+    
+    userEmail = localStorage.getItem("email")
+    
+    if(!userEmail){
+    alert("Debes iniciar sesión")
+    window.location = "login.html"
+    return
+    }
+    
+    document.getElementById("userEmail").innerText = "Usuario: " + userEmail
+    
+    loadTasks()
+    
+    }
+    
+    // ======================
+    // CHAT IA
+    // ======================
+    
+    async function send(){
+    
+    const input = document.getElementById("message")
+    const msg = input.value.trim()
+    
+    if(!msg) return
+    
+    addMessage(msg, "userMsg")
+    input.value = ""
+    
+    try{
+    
+    const res = await fetch(API+"/ai",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+    message:msg,
+    email:userEmail
+    })
+    })
+    
+    const data = await res.json()
+    
+    addMessage(data.response || "Error en respuesta", "aiMsg")
+    
+    loadTasks()
+    
+    }catch(err){
+    addMessage("Error conectando con el servidor", "aiMsg")
+    }
+    
+    }
+    
+    function addMessage(text, type){
+    
+    const chat = document.getElementById("chat")
+    
+    const div = document.createElement("div")
+    div.className = "message " + type
+    div.innerText = text
+    
+    chat.appendChild(div)
+    
+    chat.scrollTop = chat.scrollHeight
+    }
+    
+    // ======================
+    // TASKS
+    // ======================
+    
+    async function loadTasks(){
+    
+    try{
+    
+    const res = await fetch(API+"/get-tasks",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:userEmail})
+    })
+    
+    const data = await res.json()
+    
+    const container = document.getElementById("tasks")
+    container.innerHTML = ""
+    
+    data.tasks.forEach(t => {
+    
+    const div = document.createElement("div")
+    div.className = "task" + (t.completed ? " completed" : "")
+    
+    div.innerHTML = `
+    <div class="task-left">
+    <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
+    <span>${t.task}</span>
+    </div>
+    <button onclick="removeTask(${t.id})">🗑</button>
+    `
+    
+    container.appendChild(div)
+    
+    })
+    
+    }catch(err){
+    console.log("Error cargando tareas")
+    }
+    
+    }
+    
+    // ======================
+    // AGREGAR TAREA (FIX)
+    // ======================
+    
+    async function addTask(){
+    
+    const text = document.getElementById("taskInput").value.trim()
+    
+    if(!text) return
+    
+    try{
+    
+    await fetch(API+"/ai",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+    message:text,
+    email:userEmail
+    })
+    })
+    
+    document.getElementById("taskInput").value=""
+    
+    loadTasks()
+    
+    }catch(err){
+    alert("Error agregando tarea")
+    }
+    
+    }
+    
+    // ======================
+    // COMPLETAR
+    // ======================
+    
+    async function complete(id){
+
+try{
+
+    await fetch(API+"/complete-task",{
+        method:"POST",
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            task_id: id,
+            email: userEmail
+        })
+    })
+
+    loadTasks()
+
+}catch(err){
+    alert("Error al completar tarea")
+}
+
+}
+    
+    // ======================
+    // ELIMINAR
+    // ======================
+    
+    async function removeTask(id){
+
+try{
+
+    await fetch(API+"/delete-task",{
+        method:"POST",
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            task_id: id,
+            email: userEmail
+        })
+    })
+
+    loadTasks()
+
+}catch(err){
+    alert("Error eliminando tarea")
+}
+
+}
+    
+    // ======================
+    // LOGOUT (PRO)
+    // ======================
+    
+    function logout(){
+    localStorage.removeItem("email")
+    window.location = "login.html"
+    }
+    
+    </script>
+
+</body>
+</html>
