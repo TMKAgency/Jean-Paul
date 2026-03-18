@@ -190,12 +190,15 @@ def login(data: dict):
 @app.post("/send-code")
 def send_code(data: dict):
 
+    if not cursor:
+        return {"message": "DB no disponible"}
+
     email = data["email"]
 
     if email not in allowed_emails:
         return {"message": "Correo no autorizado"}
 
-    code = str(random.randint(100000,999999))
+    code = str(random.randint(100000, 999999))
 
     cursor.execute(
         "UPDATE Users SET reset_code=%s WHERE email=%s",
@@ -204,17 +207,26 @@ def send_code(data: dict):
 
     conn.commit()
 
-    msg = MIMEText(f"Tu código es: {code}")
-    msg["Subject"] = "Recuperación"
-    msg["From"] = "soporte@tmk-agency.com"
-    msg["To"] = email
+    try:
+        msg = MIMEText(f"Tu código de recuperación es: {code}")
+        msg["Subject"] = "Recuperación de contraseña"
+        msg["From"] = os.getenv("EMAIL_USER")
+        msg["To"] = email
 
-    server = smtplib.SMTP_SSL("smtp.gmail.com",465)
-    server.login("TU_CORREO","TU_PASSWORD_APP")
-    server.send_message(msg)
-    server.quit()
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        server.login(
+            os.getenv("EMAIL_USER"),
+            os.getenv("EMAIL_PASS")
+        )
 
-    return {"message": "Código enviado"}
+        server.send_message(msg)
+        server.quit()
+
+    except Exception as e:
+        print("❌ Error enviando correo:", e)
+        return {"message": "Error enviando correo"}
+
+    return {"message": "Código enviado correctamente"}
 
 # =========================
 # VERIFY CODE
