@@ -70,14 +70,24 @@ app.add_middleware(
 # SQL SERVER
 # =========================
 
-conn = pyodbc.connect(
-"DRIVER={ODBC Driver 17 for SQL Server};"
-"SERVER=localhost\\SQLEXPRESS;"
-"DATABASE=TMKAgency;"
-"Trusted_Connection=yes;"
-)
+import pyodbc
 
-cursor = conn.cursor()
+conn = None
+cursor = None
+
+try:
+    conn = pyodbc.connect(
+        "DRIVER={ODBC Driver 17 for SQL Server};"
+        "SERVER=localhost\\SQLEXPRESS;"
+        "DATABASE=TMKAgency;"
+        "Trusted_Connection=yes;"
+    )
+    cursor = conn.cursor()
+    print("✅ Conectado a la base de datos")
+except Exception as e:
+    print("❌ Error conectando a la DB:", e)
+    conn = None
+    cursor = None
 
 # =========================
 # HASH PASSWORD
@@ -93,19 +103,24 @@ def hash_password(password):
 @app.post("/register")
 def register(data: dict):
 
+    # 🔒 Evita que la app crashee si no hay DB
+    if not cursor:
+        return {"error": "Base de datos no disponible"}
+
     email = data["email"]
     password = hash_password(data["password"])
 
-    cursor.execute("SELECT email FROM Users WHERE email=?", email)
+    # 🔍 Verificar si el email existe
+    cursor.execute("SELECT email FROM Users WHERE email = ?", (email,))
     user = cursor.fetchone()
 
     if not user:
         return {"message": "Correo no autorizado"}
 
+    # 🔄 Actualizar contraseña
     cursor.execute(
-        "UPDATE Users SET password_hash=? WHERE email=?",
-        password,
-        email
+        "UPDATE Users SET password_hash = ? WHERE email = ?",
+        (password, email)
     )
 
     conn.commit()
