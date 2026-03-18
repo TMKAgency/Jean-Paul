@@ -5,61 +5,97 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 from openai import OpenAI
-
-
-
 import psycopg2
 import os
+
+# =========================
+# DB CONNECTION
+# =========================
 
 conn = None
 cursor = None
 
 try:
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
     conn = psycopg2.connect(
-        os.getenv("DATABASE_URL"),
+        DATABASE_URL,
         sslmode="require"
     )
+
     cursor = conn.cursor()
     print("✅ DB conectada")
+
 except Exception as e:
     print("❌ Error DB:", e)
 
+# =========================
+# CREATE TABLES + USERS
+# =========================
+
+if cursor:
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Users (
+        id SERIAL PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        password_hash TEXT,
+        reset_code TEXT,
+        code_expiration TIMESTAMP
+    );
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Tasks (
+        id SERIAL PRIMARY KEY,
+        assigned_to TEXT,
+        assigned_by TEXT,
+        task_text TEXT,
+        completed BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """)
+
+    cursor.execute("""
+    INSERT INTO Users (email) VALUES
+    ('andrew@tmk-agency.com'),
+    ('danielaalvarez@tmk-agency.com'),
+    ('fabricio@tmk-agency.com'),
+    ('katherinemora@tmk-agency.com'),
+    ('marcolamugue@tmk-agency.com'),
+    ('michelle@tmk-agency.com'),
+    ('valeriars@tmk-agency.com')
+    ON CONFLICT (email) DO NOTHING;
+    """)
+
+    conn.commit()
 
 # =========================
-# CORREOS DE EMPLEADOS
+# DATA
 # =========================
 
 employees = {
-"alanys": "alanyssoto@tmk-agency.com",
-"andrew": "andrew@tmk-agency.com",
-"clifton": "andrew@tmk-agency.com",
-"fabricio": "fabricio@tmk-agency.com",
-"katherine": "katherinemora@tmk-agency.com",
-"michelle": "michelle@tmk-agency.com",
-"valeria": "valeriars@tmk-agency.com"
+    "alanys": "alanyssoto@tmk-agency.com",
+    "andrew": "andrew@tmk-agency.com",
+    "clifton": "andrew@tmk-agency.com",
+    "fabricio": "fabricio@tmk-agency.com",
+    "katherine": "katherinemora@tmk-agency.com",
+    "michelle": "michelle@tmk-agency.com",
+    "valeria": "valeriars@tmk-agency.com"
 }
 
-# =========================
-# CORREOS AUTORIZADOS
-# =========================
-
 allowed_emails = [
-"andrew@tmk-agency.com",
-"danielaalvarez@tmk-agency.com",
-"fabricio@tmk-agency.com",
-"katherinemora@tmk-agency.com",
-"marcolamugue@tmk-agency.com",
-"michelle@tmk-agency.com",
-"valeriars@tmk-agency.com"
+    "andrew@tmk-agency.com",
+    "danielaalvarez@tmk-agency.com",
+    "fabricio@tmk-agency.com",
+    "katherinemora@tmk-agency.com",
+    "marcolamugue@tmk-agency.com",
+    "michelle@tmk-agency.com",
+    "valeriars@tmk-agency.com"
 ]
 
-# =========================
-# SUPERVISORES
-# =========================
-
 supervisors = [
-"marcolamugue@tmk-agency.com",
-"danielaalvarez@tmk-agency.com",
+    "marcolamugue@tmk-agency.com",
+    "danielaalvarez@tmk-agency.com",
 ]
 
 # =========================
@@ -83,32 +119,7 @@ app.add_middleware(
 )
 
 # =========================
-# SQL SERVER
-# =========================
-
-import psycopg2
-import os
-
-conn = None
-cursor = None
-
-try:
-    DATABASE_URL = os.getenv("DATABASE_URL")
-
-    conn = psycopg2.connect(
-        DATABASE_URL,
-        sslmode="require"
-    )
-
-    cursor = conn.cursor()
-
-    print("✅ DB conectada")
-
-except Exception as e:
-    print("❌ Error DB:", e)
-
-# =========================
-# HASH PASSWORD
+# UTILS
 # =========================
 
 def hash_password(password):
@@ -121,23 +132,20 @@ def hash_password(password):
 @app.post("/register")
 def register(data: dict):
 
-    # 🔒 Evita que la app crashee si no hay DB
     if not cursor:
-        return {"error": "Base de datos no disponible"}
+        return {"error": "DB no disponible"}
 
     email = data["email"]
     password = hash_password(data["password"])
 
-    # 🔍 Verificar si el email existe
-    cursor.execute("SELECT email FROM Users WHERE email = ?", (email,))    
+    cursor.execute("SELECT email FROM Users WHERE email=%s", (email,))
     user = cursor.fetchone()
 
     if not user:
         return {"message": "Correo no autorizado"}
 
-    # 🔄 Actualizar contraseña
     cursor.execute(
-        "UPDATE Users SET password_hash = %s WHERE email = %s",
+        "UPDATE Users SET password_hash=%s WHERE email=%s",
         (password, email)
     )
 
@@ -156,8 +164,8 @@ def login(data: dict):
     password = data["password"]
 
     cursor.execute(
-    "SELECT password_hash FROM Users WHERE email=%s",
-    (email,)
+        "SELECT password_hash FROM Users WHERE email=%s",
+        (email,)
     )
 
     row = cursor.fetchone()
@@ -167,18 +175,16 @@ def login(data: dict):
 
     db_password = row[0]
 
-    # 🚨 NO TIENE CONTRASEÑA
     if not db_password:
         return {"success": False, "message": "Debes crear contraseña primero"}
 
-    # 🔐 VALIDAR PASSWORD
     if db_password == hash_password(password):
         return {"success": True}
 
     return {"success": False, "message": "Contraseña incorrecta"}
 
 # =========================
-# ENVIAR CODIGO
+# SEND CODE
 # =========================
 
 @app.post("/send-code")
@@ -192,14 +198,14 @@ def send_code(data: dict):
     code = str(random.randint(100000,999999))
 
     cursor.execute(
-    "UPDATE Users SET reset_code=%s WHERE email=%s",
-    (code, email)
+        "UPDATE Users SET reset_code=%s WHERE email=%s",
+        (code, email)
     )
 
     conn.commit()
 
-    msg = MIMEText(f"Tu código de recuperación es: {code}")
-    msg["Subject"] = "Recuperación de contraseña"
+    msg = MIMEText(f"Tu código es: {code}")
+    msg["Subject"] = "Recuperación"
     msg["From"] = "soporte@tmk-agency.com"
     msg["To"] = email
 
@@ -211,7 +217,7 @@ def send_code(data: dict):
     return {"message": "Código enviado"}
 
 # =========================
-# VERIFICAR CODIGO
+# VERIFY CODE
 # =========================
 
 @app.post("/verify-code")
@@ -221,8 +227,8 @@ def verify_code(data: dict):
     code = data["code"]
 
     cursor.execute(
-    "SELECT reset_code FROM Users WHERE email=%s",
-    (email,)
+        "SELECT reset_code FROM Users WHERE email=%s",
+        (email,)
     )
 
     row = cursor.fetchone()
@@ -230,9 +236,7 @@ def verify_code(data: dict):
     if not row:
         return {"valid": False}
 
-    db_code = row[0]
-
-    return {"valid": db_code == code}
+    return {"valid": row[0] == code}
 
 # =========================
 # RESET PASSWORD
@@ -246,8 +250,8 @@ def reset_password(data: dict):
     password = hash_password(data["password"])
 
     cursor.execute(
-    "SELECT reset_code FROM Users WHERE email=%s",
-    (email,)
+        "SELECT reset_code FROM Users WHERE email=%s",
+        (email,)
     )
 
     row = cursor.fetchone()
@@ -255,37 +259,23 @@ def reset_password(data: dict):
     if not row:
         return {"message": "Usuario no encontrado"}
 
-    db_code = row[0]
-
-    if db_code == code:
-
+    if row[0] == code:
         cursor.execute(
-    "UPDATE Users SET password_hash=%s, reset_code=NULL WHERE email=%s",
-    (password, email)
-)
-
+            "UPDATE Users SET password_hash=%s, reset_code=NULL WHERE email=%s",
+            (password, email)
+        )
         conn.commit()
-
         return {"message": "Contraseña actualizada"}
 
     return {"message": "Código incorrecto"}
 
 # =========================
-# CONOCIMIENTO IA
+# IA
 # =========================
 
 knowledge = """
-Tu nombre es Jean Paul.
-Eres la inteligencia artificial de TMK Agency.
-
-Puedes ayudar con marketing digital, tareas y gestión de equipo.
-
-Si un supervisor pide asignar una tarea a un empleado debes hacerlo.
+Eres Jean Paul, IA de TMK Agency.
 """
-
-# =========================
-# IA JEAN PAUL
-# =========================
 
 @app.post("/ai")
 def ai(data: dict):
@@ -294,46 +284,25 @@ def ai(data: dict):
     user_email = data["email"]
     lower_msg = message.lower()
 
-    # =========================
-    # SOLO SUPERVISORES ASIGNAN
-    # =========================
-
     if user_email in supervisors:
-
         for name, email in employees.items():
-
             if name in lower_msg:
-
                 cursor.execute(
-    """
-    INSERT INTO Tasks (assigned_to, assigned_by, task_text)
-    VALUES (%s,%s,%s)
-    """,
-    (email, user_email, message)
-)
-
+                    "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
+                    (email, user_email, message)
+                )
                 conn.commit()
-
-                return {"response": f"Tarea asignada a {name.title()}"}
-
-    # =========================
-    # USUARIO NORMAL → SOLO CHAT
-    # =========================
+                return {"response": f"Tarea asignada a {name}"}
 
     response = client.responses.create(
         model="gpt-4.1-mini",
-        input=[
-            {"role":"system","content": knowledge + f"\nUsuario: {user_email}"},
-            {"role":"user","content": message}
-        ]
+        input=message
     )
 
-    respuesta = response.output[0].content[0].text
-
-    return {"response": respuesta}
+    return {"response": response.output[0].content[0].text}
 
 # =========================
-# OBTENER TAREAS
+# TASKS
 # =========================
 
 @app.post("/get-tasks")
@@ -342,86 +311,71 @@ def get_tasks(data: dict):
     email = data["email"]
 
     cursor.execute(
-    "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=%s",
-    (email,)
-)
+        "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=%s",
+        (email,)
+    )
 
     rows = cursor.fetchall()
 
-    tasks = []
-
-    for r in rows:
-        tasks.append({
-            "id": r[0],
-            "task": r[1],
-            "completed": r[2]
-        })
-
-    return {"tasks": tasks}
-
-# =========================
-# COMPLETAR TAREA
-# =========================
+    return {
+        "tasks": [
+            {"id": r[0], "task": r[1], "completed": r[2]}
+            for r in rows
+        ]
+    }
 
 @app.post("/complete-task")
 def complete_task(data: dict):
 
     task_id = data["task_id"]
-    user_email = data["email"]
+    email = data["email"]
 
     cursor.execute(
-    "SELECT assigned_to FROM Tasks WHERE id=%s",
-    (task_id,)
-)
+        "SELECT assigned_to FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
+
     row = cursor.fetchone()
 
     if not row:
-        return {"message": "Tarea no existe"}
+        return {"message": "No existe"}
 
-    owner = row[0]
-
-    if user_email != owner:
+    if row[0] != email:
         return {"message": "No autorizado"}
 
     cursor.execute(
-    "UPDATE Tasks SET completed=1 WHERE id=%s",
-    (task_id,)
-)
+        "UPDATE Tasks SET completed=TRUE WHERE id=%s",
+        (task_id,)
+    )
 
     conn.commit()
 
-    return {"message": "Tarea completada"}
-
-# =========================
-# ELIMINAR TAREA
-# =========================
+    return {"message": "Completada"}
 
 @app.post("/delete-task")
 def delete_task(data: dict):
 
     task_id = data["task_id"]
-    user_email = data["email"]
+    email = data["email"]
 
     cursor.execute(
         "SELECT assigned_to FROM Tasks WHERE id=%s",
-        task_id
+        (task_id,)
     )
+
     row = cursor.fetchone()
 
     if not row:
-        return {"message": "Tarea no existe"}
+        return {"message": "No existe"}
 
-    owner = row[0]
-
-    # 🔒 VALIDACIÓN
-    if user_email not in supervisors and user_email != owner:
+    if email not in supervisors and email != row[0]:
         return {"message": "No autorizado"}
 
     cursor.execute(
         "DELETE FROM Tasks WHERE id=%s",
-        task_id
+        (task_id,)
     )
 
     conn.commit()
 
-    return {"message": "Tarea eliminada"}
+    return {"message": "Eliminada"}

@@ -59,11 +59,13 @@ cursor:pointer;
 
 <script>
 
+const API = "https://jean-paul.onrender.com"
+
 async function send(){
 
 const email=document.getElementById("email").value
 
-const res=await fetch("http://127.0.0.1:8000/send-code",{
+const res = await fetch("https://jean-paul.onrender.com/send-code",{
 method:"POST",
 headers:{'Content-Type':'application/json'},
 body:JSON.stringify({email})
