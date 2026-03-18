@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import pyodbc
 import hashlib
 import random
 import smtplib
@@ -9,6 +8,25 @@ from openai import OpenAI
 import os
 from openai import OpenAI
 
+
+
+import psycopg2
+import os
+
+conn = None
+cursor = None
+
+try:
+    conn = psycopg2.connect(
+        os.getenv("DATABASE_URL"),
+        sslmode="require"
+    )
+    cursor = conn.cursor()
+    print("✅ DB conectada")
+except Exception as e:
+    print("❌ Error DB:", e)
+
+    
 # =========================
 # CORREOS DE EMPLEADOS
 # =========================
@@ -70,24 +88,26 @@ app.add_middleware(
 # SQL SERVER
 # =========================
 
-import pyodbc
+import psycopg2
+import os
 
 conn = None
 cursor = None
 
 try:
-    conn = pyodbc.connect(
-        "DRIVER={ODBC Driver 17 for SQL Server};"
-        "SERVER=localhost\\SQLEXPRESS;"
-        "DATABASE=TMKAgency;"
-        "Trusted_Connection=yes;"
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    conn = psycopg2.connect(
+        DATABASE_URL,
+        sslmode="require"
     )
+
     cursor = conn.cursor()
-    print("✅ Conectado a la base de datos")
+
+    print("✅ DB conectada")
+
 except Exception as e:
-    print("❌ Error conectando a la DB:", e)
-    conn = None
-    cursor = None
+    print("❌ Error DB:", e)
 
 # =========================
 # HASH PASSWORD

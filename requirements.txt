@@ -3,3 +3,4 @@ uvicorn
 pyodbc
 openai
 python-dotenv
+psycopg2-binary
