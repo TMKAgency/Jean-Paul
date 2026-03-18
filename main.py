@@ -5,8 +5,6 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 from openai import OpenAI
-import os
-from openai import OpenAI
 
 
 
@@ -26,7 +24,7 @@ try:
 except Exception as e:
     print("❌ Error DB:", e)
 
-    
+
 # =========================
 # CORREOS DE EMPLEADOS
 # =========================
@@ -131,7 +129,7 @@ def register(data: dict):
     password = hash_password(data["password"])
 
     # 🔍 Verificar si el email existe
-    cursor.execute("SELECT email FROM Users WHERE email = ?", (email,))
+    cursor.execute("SELECT email FROM Users WHERE email = ?", (email,))    
     user = cursor.fetchone()
 
     if not user:
@@ -139,7 +137,7 @@ def register(data: dict):
 
     # 🔄 Actualizar contraseña
     cursor.execute(
-        "UPDATE Users SET password_hash = ? WHERE email = ?",
+        "UPDATE Users SET password_hash = %s WHERE email = %s",
         (password, email)
     )
 
@@ -158,8 +156,8 @@ def login(data: dict):
     password = data["password"]
 
     cursor.execute(
-        "SELECT password_hash FROM Users WHERE email=?",
-        email
+    "SELECT password_hash FROM Users WHERE email=%s",
+    (email,)
     )
 
     row = cursor.fetchone()
@@ -194,9 +192,8 @@ def send_code(data: dict):
     code = str(random.randint(100000,999999))
 
     cursor.execute(
-        "UPDATE Users SET reset_code=? WHERE email=?",
-        code,
-        email
+    "UPDATE Users SET reset_code=%s WHERE email=%s",
+    (code, email)
     )
 
     conn.commit()
@@ -224,8 +221,8 @@ def verify_code(data: dict):
     code = data["code"]
 
     cursor.execute(
-        "SELECT reset_code FROM Users WHERE email=?",
-        email
+    "SELECT reset_code FROM Users WHERE email=%s",
+    (email,)
     )
 
     row = cursor.fetchone()
@@ -249,8 +246,8 @@ def reset_password(data: dict):
     password = hash_password(data["password"])
 
     cursor.execute(
-        "SELECT reset_code FROM Users WHERE email=?",
-        email
+    "SELECT reset_code FROM Users WHERE email=%s",
+    (email,)
     )
 
     row = cursor.fetchone()
@@ -263,10 +260,9 @@ def reset_password(data: dict):
     if db_code == code:
 
         cursor.execute(
-            "UPDATE Users SET password_hash=?, reset_code=NULL WHERE email=?",
-            password,
-            email
-        )
+    "UPDATE Users SET password_hash=%s, reset_code=NULL WHERE email=%s",
+    (password, email)
+)
 
         conn.commit()
 
@@ -309,14 +305,12 @@ def ai(data: dict):
             if name in lower_msg:
 
                 cursor.execute(
-                    """
-                    INSERT INTO Tasks (assigned_to, assigned_by, task_text)
-                    VALUES (?,?,?)
-                    """,
-                    email,
-                    user_email,
-                    message
-                )
+    """
+    INSERT INTO Tasks (assigned_to, assigned_by, task_text)
+    VALUES (%s,%s,%s)
+    """,
+    (email, user_email, message)
+)
 
                 conn.commit()
 
@@ -348,9 +342,9 @@ def get_tasks(data: dict):
     email = data["email"]
 
     cursor.execute(
-        "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=?",
-        email
-    )
+    "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=%s",
+    (email,)
+)
 
     rows = cursor.fetchall()
 
@@ -376,9 +370,9 @@ def complete_task(data: dict):
     user_email = data["email"]
 
     cursor.execute(
-        "SELECT assigned_to FROM Tasks WHERE id=?",
-        task_id
-    )
+    "SELECT assigned_to FROM Tasks WHERE id=%s",
+    (task_id,)
+)
     row = cursor.fetchone()
 
     if not row:
@@ -390,9 +384,9 @@ def complete_task(data: dict):
         return {"message": "No autorizado"}
 
     cursor.execute(
-        "UPDATE Tasks SET completed=1 WHERE id=?",
-        task_id
-    )
+    "UPDATE Tasks SET completed=1 WHERE id=%s",
+    (task_id,)
+)
 
     conn.commit()
 
@@ -409,7 +403,7 @@ def delete_task(data: dict):
     user_email = data["email"]
 
     cursor.execute(
-        "SELECT assigned_to FROM Tasks WHERE id=?",
+        "SELECT assigned_to FROM Tasks WHERE id=%s",
         task_id
     )
     row = cursor.fetchone()
@@ -424,7 +418,7 @@ def delete_task(data: dict):
         return {"message": "No autorizado"}
 
     cursor.execute(
-        "DELETE FROM Tasks WHERE id=?",
+        "DELETE FROM Tasks WHERE id=%s",
         task_id
     )
 
