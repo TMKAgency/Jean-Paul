@@ -132,26 +132,26 @@ def hash_password(password):
 @app.post("/register")
 def register(data: dict):
 
-    if not cursor:
-        return {"error": "DB no disponible"}
-
     email = data["email"]
     password = hash_password(data["password"])
 
     cursor.execute("SELECT email FROM Users WHERE email=%s", (email,))
     user = cursor.fetchone()
 
-    if not user:
-        return {"message": "Correo no autorizado"}
-
-    cursor.execute(
-        "UPDATE Users SET password_hash=%s WHERE email=%s",
-        (password, email)
-    )
+    if user:
+        cursor.execute(
+            "UPDATE Users SET password_hash=%s WHERE email=%s",
+            (password, email)
+        )
+    else:
+        cursor.execute(
+            "INSERT INTO Users (email, password_hash) VALUES (%s, %s)",
+            (email, password)
+        )
 
     conn.commit()
 
-    return {"message": "Contraseña creada correctamente"}
+    return {"message": "Usuario listo"}
 
 # =========================
 # LOGIN
