@@ -7,8 +7,8 @@ from email.mime.text import MIMEText
 from openai import OpenAI
 import psycopg2
 import os
-from fastapi.responses import FileResponse
-
+from fastapi import FastAPI, Form
+from fastapi.responses import FileResponse, RedirectResponse
 
 # =========================
 # DB CONNECTION
@@ -394,8 +394,55 @@ def delete_task(data: dict):
 
     return {"message": "Eliminada"}
 
+app = FastAPI()
 
+# =========================
+# VISTAS (GET)
+# =========================
 
 @app.get("/")
 def home():
     return FileResponse("index.html")
+
+@app.get("/login")
+def login_page():
+    return FileResponse("login.html")
+
+@app.get("/register")
+def register_page():
+    return FileResponse("register.html")
+
+@app.get("/forgot")
+def forgot_page():
+    return FileResponse("forgot.html")
+
+
+# =========================
+# ACCIONES (POST)
+# =========================
+
+@app.post("/login")
+def login_user(email: str = Form(...), password: str = Form(...)):
+    
+    # 🔐 Aquí va tu lógica real (base de datos después)
+    
+    if email == "admin@test.com" and password == "1234":
+        return RedirectResponse(url="/", status_code=303)
+    
+    return {"error": "Credenciales incorrectas"}
+
+
+@app.post("/register")
+def register_user(email: str = Form(...), password: str = Form(...)):
+    
+    # Aquí luego guardás en la base de datos
+    
+    return {"message": "Usuario registrado correctamente"}
+
+
+@app.post("/forgot")
+def forgot_password(email: str = Form(...)):
+    
+    # Aquí iría envío de correo
+    
+    return {"message": "Correo de recuperación enviado"}
