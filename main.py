@@ -7,6 +7,8 @@ from email.mime.text import MIMEText
 from openai import OpenAI
 import psycopg2
 import os
+from fastapi.responses import FileResponse
+
 
 # =========================
 # DB CONNECTION
@@ -391,3 +393,9 @@ def delete_task(data: dict):
     conn.commit()
 
     return {"message": "Eliminada"}
+
+
+
+@app.get("/")
+def home():
+    return FileResponse("index.html")
