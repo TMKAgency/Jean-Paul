@@ -398,7 +398,7 @@ def delete_task(data: dict):
 # VISTAS (GET)
 # =========================
 
-@app.get("/")
+@app.get("/index.html")
 def home():
     return FileResponse("index.html")
 
