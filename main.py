@@ -402,20 +402,20 @@ def delete_task(data: dict):
 def home():
     return FileResponse("index.html")
 
-@app.get("/login")
+@app.get("/login.html")
 def login_page():
     return FileResponse("login.html")
 
-@app.get("/register")
+@app.get("/register.html")
 def register_page():
     return FileResponse("register.html")
 
-@app.get("/forgot")
+@app.get("/forgot.html")
 def forgot_page():
     return FileResponse("forgot.html")
 
 
-@app.post("/login")
+@app.post("/login.html")
 def login(data: dict):
 
     if not cursor:
