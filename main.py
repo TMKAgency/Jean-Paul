@@ -394,8 +394,6 @@ def delete_task(data: dict):
 
     return {"message": "Eliminada"}
 
-app = FastAPI()
-
 # =========================
 # VISTAS (GET)
 # =========================
@@ -417,26 +415,11 @@ def forgot_page():
     return FileResponse("forgot.html")
 
 
-# =========================
-# ACCIONES (POST)
-# =========================
-
 @app.post("/login")
-def login_user(email: str = Form(...), password: str = Form(...)):
-    
-    if email == "admin@test.com" and password == "1234":
-        return RedirectResponse(url="/", status_code=303)
-    
-    return {"error": "Credenciales incorrectas"}
+def login(data: dict):
 
+    if not cursor:
+        return {"success": False, "message": "Error de servidor"}
 
-@app.post("/register")
-def register_user(email: str = Form(...), password: str = Form(...)):
-    
-    return {"message": "Usuario registrado correctamente"}
-
-
-@app.post("/forgot")
-def forgot_password(email: str = Form(...)):
-    
-    return {"message": "Correo de recuperación enviado"}
+    email = data["email"]
+    password = data["password"]
