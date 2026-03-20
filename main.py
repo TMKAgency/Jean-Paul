@@ -424,8 +424,6 @@ def forgot_page():
 @app.post("/login")
 def login_user(email: str = Form(...), password: str = Form(...)):
     
-    # 🔐 Aquí va tu lógica real (base de datos después)
-    
     if email == "admin@test.com" and password == "1234":
         return RedirectResponse(url="/", status_code=303)
     
@@ -435,14 +433,10 @@ def login_user(email: str = Form(...), password: str = Form(...)):
 @app.post("/register")
 def register_user(email: str = Form(...), password: str = Form(...)):
     
-    # Aquí luego guardás en la base de datos
-    
     return {"message": "Usuario registrado correctamente"}
 
 
 @app.post("/forgot")
 def forgot_password(email: str = Form(...)):
-    
-    # Aquí iría envío de correo
     
     return {"message": "Correo de recuperación enviado"}
