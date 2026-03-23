@@ -247,18 +247,17 @@ color:black;
     
     window.onload = () => {
     
-    userEmail = localStorage.getItem("email")
+        userEmail = localStorage.getItem("email")
     
-    if(!userEmail){
-    alert("Debes iniciar sesión")
-    window.location = "login.html"
-    return
-    }
+        if(!userEmail){
+            alert("Debes iniciar sesión")
+            window.location = "login.html"
+            return
+        }
     
-    document.getElementById("userEmail").innerText = "Usuario: " + userEmail
+        document.getElementById("userEmail").innerText = "Usuario: " + userEmail
     
-    loadTasks()
-    
+        loadTasks()
     }
     
     // ======================
@@ -267,48 +266,55 @@ color:black;
     
     async function send(){
     
-    const input = document.getElementById("message")
-    const msg = input.value.trim()
+        const input = document.getElementById("message")
+        const msg = input.value.trim()
     
-    if(!msg) return
+        if(!msg) return
     
-    addMessage(msg, "userMsg")
-    input.value = ""
+        addMessage(msg, "userMsg")
+        input.value = ""
     
-    try{
+        try{
     
-    const res = await fetch(API+"/ai",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-    message:msg,
-    email:userEmail
-    })
-    })
+            const res = await fetch(API+"/ai",{
+                method:"POST",
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    message:msg,
+                    email:userEmail
+                })
+            })
     
-    const data = await res.json()
+            const data = await res.json()
     
-    addMessage(data.response || "Error en respuesta", "aiMsg")
+            console.log("AI response:", data)
     
-    loadTasks()
+            addMessage(data.response || "Error en respuesta", "aiMsg")
     
-    }catch(err){
-    addMessage("Error conectando con el servidor", "aiMsg")
+            loadTasks()
+    
+        }catch(err){
+            console.error(err)
+            addMessage("Error conectando con el servidor", "aiMsg")
+        }
+    
     }
     
-    }
+    // ======================
+    // UI CHAT
+    // ======================
     
     function addMessage(text, type){
     
-    const chat = document.getElementById("chat")
+        const chat = document.getElementById("chat")
     
-    const div = document.createElement("div")
-    div.className = "message " + type
-    div.innerText = text
+        const div = document.createElement("div")
+        div.className = "message " + type
+        div.innerText = text
     
-    chat.appendChild(div)
+        chat.appendChild(div)
     
-    chat.scrollTop = chat.scrollHeight
+        chat.scrollTop = chat.scrollHeight
     }
     
     // ======================
@@ -317,70 +323,85 @@ color:black;
     
     async function loadTasks(){
     
-    try{
+        try{
     
-    const res = await fetch(API+"/get-tasks",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:userEmail})
-    })
+            const res = await fetch(API+"/get-tasks",{
+                method:"POST",
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({email:userEmail})
+            })
     
-    const data = await res.json()
+            const data = await res.json()
     
-    const container = document.getElementById("tasks")
-    container.innerHTML = ""
+            console.log("Tasks:", data)
     
-    data.tasks.forEach(t => {
+            const container = document.getElementById("tasks")
+            container.innerHTML = ""
     
-    const div = document.createElement("div")
-    div.className = "task" + (t.completed ? " completed" : "")
+            data.tasks.forEach(t => {
     
-    div.innerHTML = `
-    <div class="task-left">
-    <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
-    <span>${t.task}</span>
-    </div>
-    <button onclick="removeTask(${t.id})">🗑</button>
-    `
+                const div = document.createElement("div")
+                div.className = "task" + (t.completed ? " completed" : "")
     
-    container.appendChild(div)
+                div.innerHTML = `
+                <div class="task-left">
+                    <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
+                    <span>${t.task}</span>
+                </div>
+                <button onclick="removeTask(${t.id})">🗑</button>
+                `
     
-    })
+                container.appendChild(div)
+            })
     
-    }catch(err){
-    console.log("Error cargando tareas")
-    }
+        }catch(err){
+            console.error("Error cargando tareas:", err)
+        }
     
     }
     
     // ======================
-    // AGREGAR TAREA (FIX)
+    // AGREGAR TAREA (FIX REAL)
     // ======================
     
     async function addTask(){
     
-    const text = document.getElementById("taskInput").value.trim()
+        const input = document.getElementById("taskInput")
+        const text = input.value.trim()
     
-    if(!text) return
+        if(!text){
+            alert("Escribe una tarea")
+            return
+        }
     
-    try{
+        try{
     
-    await fetch(API+"/ai",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-    message:text,
-    email:userEmail
-    })
-    })
+            const res = await fetch(API+"/add-task",{
+                method:"POST",
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    email: userEmail,
+                    task: text
+                })
+            })
     
-    document.getElementById("taskInput").value=""
+            const data = await res.json()
     
-    loadTasks()
+            console.log("Add task:", data)
     
-    }catch(err){
-    alert("Error agregando tarea")
-    }
+            if(data.message !== "Tarea creada"){
+                alert("Error: " + data.message)
+                return
+            }
+    
+            input.value = ""
+    
+            loadTasks()
+    
+        }catch(err){
+            console.error(err)
+            alert("Error agregando tarea")
+        }
     
     }
     
@@ -389,71 +410,79 @@ color:black;
     // ======================
     
     async function complete(id){
-
-try{
-
-    await fetch(API+"/complete-task",{
-        method:"POST",
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-            task_id: id,
-            email: userEmail
-        })
-    })
-
-    loadTasks()
-
-}catch(err){
-    alert("Error al completar tarea")
-}
-
-}
+    
+        try{
+    
+            await fetch(API+"/complete-task",{
+                method:"POST",
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    task_id: id,
+                    email: userEmail
+                })
+            })
+    
+            loadTasks()
+    
+        }catch(err){
+            console.error(err)
+            alert("Error al completar tarea")
+        }
+    
+    }
     
     // ======================
     // ELIMINAR
     // ======================
     
     async function removeTask(id){
-
-try{
-
-    await fetch(API+"/delete-task",{
-        method:"POST",
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-            task_id: id,
-            email: userEmail
-        })
-    })
-
-    loadTasks()
-
-}catch(err){
-    alert("Error eliminando tarea")
-}
-
-}
+    
+        try{
+    
+            await fetch(API+"/delete-task",{
+                method:"POST",
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    task_id: id,
+                    email: userEmail
+                })
+            })
+    
+            loadTasks()
+    
+        }catch(err){
+            console.error(err)
+            alert("Error eliminando tarea")
+        }
+    
+    }
     
     // ======================
-    // LOGOUT (PRO)
+    // LOGOUT
     // ======================
     
     function logout(){
-    localStorage.removeItem("email")
-    window.location = "login.html"
+        localStorage.removeItem("email")
+        window.location = "login.html"
     }
     
-    </script>
+    // ======================
+    // ENTER PARA ENVIAR CHAT
+    // ======================
     
-    <script>
-        const input = document.getElementById("message");
-        
-        input.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault(); // evita comportamientos raros
-                send();
-            }
-        });
-        </script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("message")
+    
+        if(input){
+            input.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault()
+                    send()
+                }
+            })
+        }
+    })
+    
+    </script>
 </body>
 </html>

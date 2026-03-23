@@ -719,7 +719,17 @@ def delete_task(data: dict):
     return {"message": "Eliminada"}
 
 
+@app.post("/add-task")
+def add_task(data: dict):
 
+    cursor.execute(
+        "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
+        (data["email"], data["email"], data["task"])
+    )
+
+    conn.commit()
+
+    return {"message": "Tarea creada"}
 
 
 # =========================
