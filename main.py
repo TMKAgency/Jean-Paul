@@ -423,7 +423,7 @@ def forgot_page():
     return FileResponse("forgot.html")
 
 
-@app.post("/login.html")
+@app.post("/login-html")
 def login(data: dict):
 
     if not cursor:
