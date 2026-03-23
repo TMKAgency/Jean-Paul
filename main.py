@@ -9,6 +9,8 @@ import psycopg2
 import os
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, RedirectResponse
+from datetime import datetime, timedelta
+
 
 # =========================
 # DB CONNECTION
@@ -201,11 +203,12 @@ def send_code(data: dict):
         return {"message": "Correo no autorizado"}
 
     code = str(random.randint(100000, 999999))
+    expiration = datetime.utcnow() + timedelta(minutes=10)
 
     cursor.execute(
-        "UPDATE Users SET reset_code=%s WHERE email=%s",
-        (code, email)
-    )
+    "UPDATE Users SET reset_code=%s, code_expiration=%s WHERE email=%s",
+    (code, expiration, email)
+)
 
     conn.commit()
 
@@ -241,16 +244,21 @@ def verify_code(data: dict):
     code = data["code"]
 
     cursor.execute(
-        "SELECT reset_code FROM Users WHERE email=%s",
-        (email,)
-    )
+    "SELECT reset_code, code_expiration FROM Users WHERE email=%s",
+    (email,)
+)
 
     row = cursor.fetchone()
 
     if not row:
         return {"valid": False}
 
-    return {"valid": row[0] == code}
+    saved_code, expiration = row
+
+    if expiration is None or expiration < datetime.utcnow():
+        return {"valid": False}
+
+    return {"valid": saved_code == code}
 
 # =========================
 # RESET PASSWORD

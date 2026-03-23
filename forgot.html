@@ -47,34 +47,159 @@ cursor:pointer;
 
 <body>
 
-<div class="box">
+    <div class="box">
 
-<h2>Recuperar contraseña</h2>
-
-<input type="email" id="email" placeholder="Correo">
-
-<button onclick="send()">Enviar código</button>
-
-</div>
+        <h2>Recuperar contraseña</h2>
+        
+        <!-- PASO 1 -->
+        <div id="step1">
+          <input type="email" id="email" placeholder="Correo">
+          <button onclick="sendCode()">Enviar código</button>
+        </div>
+        
+        <!-- PASO 2 -->
+<div id="step2" style="display:none;">
+    <input 
+      type="text" 
+      id="code" 
+      placeholder="Código"
+      maxlength="6"
+      oninput="autoVerifyCode()"
+    >
+    <p id="status" style="font-size:12px; margin-top:5px;"></p>
+  </div>
+        
+        <!-- PASO 3 -->
+        <div id="step3" style="display:none;">
+          <input type="password" id="newPassword" placeholder="Nueva contraseña">
+          <button onclick="resetPassword()">Cambiar contraseña</button>
+        </div>
+        
+        </div>
 
 <script>
 
 const API = "https://jean-paul.onrender.com"
 
-async function send(){
+let userEmail = ""
 
-const email=document.getElementById("email").value
+async function sendCode(){
+  const email = document.getElementById("email").value
+  userEmail = email
 
-const res = await fetch(`${API}/send-code`, {
-method:"POST",
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({email})
-})
+  const res = await fetch(`${API}/send-code`, {
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email})
+  })
 
-alert("Código enviado al correo")
+  const data = await res.json()
 
+  if(data.message === "Código enviado correctamente"){
+    alert("Código enviado al correo")
+    document.getElementById("step1").style.display = "none"
+    document.getElementById("step2").style.display = "block"
+  }else{
+    alert(data.message)
+  }
 }
 
+
+async function verifyCode(){
+  const code = document.getElementById("code").value
+
+  const res = await fetch(`${API}/verify-code`, {
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      email: userEmail,
+      code: code
+    })
+  })
+
+  const data = await res.json()
+
+  if(data.valid){
+    alert("Código correcto")
+    document.getElementById("step2").style.display = "none"
+    document.getElementById("step3").style.display = "block"
+  }else{
+    alert("Código incorrecto")
+  }
+}
+
+
+
+async function resetPassword(){
+  const password = document.getElementById("newPassword").value
+  const code = document.getElementById("code").value
+
+  const res = await fetch(`${API}/reset-password`, {
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      email: userEmail,
+      code: code,
+      password: password
+    })
+  })
+
+  const data = await res.json()
+
+  alert(data.message)
+
+  if(data.message === "Contraseña actualizada"){
+    window.location.href = "/login.html"
+  }
+}
+
+
+let verifying = false
+
+async function autoVerifyCode(){
+  const code = document.getElementById("code").value
+  const status = document.getElementById("status")
+
+  // Evita llamadas innecesarias
+  if(code.length !== 6 || verifying) return
+
+  verifying = true
+  status.innerText = "Verificando..."
+  status.style.color = "#888"
+
+  try {
+    const res = await fetch(`${API}/verify-code`, {
+      method:"POST",
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        email: userEmail,
+        code: code
+      })
+    })
+
+    const data = await res.json()
+
+    if(data.valid){
+      status.innerText = "Código correcto ✅"
+      status.style.color = "green"
+
+      setTimeout(() => {
+        document.getElementById("step2").style.display = "none"
+        document.getElementById("step3").style.display = "block"
+      }, 500)
+
+    } else {
+      status.innerText = "Código incorrecto ❌"
+      status.style.color = "red"
+    }
+
+  } catch (error){
+    status.innerText = "Error de conexión"
+    status.style.color = "red"
+  }
+
+  verifying = false
+}
 </script>
 
 </body>
