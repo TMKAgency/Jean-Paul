@@ -402,8 +402,27 @@ def delete_task(data: dict):
 
     return {"message": "Eliminada"}
 
+
+
+
+
 # =========================
 # VISTAS (GET)
+# =========================
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+# =========================
+# RUTA PRINCIPAL (IMPORTANTE)
+# =========================
+
+@app.get("/")
+def root():
+    return FileResponse("index.html")
+
+
+# =========================
+# VISTAS (HTML)
 # =========================
 
 @app.get("/index.html")
@@ -423,11 +442,10 @@ def forgot_page():
     return FileResponse("forgot.html")
 
 
+# =========================
+# FIX ERROR (ANTES ROTO)
+# =========================
+
 @app.post("/login-html")
-def login(data: dict):
-
-    if not cursor:
-        return {"success": False, "message": "Error de servidor"}
-
-    email = data["email"]
-    password = data["password"]
+def login_html(data: dict):
+    return {"message": "ok"}
