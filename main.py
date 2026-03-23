@@ -615,6 +615,8 @@ Asistencia médica (doctor virtual, electrocardiogramas gratuitos, asistencia de
 1 mascota por inscripción, cremación de mascota hasta 20 kg y traslado GAM 30 km.
 """
 
+
+
 @app.post("/ai")
 def ai(data: dict):
 
@@ -622,6 +624,9 @@ def ai(data: dict):
     user_email = data["email"]
     lower_msg = message.lower()
 
+    # =========================
+    # ASIGNACIÓN DE TAREAS
+    # =========================
     if user_email in supervisors:
         for name, email in employees.items():
             if name in lower_msg:
@@ -632,12 +637,43 @@ def ai(data: dict):
                 conn.commit()
                 return {"response": f"Tarea asignada a {name}"}
 
-    response = client.responses.create(
-        model="gpt-4.1-mini",
-        input=message
-    )
+    # =========================
+    # IA CON KNOWLEDGE (FIX REAL)
+    # =========================
+    try:
 
-    return {"response": response.output[0].content[0].text}
+        response = client.responses.create(
+            model="gpt-4.1-mini",
+            input=[
+                {
+                    "role": "system",
+                    "content": f"""
+{knowledge}
+
+INSTRUCCIONES IMPORTANTES:
+- SIEMPRE responde usando SOLO esta información
+- NO inventes datos
+- NO uses conocimiento externo
+- Si la pregunta incluye peso de mascota, identifica el rango correcto automáticamente
+- Responde con el paquete de precios EXACTO según el rango
+- Si la pregunta es sobre precios o servicios, responde EXACTAMENTE con los datos del catálogo
+- Si no existe la información, responde: "No tengo esa información en el sistema"
+"""
+                },
+                {
+                    "role": "user",
+                    "content": message
+                }
+            ]
+        )
+
+        return {
+    "response": response.output_text
+}
+
+    except Exception as e:
+        print("❌ Error IA:", e)
+        return {"response": "Error con la IA"}
 
 # =========================
 # TASKS
