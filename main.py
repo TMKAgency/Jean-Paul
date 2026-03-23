@@ -404,6 +404,15 @@ Paquete 2 → ₡172.700
 Paquete 3 → ₡182.700
 Paquete 4 → ₡202.700
 
+🔹 +71 kg
+se matendria en estos precios
+Paquete 1 → ₡132.700
+Paquete 2 → ₡172.700
+Paquete 3 → ₡182.700
+Paquete 4 → ₡202.700
+pero mejor hablar con un asesor de ventas para mayor aclaracion 
+
+
 🏝️ CATÁLOGO DE DESTINOS – ESCAPADITAS
 📍 1. ISLA CHIRA
 🏡 Descripción
@@ -613,6 +622,28 @@ Puede elegir entre:
 ✅ Todos los planes incluyen:
 Asistencia médica (doctor virtual, electrocardiogramas gratuitos, asistencia deportiva, nutricional y emocional).
 1 mascota por inscripción, cremación de mascota hasta 20 kg y traslado GAM 30 km.
+
+
+
+Coopeprofa Numero = 7300 6140
+Escapaditas Numero = 7300 9126
+
+Memorial = 📞 Recepción 24/7: 8959 7707
+📱 Servicio al cliente / Más información: 6457 0000
+📞 Chat de emergencia: 4035 5871
+✉️ Correo: info@memorialpets.cr
+
+
+
+Valle de paz = 
+Central: 4035-5800
+Servicio al cliente: 8913-9999
+Emergencia: 4035-5801
+WhatsApp: 4035-5800
+Chat emergencias: 8818-9799
+
+Correo electrónico:
+servicioalcliente@valledepazcr.com
 """
 
 
@@ -637,27 +668,26 @@ def ai(data: dict):
                 conn.commit()
                 return {"response": f"Tarea asignada a {name}"}
 
-    # =========================
-    # IA CON KNOWLEDGE (FIX REAL)
-    # =========================
     try:
 
+        # =========================
+        # 1️⃣ PRIMER INTENTO: KNOWLEDGE
+        # =========================
         response = client.responses.create(
             model="gpt-4.1-mini",
             input=[
                 {
                     "role": "system",
                     "content": f"""
+Eres Jean Paul, IA de TMK Agency.
+
+USA ESTA INFORMACIÓN:
 {knowledge}
 
-INSTRUCCIONES IMPORTANTES:
-- SIEMPRE responde usando SOLO esta información
-- NO inventes datos
-- NO uses conocimiento externo
-- Si la pregunta incluye peso de mascota, identifica el rango correcto automáticamente
-- Responde con el paquete de precios EXACTO según el rango
-- Si la pregunta es sobre precios o servicios, responde EXACTAMENTE con los datos del catálogo
-- Si no existe la información, responde: "No tengo esa información en el sistema"
+REGLAS:
+- Responde SOLO con esta información
+- Si no encuentras la respuesta exacta, responde EXACTAMENTE:
+"No tengo esa información en el sistema"
 """
                 },
                 {
@@ -667,14 +697,32 @@ INSTRUCCIONES IMPORTANTES:
             ]
         )
 
+        answer = response.output_text.strip()
+
+        # =========================
+        # 2️⃣ FALLBACK A CHATGPT
+        # =========================
+        if "No tengo esa información" in answer:
+
+            fallback = client.responses.create(
+                model="gpt-4.1-mini",
+                input=message
+            )
+
+            return {
+                "response": fallback.output_text
+            }
+
+        # =========================
+        # RESPUESTA NORMAL
+        # =========================
         return {
-    "response": response.output_text
-}
+            "response": answer
+        }
 
     except Exception as e:
         print("❌ Error IA:", e)
         return {"response": "Error con la IA"}
-
 # =========================
 # TASKS
 # =========================
