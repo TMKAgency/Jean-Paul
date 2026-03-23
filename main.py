@@ -626,16 +626,16 @@ Asistencia médica (doctor virtual, electrocardiogramas gratuitos, asistencia de
 
 
 Coopeprofa Numero = 7300 6140
-Escapaditas Numero = 7300 9126
+Escapaditas Numero, todo lo que tenga que ver con planes turisticos = 7300 9126
 
-Memorial = 📞 Recepción 24/7: 8959 7707
-📱 Servicio al cliente / Más información: 6457 0000
+Memorial, estos son los numeros para cremacion de mascotas, velacion de masctoas, joyeria de mascotas, todo lo que tenga que ver con mascotas, perdida de masctoas, entre otras = 📞 Recepción 24/7: 8959 7707
+📱 Servicio al cliente / hablar con un asesor: 6457 0000
 📞 Chat de emergencia: 4035 5871
 ✉️ Correo: info@memorialpets.cr
 
 
 
-Valle de paz = 
+Numeros de Valle de paz, todo lo que tenga que ver con funeraria = 
 Central: 4035-5800
 Servicio al cliente: 8913-9999
 Emergencia: 4035-5801
