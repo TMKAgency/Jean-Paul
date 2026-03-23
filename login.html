@@ -5,6 +5,7 @@
 <title>TMK Agency Login</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
@@ -43,6 +44,41 @@ text-align:center;
 font-size:22px;
 font-weight:600;
 margin-bottom:25px;
+}
+
+.password-container {
+  position: relative;
+  width: 280px;
+}
+
+.password-container input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.password-container input:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.toggle-password:hover {
+  color: #6c63ff;
 }
 
 input{
@@ -105,7 +141,10 @@ color:white;
 
 <input type="email" id="email" placeholder="Correo corporativo">
 
-<input type="password" id="password" placeholder="Contraseña">
+<div class="password-container">
+  <input type="password" id="password" placeholder="Contraseña">
+  <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i>
+</div>
 
 <button onclick="login()">Iniciar sesión</button>
 
@@ -149,6 +188,20 @@ function forgot(){
 window.location="forgot.html"
 }
 
+function togglePassword() {
+  const input = document.getElementById("password");
+  const icon = document.querySelector(".toggle-password");
+
+  if (input.type === "password") {
+    input.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    input.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}
 </script>
 
 </body>
