@@ -12,7 +12,6 @@ from fastapi.responses import FileResponse, RedirectResponse
 from datetime import datetime, timedelta
 import google.generativeai as genai
 
-
 # =========================
 # DB CONNECTION
 # =========================
