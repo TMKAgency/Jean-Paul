@@ -26,7 +26,7 @@ except Exception as e:
     print("⚠️ Gemini no disponible:", e)
     GEMINI_AVAILABLE = False
 
-    
+
 
 conn = None
 cursor = None
@@ -325,6 +325,359 @@ def reset_password(data: dict):
 knowledge = """
 Eres Jean Paul, IA de TMK Agency.
 
+TMK Agency es una agencia de Telemarketing, que por ahora le da Marketing a Valle de paz, memorial pets, escapaditas y la cooperativa (COOPEPROFA)
+Fabricio es el programador 
+Marco Lamugue es el jefe
+Daniela es la jefa
+Clifton Andrew y Katherine son los asesores de ventas
+Michelle es la diseñadora y encargada del meta 
+
+💉 Servicios + precios
+🔹 Corporales
+Liposucción 360 → $2500
+Body Tite → $2000
+Lipo de piernas → $1000
+Lipo de brazos → $1000
+Abdominoplastia → $4000
+Mini liposucción → $1000
+Liposucción + transferencia glútea → $3500
+Liposucción + implantes mamarios → $6000
+Mega lipólisis → $3000
+Liposucción + transferencia + Body Tite → $5000
+Lipomarcación → $3000
+🔹 Rostro / estética facial
+Bichectomía → $550
+Bioestimuladores de colágeno (Radiesse) → $600
+Botox → $300
+Ácido hialurónico → $300
+Baby Botox → $250
+Rejuvenecimiento de rostro (Blefaroplastia + FaceTite) → $3000
+Hilos tensores PCL → $500
+Escleroterapia → $140
+🔹 Otros procedimientos
+Ginecomastia → $2000
+Mesoterapia enzimática → $1000
+Mesoterapia capilar → $120
+Otoplastia → $1000
+Electrocauterización (sesión) → $60
+Labioplastia → $900
+Láser CO2 fraccionado → $100 – $800
+📄 2. Valle de Paz (Servicios funerarios)
+
+⚠️ Importante
+
+Este catálogo es más institucional.
+👉 Solo hay precios en planes, no productos individuales.
+
+📦 Planes funerarios
+Plan Girasol → ₡3500 mensuales
+Plan Gardenia → ₡5600 mensuales
+Plan Tulipán → ₡8700 mensuales
+
+(Incluyen servicios funerarios + cremación + beneficios, según página 14–16)
+
+
+🪦 Urnas aluminio
++2 kg → ₡50.000
+-2 kg → ₡40.000
+
+Modelos:
+
+UAOM-01
+UAOM-03
+UAOM-04
+UACG-01
+UACG-02
+UACP-01
+UACP-02
+UACP-03
+🌱 Urnas ecológicas
+Hasta 30 kg → ₡40.000
+Hasta 50 kg → ₡50.000
+
+Opciones:
+
+Planta Jade
+Planta Sábila
+Planta Romero
+Planta Suculenta
+Planta Mano de Tigre
+Planta Camila
+Planta Mostera
+🏺 Urnas cerámica
+Precio → ₡80.000
+
+(Disponible para múltiples razas de perros y gatos)
+
+💎 Joyería memorial
+Aretes → ₡30.000
+Collares → ₡35.000
+Anillos → ₡30.000
+Grabado láser → desde ₡10.000
+
+
+Precios por paquete y peso
+🔹 0 – 20 kg
+Paquete 1 → ₡90.300
+Paquete 2 → ₡130.300
+Paquete 3 → ₡140.300
+Paquete 4 → ₡160.300
+🔹 21 – 40 kg
+Paquete 1 → ₡101.000
+Paquete 2 → ₡141.000
+Paquete 3 → ₡151.000
+Paquete 4 → ₡171.000
+🔹 41 – 50 kg
+Paquete 1 → ₡122.100
+Paquete 2 → ₡162.100
+Paquete 3 → ₡172.100
+Paquete 4 → ₡192.100
+🔹 51 – 70 kg
+Paquete 1 → ₡132.700
+Paquete 2 → ₡172.700
+Paquete 3 → ₡182.700
+Paquete 4 → ₡202.700
+
+🔹 +71 kg
+se matendria en estos precios
+Paquete 1 → ₡132.700
+Paquete 2 → ₡172.700
+Paquete 3 → ₡182.700
+Paquete 4 → ₡202.700
+pero mejor hablar con un asesor de ventas para mayor aclaracion 
+
+
+🏝️ CATÁLOGO DE DESTINOS – ESCAPADITAS
+📍 1. ISLA CHIRA
+🏡 Descripción
+Propiedad privada frente al mar
+Ambiente natural, tranquilo
+Ideal para familia
+Vista al Pacífico (amaneceres y atardeceres)
+📋 Reglas
+✅ Se permiten mascotas (con restricciones)
+❌ No fumar dentro
+🗑️ Basura se recoge lunes
+❌ No hay WiFi
+⚠️ Revisiones por daños
+⏰ Instrucciones
+Check-in → después de 3:00 pm
+Check-out → 12:00 md
+No dejar comida en nevera
+Mantener utensilios limpios
+Sacar basura
+Cerrar puerta al salir
+🛏️ Especificaciones
+❌ No internet
+❌ No aire acondicionado
+🛏️ 2 habitaciones
+Camas:
+2 matrimoniales
+1 individual
+🏠 Incluye:
+Sala
+Cocina equipada
+Piscina
+1 baño
+👥 Capacidad
+4 personas incluidas
++2 personas extra (con costo adicional)
+📍 Extras
+Restaurantes cercanos:
+El Camarón
+Chira Fish
+Actividades:
+Pesca
+Tour Playa Muerto
+Transporte:
+Lancha desde Costa Pájaros
+Transporte adicional coordinado
+📍 2. TURRUBARES
+🏡 Descripción
+Quinta privada
+Piscina + rancho
+Ubicación: San José, Turrubares
+📋 Reglas
+✅ Mascotas permitidas
+❌ No fumar
+❌ Sin WiFi
+🗑️ Basura lunes
+⚠️ Revisiones por daños
+⏰ Instrucciones
+
+(Iguales al anterior)
+
+Check-in → 3:00 pm
+Check-out → 12:00 md
+Limpieza obligatoria básica
+🛏️ Especificaciones
+❌ No internet
+✅ Aire acondicionado en cuartos
+🛏️ 2 habitaciones
+Camas:
+3 camarotes
+1 cama matrimonial
+1 camarote adicional
+🏠 Incluye
+Sala
+Cocina equipada
+Rancho con:
+Cocina de leña
+Parrilla
+1 baño
+Piscina
+👥 Capacidad
+4 personas incluidas
++2 personas extra (con costo adicional)
+📍 Extras
+❌ No restaurantes cercanos
+🚗 Transporte:
+Carro o bus
+📍 3. TAMARINDO – HACIENDA LA JOSEFINA
+🏡 Descripción
+Propiedad privada en Guanacaste
+Piscina + rancho
+Ubicación: Huacas, Tamarindo
+📋 Reglas
+✅ Mascotas permitidas
+❌ No fumar
+✅ WiFi disponible
+🗑️ Basura lunes
+⏰ Instrucciones
+Check-in → 3:00 pm
+Check-out → 12:00 md
+🛏️ Especificaciones
+✅ Internet
+✅ Aire acondicionado (cuartos y sala)
+🛏️ 3 habitaciones
+Camas:
+2 camas matrimoniales
+3 camas individuales
+🏠 Incluye
+Sala
+Cocina equipada
+Gimnasio
+2 ranchos
+3 baños
+Piscina
+👥 Capacidad
+Máximo 10 personas
+❌ No se permiten extras
+📍 Extras
+❌ No restaurantes cercanos
+🚗 Transporte:
+Hasta 3 autos pueden entrar
+📍 4. TAMARINDO – CONDOMINIO THE OAKS
+🏡 Descripción
+Condominio privado
+Entorno seguro
+Fácil acceso a playas
+Ubicación: La Josefina, Tamarindo
+📋 Reglas
+✅ Hasta 2 mascotas
+❌ No fumar
+❌ No WiFi
+🗑️ Basura lunes
+⏰ Instrucciones
+Check-in → 3:00 pm
+Check-out → 12:00 md
+🛏️ Especificaciones
+✅ Internet
+✅ Aire acondicionado
+🛏️ 2 habitaciones
+Camas:
+1 cama Queen
+1 cama matrimonial
+🏠 Incluye
+Sala
+Cocina equipada
+Terraza
+Jardín
+1 baño
+4 piscinas (condominio)
+👥 Capacidad
+4 personas incluidas
++2 adicionales con costo
+📍 Extras
+Restaurantes cercanos
+Gasolinera
+Supermercados
+Transporte:
+Carro o bus
+
+
+Planes Memorial 24/7
+
+Protección total y tranquilidad para vos y tu familia. Elegí el plan que mejor se adapte a tus necesidades.
+
+💼 PLAN EMPRESARIAL
+
+₡5.000 mensuales
+
+Asistencia funeraria completa y cremación con todo lo esencial incluido.
+
+Cofre ejecutivo laqueado estándar
+Traslados a nivel nacional
+Servicio de patología
+Preparación y estética del cuerpo
+Urna
+Decoración de la iglesia
+Capilla de velación en sede según disponibilidad
+Capilla portátil
+25 tarjetas de agradecimiento
+Libro de condolencias
+Catafalco y carroza fúnebre
+4 arreglos florales
+👑 PLAN PREMIUM
+
+₡8.000 mensuales
+
+Incluye asistencia vial, funeraria, cremación y beneficios médicos adicionales.
+
+Asistencia vial según antigüedad permitida
+Estar al día con Dekra
+Asistencia funeraria
+Asistencia de cremación
+Asistencia médica
+Membresía para talleres sociales
+💎 PLAN ELITE
+
+₡13.500 mensuales
+
+El plan más completo con asistencia médica, funeraria, cremación y beneficios exclusivos.
+
+Asistencia médica
+Asistencia vehicular 20 años de antigüedad
+Dekra al día
+Asistencia funeraria y cremación
+Puede elegir entre:
+(A) Asistencia Camposanto o Árbol Ecológico
+(B) 1 escapadita al año a Isla Chira o Turrubares
+✅ Todos los planes incluyen:
+Asistencia médica (doctor virtual, electrocardiogramas gratuitos, asistencia deportiva, nutricional y emocional).
+1 mascota por inscripción, cremación de mascota hasta 20 kg y traslado GAM 30 km.
+
+
+
+Coopeprofa Numero = 7300 6140
+Escapaditas Numero, todo lo que tenga que ver con planes turisticos = 7300 9126
+
+Memorial, estos son los numeros para cremacion de mascotas, velacion de masctoas, joyeria de mascotas, todo lo que tenga que ver con mascotas, perdida de masctoas, entre otras = 📞 Recepción 24/7: 8959 7707
+📱 Servicio al cliente / hablar con un asesor: 6457 0000
+📞 Chat de emergencia: 4035 5871
+✉️ Correo: info@memorialpets.cr
+
+
+
+Numeros de Valle de paz, todo lo que tenga que ver con funeraria = 
+Central: 4035-5800
+Servicio al cliente: 8913-9999
+Emergencia: 4035-5801
+WhatsApp: 4035-5800
+Chat emergencias: 8818-9799
+
+Correo electrónico:
+servicioalcliente@valledepazcr.com
 
 """
 
