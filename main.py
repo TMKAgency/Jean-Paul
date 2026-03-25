@@ -16,6 +16,18 @@ import google.generativeai as genai
 # DB CONNECTION
 # =========================
 
+
+try:
+    import google.generativeai as genai
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    GEMINI_AVAILABLE = True
+    print("✅ Gemini activo")
+except Exception as e:
+    print("⚠️ Gemini no disponible:", e)
+    GEMINI_AVAILABLE = False
+
+    
+
 conn = None
 cursor = None
 
