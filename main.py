@@ -77,6 +77,11 @@ if cursor:
 # DATA
 # =========================
 
+image_keywords = [
+    "imagen", "foto", "dibujo", "genera", "crea", "hazme",
+    "picture", "image", "draw", "generate"
+]
+
 employees = {
     "alanys": "alanyssoto@tmk-agency.com",
     "andrew": "andrew@tmk-agency.com",
@@ -121,6 +126,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+from fastapi.staticfiles import StaticFiles
+
+app.mount("/static", StaticFiles(directory="."), name="static")
 
 # =========================
 # UTILS
@@ -656,6 +665,50 @@ def ai(data: dict):
     lower_msg = message.lower()
 
     # =========================
+    # DETECTAR SI QUIERE IMAGEN
+    # =========================
+    wants_image = (
+        "imagen" in lower_msg or
+        "foto" in lower_msg or
+        "dibujo" in lower_msg or
+        "crea" in lower_msg or
+        "genera" in lower_msg or
+        "hazme" in lower_msg
+    )
+
+    print("🧠 Mensaje:", lower_msg)
+    print("🎯 Quiere imagen:", wants_image)
+
+    # =========================
+    # SI QUIERE IMAGEN 🚀
+    # =========================
+    if wants_image:
+        try:
+            import base64
+
+            img = client.images.generate(
+                model="gpt-image-1",
+                prompt=message,
+                size="1024x1024"
+            )
+
+            image_base64 = img.data[0].b64_json
+
+            filename = f"image_{random.randint(1000,9999)}.png"
+
+            with open(filename, "wb") as f:
+                f.write(base64.b64decode(image_base64))
+
+            return {
+                "type": "image",
+                "image_url": f"/static/{filename}"
+            }
+
+        except Exception as e:
+            print("❌ Error generando imagen:", e)
+            return {"response": "Error generando imagen"}
+
+    # =========================
     # ASIGNACIÓN DE TAREAS
     # =========================
     if user_email in supervisors:
@@ -671,7 +724,7 @@ def ai(data: dict):
     try:
 
         # =========================
-        # 1️⃣ PRIMER INTENTO: KNOWLEDGE
+        # 1️⃣ KNOWLEDGE
         # =========================
         response = client.responses.create(
             model="gpt-4.1-mini",
@@ -700,7 +753,7 @@ REGLAS:
         answer = response.output_text.strip()
 
         # =========================
-        # 2️⃣ FALLBACK A CHATGPT
+        # 2️⃣ FALLBACK
         # =========================
         if "No tengo esa información" in answer:
 
@@ -713,9 +766,6 @@ REGLAS:
                 "response": fallback.output_text
             }
 
-        # =========================
-        # RESPUESTA NORMAL
-        # =========================
         return {
             "response": answer
         }
@@ -723,6 +773,7 @@ REGLAS:
     except Exception as e:
         print("❌ Error IA:", e)
         return {"response": "Error con la IA"}
+
 # =========================
 # TASKS
 # =========================
