@@ -337,57 +337,114 @@ def ai(data: dict):
     print("🎯 Quiere imagen:", wants_image)
 
     # =========================
-    # 🎨 IMÁGENES → GEMINI (INTENTO)
+    # 🎨 GENERACIÓN DE IMAGEN
     # =========================
     if wants_image:
         try:
-            print("🎨 Intentando con GEMINI...")
+            import base64
 
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            # 👉 Intento con Gemini (no genera imagen real, solo log)
+            try:
+                if GEMINI_AVAILABLE:
+                    print("🎨 Intentando con Gemini...")
 
-            response = model.generate_content(
-                f"Describe visually: {message}"
+                    model = genai.GenerativeModel("gemini-1.5-flash")
+
+                    response = model.generate_content(
+                        f"Describe visually: {message}"
+                    )
+
+                    print("⚠️ Gemini solo texto → fallback a OpenAI")
+
+            except Exception as e:
+                print("Gemini falló:", e)
+
+            # 👉 OpenAI SIEMPRE genera la imagen real
+            print("🎨 Generando imagen con OpenAI...")
+
+            img = client.images.generate(
+                model="gpt-image-1",
+                prompt=message,
+                size="1024x1024"
             )
 
-            # ⚠️ Gemini solo devuelve TEXTO (no imagen real)
-            if response and response.text:
-                print("⚠️ Gemini no genera imagen real → fallback")
+            if not img.data or not img.data[0].b64_json:
+                return {"response": "Error generando imagen"}
 
-            raise Exception("Gemini no genera imágenes reales")
+            image_base64 = img.data[0].b64_json
 
-        except Exception as e:
-            print("🔁 Usando OpenAI para imagen:", e)
+            filename = f"/tmp/image_{random.randint(1000,9999)}.png"
 
-            try:
-                import base64
+            with open(filename, "wb") as f:
+                f.write(base64.b64decode(image_base64))
 
-                img = client.images.generate(
-                    model="gpt-image-1",
-                    prompt=message,
-                    size="1024x1024"
-                )
+            return {
+                "type": "image",
+                "image_url": filename,
+                "provider": "openai"
+            }
 
-                if not img.data or not img.data[0].b64_json:
-                    return {"response": "Error generando imagen"}
+        except Exception as err:
+            print("❌ ERROR IMAGEN:", err)
+            return {
+                "response": f"Error generando imagen: {str(err)}"
+            }
 
-                image_base64 = img.data[0].b64_json
+    # =========================
+    # 🧠 TEXTO → OPENAI
+    # =========================
+    try:
 
-                filename = f"/tmp/image_{random.randint(1000,9999)}.png"
+        # 1️⃣ RESPUESTA CON KNOWLEDGE
+        response = client.responses.create(
+            model="gpt-4.1-mini",
+            input=[
+                {
+                    "role": "system",
+                    "content": f"""
+Eres Jean Paul, IA de TMK Agency.
 
-                with open(filename, "wb") as f:
-                    f.write(base64.b64decode(image_base64))
+USA ESTA INFORMACIÓN:
+{knowledge}
 
-                return {
-                    "type": "image",
-                    "image_url": filename,
-                    "provider": "openai"
+REGLAS:
+- Responde SOLO con esta información
+- Si no encuentras la respuesta exacta, responde EXACTAMENTE:
+"No tengo esa información en el sistema"
+"""
+                },
+                {
+                    "role": "user",
+                    "content": message
                 }
+            ]
+        )
 
-            except Exception as err:
-                return {
-                    "response": f"Error generando imagen: {str(err)}"
-                }
+        answer = response.output_text.strip()
 
+        # 2️⃣ FALLBACK A GPT NORMAL
+        if "No tengo esa información" in answer:
+
+            fallback = client.responses.create(
+                model="gpt-4.1-mini",
+                input=message
+            )
+
+            return {
+                "response": fallback.output_text,
+                "provider": "openai"
+            }
+
+        return {
+            "response": answer,
+            "provider": "openai"
+        }
+
+    except Exception as e:
+        print("❌ ERROR IA:", e)
+        return {
+            "response": "Error con la IA"
+        }
     # =========================
     # 🧠 TEXTO → OPENAI (SIEMPRE)
     # =========================
