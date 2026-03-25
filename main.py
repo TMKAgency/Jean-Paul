@@ -129,7 +129,7 @@ app.add_middleware(
 
 from fastapi.staticfiles import StaticFiles
 
-app.mount("/static", StaticFiles(directory="."), name="static")
+app.mount("/tmp", StaticFiles(directory="/tmp"), name="tmp")
 
 # =========================
 # UTILS
@@ -685,6 +685,9 @@ def ai(data: dict):
     if wants_image:
         try:
             import base64
+            import os
+
+            print("🎨 GENERANDO IMAGEN...")
 
             img = client.images.generate(
                 model="gpt-image-1",
@@ -692,21 +695,30 @@ def ai(data: dict):
                 size="1024x1024"
             )
 
+            # 🔥 VALIDACIÓN (MUY IMPORTANTE)
+            if not img.data or not img.data[0].b64_json:
+                return {"response": "Error: OpenAI no devolvió imagen"}
+
             image_base64 = img.data[0].b64_json
 
-            filename = f"image_{random.randint(1000,9999)}.png"
+            # ✅ usar /tmp (Render compatible)
+            filename = f"/tmp/image_{random.randint(1000,9999)}.png"
 
             with open(filename, "wb") as f:
                 f.write(base64.b64decode(image_base64))
 
+            print("✅ Imagen guardada en:", filename)
+
             return {
                 "type": "image",
-                "image_url": f"/static/{filename}"
+                "image_url": filename
             }
 
         except Exception as e:
-            print("❌ Error generando imagen:", e)
-            return {"response": "Error generando imagen"}
+            print("❌ ERROR REAL:", str(e))
+            return {
+                "response": f"Error real: {str(e)}"
+            }
 
     # =========================
     # ASIGNACIÓN DE TAREAS
