@@ -289,7 +289,23 @@ color:black;
     
             console.log("AI response:", data)
     
-            addMessage(data.response || "Error en respuesta", "aiMsg")
+            // =========================
+            // 🖼️ SI ES IMAGEN
+            // =========================
+            if(data.type === "image" && data.image_base64){
+    
+                addImage(data.image_base64)
+    
+            }
+    
+            // =========================
+            // 💬 SI ES TEXTO
+            // =========================
+            else {
+    
+                addMessage(data.response || "Error en respuesta", "aiMsg")
+    
+            }
     
             loadTasks()
     
@@ -301,7 +317,7 @@ color:black;
     }
     
     // ======================
-    // UI CHAT
+    // UI CHAT TEXTO
     // ======================
     
     function addMessage(text, type){
@@ -311,6 +327,30 @@ color:black;
         const div = document.createElement("div")
         div.className = "message " + type
         div.innerText = text
+    
+        chat.appendChild(div)
+    
+        chat.scrollTop = chat.scrollHeight
+    }
+    
+    // ======================
+    // 🖼️ UI CHAT IMAGEN
+    // ======================
+    
+    function addImage(base64){
+    
+        const chat = document.getElementById("chat")
+    
+        const div = document.createElement("div")
+        div.className = "message aiMsg"
+    
+        const img = document.createElement("img")
+        img.src = "data:image/png;base64," + base64
+        img.style.maxWidth = "300px"
+        img.style.borderRadius = "10px"
+        img.style.marginTop = "5px"
+    
+        div.appendChild(img)
     
         chat.appendChild(div)
     
@@ -361,7 +401,7 @@ color:black;
     }
     
     // ======================
-    // AGREGAR TAREA (FIX REAL)
+    // AGREGAR TAREA
     // ======================
     
     async function addTask(){
