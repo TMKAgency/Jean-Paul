@@ -699,8 +699,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = OpenAI(api_key="TU_API_KEY_AQUI")
-
+client = OpenAI(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.post("/ai")
 def ai(data: dict):
@@ -770,7 +769,7 @@ def ai(data: dict):
             "type": "text",
             "response": "Error en respuesta"
         }
-        
+
     # =========================
     # 🧠 TEXTO → OPENAI
     # =========================
