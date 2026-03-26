@@ -683,6 +683,25 @@ servicioalcliente@valledepazcr.com
 
 
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from openai import OpenAI
+import random
+
+app = FastAPI()
+
+# ✅ CORS (IMPORTANTE para frontend)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+client = OpenAI(api_key="TU_API_KEY_AQUI")
+
+
 @app.post("/ai")
 def ai(data: dict):
 
@@ -702,29 +721,10 @@ def ai(data: dict):
     print("🎯 Quiere imagen:", wants_image)
 
     # =========================
-    # 🎨 GENERACIÓN DE IMAGEN
+    # 🎨 GENERAR IMAGEN
     # =========================
     if wants_image:
         try:
-            import base64
-
-            # 👉 Intento con Gemini (no genera imagen real, solo log)
-            try:
-                if GEMINI_AVAILABLE:
-                    print("🎨 Intentando con Gemini...")
-
-                    model = genai.GenerativeModel("gemini-1.5-flash")
-
-                    response = model.generate_content(
-                        f"Describe visually: {message}"
-                    )
-
-                    print("⚠️ Gemini solo texto → fallback a OpenAI")
-
-            except Exception as e:
-                print("Gemini falló:", e)
-
-            # 👉 OpenAI SIEMPRE genera la imagen real
             print("🎨 Generando imagen con OpenAI...")
 
             img = client.images.generate(
@@ -733,28 +733,44 @@ def ai(data: dict):
                 size="1024x1024"
             )
 
-            if not img.data or not img.data[0].b64_json:
-                return {"response": "Error generando imagen"}
-
             image_base64 = img.data[0].b64_json
-
-            filename = f"/tmp/image_{random.randint(1000,9999)}.png"
-
-            with open(filename, "wb") as f:
-                f.write(base64.b64decode(image_base64))
 
             return {
                 "type": "image",
-                "image_url": filename,
+                "image_base64": image_base64,
                 "provider": "openai"
             }
 
         except Exception as err:
             print("❌ ERROR IMAGEN:", err)
             return {
+                "type": "text",
                 "response": f"Error generando imagen: {str(err)}"
             }
 
+    # =========================
+    # 💬 RESPUESTA NORMAL (CHAT)
+    # =========================
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "user", "content": message}
+            ]
+        )
+
+        return {
+            "type": "text",
+            "response": response.choices[0].message.content
+        }
+
+    except Exception as err:
+        print("❌ ERROR CHAT:", err)
+        return {
+            "type": "text",
+            "response": "Error en respuesta"
+        }
+        
     # =========================
     # 🧠 TEXTO → OPENAI
     # =========================
