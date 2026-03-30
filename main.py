@@ -522,3 +522,140 @@ REGLAS:
         conn.commit()
 
         return {"response": "Error con la IA"}
+    
+# =========================
+# TASKS
+# =========================
+
+@app.post("/get-tasks")
+def get_tasks(data: dict):
+
+    email = data["email"]
+
+    cursor.execute(
+        "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=%s",
+        (email,)
+    )
+
+    rows = cursor.fetchall()
+
+    return {
+        "tasks": [
+            {"id": r[0], "task": r[1], "completed": r[2]}
+            for r in rows
+        ]
+    }
+
+@app.post("/complete-task")
+def complete_task(data: dict):
+
+    task_id = data["task_id"]
+    email = data["email"]
+
+    cursor.execute(
+        "SELECT assigned_to FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
+
+    row = cursor.fetchone()
+
+    if not row:
+        return {"message": "No existe"}
+
+    if row[0] != email:
+        return {"message": "No autorizado"}
+
+    cursor.execute(
+        "UPDATE Tasks SET completed=TRUE WHERE id=%s",
+        (task_id,)
+    )
+
+    conn.commit()
+
+    return {"message": "Completada"}
+
+@app.post("/delete-task")
+def delete_task(data: dict):
+
+    task_id = data["task_id"]
+    email = data["email"]
+
+    cursor.execute(
+        "SELECT assigned_to FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
+
+    row = cursor.fetchone()
+
+    if not row:
+        return {"message": "No existe"}
+
+    if email not in supervisors and email != row[0]:
+        return {"message": "No autorizado"}
+
+    cursor.execute(
+        "DELETE FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
+
+    conn.commit()
+
+    return {"message": "Eliminada"}
+
+
+@app.post("/add-task")
+def add_task(data: dict):
+
+    cursor.execute(
+        "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
+        (data["email"], data["email"], data["task"])
+    )
+
+    conn.commit()
+
+    return {"message": "Tarea creada"}
+
+
+# =========================
+# VISTAS (GET)
+# =========================
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+# =========================
+# RUTA PRINCIPAL (IMPORTANTE)
+# =========================
+
+@app.get("/")
+def root():
+    return FileResponse("index.html")
+
+
+# =========================
+# VISTAS (HTML)
+# =========================
+
+@app.get("/index.html")
+def home():
+    return FileResponse("index.html")
+
+@app.get("/login.html")
+def login_page():
+    return FileResponse("login.html")
+
+@app.get("/register.html")
+def register_page():
+    return FileResponse("register.html")
+
+@app.get("/forgot.html")
+def forgot_page():
+    return FileResponse("forgot.html")
+
+
+# =========================
+# FIX ERROR (ANTES ROTO)
+# =========================
+
+@app.post("/login-html")
+def login_html(data: dict):
+    return {"message": "ok"}
