@@ -686,3 +686,25 @@ def get_history(data: dict):
             for r in rows
         ]
     }
+
+@app.post("/delete-history")
+def delete_history(data: dict):
+
+    id = data["id"]
+    email = data["email"]
+
+    try:
+        cursor.execute(
+            "DELETE FROM Conversations WHERE id=%s AND email=%s",
+            (id, email)
+        )
+
+        conn.commit()
+
+        print("🗑 Eliminado:", id)
+
+        return {"message": "ok"}
+
+    except Exception as e:
+        print("❌ ERROR DELETE:", e)
+        return {"message": "error"}

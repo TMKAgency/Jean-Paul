@@ -257,10 +257,19 @@ color:black;
     color: #888;
 }
 
+.historyContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 🔥 centra vertical */
+    gap: 10px;
+}
+
 .deleteBtn {
-    float: right;
     color: red;
     cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
 }
 </style>
 </head>
@@ -354,10 +363,14 @@ try{
         div.className = "historyItem"
 
         div.innerHTML = `
+    <div class="historyContent">
+        <div>
             <div>${item.message}</div>
             <div class="historyDate">${item.date}</div>
-            <span class="deleteBtn" onclick="deleteHistory(${item.id})">🗑</span>
-        `
+        </div>
+        <span class="deleteBtn" onclick="deleteHistory(event, ${item.id})">🗑</span>
+    </div>
+`
 
         div.onclick = () => {
             loadConversation(item)
@@ -371,7 +384,9 @@ try{
 }
 }
 
-async function deleteHistory(id){
+async function deleteHistory(event, id){
+
+event.stopPropagation() // 🔥 CLAVE
 
 await fetch(API+"/delete-history",{
     method:"POST",
