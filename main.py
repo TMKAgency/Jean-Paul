@@ -659,3 +659,30 @@ def forgot_page():
 @app.post("/login-html")
 def login_html(data: dict):
     return {"message": "ok"}
+
+
+@app.post("/get-history")
+def get_history(data: dict):
+
+    email = data["email"]
+
+    cursor.execute("""
+        SELECT id, message, response, created_at
+        FROM Conversations
+        WHERE email=%s
+        ORDER BY created_at DESC
+    """, (email,))
+
+    rows = cursor.fetchall()
+
+    return {
+        "history": [
+            {
+                "id": r[0],
+                "message": r[1],
+                "response": r[2],
+                "date": r[3].strftime("%Y-%m-%d %H:%M")
+            }
+            for r in rows
+        ]
+    }
