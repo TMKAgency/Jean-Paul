@@ -771,6 +771,7 @@ Chat emergencias: 8818-9799
 
 Correo electrónico:
 servicioalcliente@valledepazcr.com
+
 """
 
 @app.post("/ai")
@@ -860,54 +861,114 @@ def ai(data: dict):
             conn.commit()
 
             return {"response": "Error generando imagen"}
+        
+
 
     # =========================
-    # 🧠 TEXTO IA
+    # 🧠 TEXTO IA (CON MEMORIA)
     # =========================
     try:
 
+        # =========================
+        # 🧠 HISTORIAL
+        # =========================
+        cursor.execute("""
+        SELECT message, response 
+        FROM Conversations 
+        WHERE email = %s
+        ORDER BY created_at DESC
+        LIMIT 6
+        """, (user_email,))
+
+        rows = cursor.fetchall()
+        rows.reverse()
+
+        chat_history = []
+
+        for msg, res in rows:
+            if res and isinstance(res, str) and res.startswith("/tmp/"):
+                continue
+
+            chat_history.append({
+                "role": "user",
+                "content": msg
+            })
+
+            chat_history.append({
+                "role": "assistant",
+                "content": res
+            })
+
+        # =========================
+        # 🧠 INPUT
+        # =========================
+        input_messages = [
+            {
+                "role": "system",
+                "content": f"""
+    Eres Jean Paul, IA de TMK Agency.
+
+    USA ESTA INFORMACIÓN:
+    {knowledge}
+
+    REGLAS:
+    - Mantén continuidad con la conversación
+    - Responde con contexto previo
+    - Sé directo
+
+    Si no sabes responde EXACTAMENTE:
+    "No tengo esa información en el sistema"
+    """
+            },
+            *chat_history,
+            {
+                "role": "user",
+                "content": message
+            }
+        ]
+
+        # =========================
+        # 🤖 LLAMADA IA
+        # =========================
         response = client.responses.create(
             model="gpt-4.1-mini",
-            input=[
-                {
-                    "role": "system",
-                    "content": f"""
-Eres Jean Paul, IA de TMK Agency.
-
-USA ESTA INFORMACIÓN:
-{knowledge}
-
-REGLAS:
-- Responde SOLO con esta información
-- Si no sabes responde EXACTAMENTE:
-"No tengo esa información en el sistema"
-"""
-                },
-                {
-                    "role": "user",
-                    "content": message
-                }
-            ]
+            input=input_messages
         )
 
-        answer = response.output_text.strip()
+        answer = response.output_text if hasattr(response, "output_text") else ""
+
+        if answer:
+            answer = answer.strip()
 
         # =========================
         # 🔁 FALLBACK
         # =========================
-        if "No tengo esa información" in answer:
+        if not answer or "No tengo esa información" in answer:
 
             fallback = client.responses.create(
                 model="gpt-4.1-mini",
-                input=message
+                input=[
+                    *chat_history,
+                    {
+                        "role": "user",
+                        "content": message
+                    }
+                ]
             )
 
-            final_answer = fallback.output_text
+            final_answer = fallback.output_text if hasattr(fallback, "output_text") else ""
+
+            if final_answer:
+                final_answer = final_answer.strip()
+            else:
+                final_answer = "No tengo respuesta en este momento"
 
         else:
             final_answer = answer
 
-        # 💾 HISTORIAL
+        # =========================
+        # 💾 GUARDAR
+        # =========================
         cursor.execute(
             "INSERT INTO Conversations (email, message, response) VALUES (%s,%s,%s)",
             (user_email, message, final_answer)
@@ -930,6 +991,8 @@ REGLAS:
 
         return {"response": "Error con la IA"}
     
+
+        
 # =========================
 # TASKS
 # =========================
