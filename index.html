@@ -195,6 +195,73 @@ background:#d4af37;
 color:black;
 }
 
+.menuBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.menuBtn span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #f1c40f; /* amarillo TMK */
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.historyPanel {
+    position: fixed;
+    top: 0;
+    right: -350px; /* 👈 oculto fuera de la pantalla */
+    width: 350px;
+    height: 100vh;
+    background: #0d0d0d;
+    border-left: 1px solid #222; /* 👈 cambia el lado del borde */
+    transition: 0.3s;
+    z-index: 2000;
+    overflow-y: auto;
+}
+
+.historyPanel.active {
+    right: 0; /* 👈 aparece desde la derecha */
+}
+
+.historyHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #222;
+}
+
+.historyItem {
+    padding: 15px;
+    border-bottom: 1px solid #1a1a1a;
+    cursor: pointer;
+}
+
+.historyItem:hover {
+    background: #1a1a1a;
+}
+
+.historyDate {
+    font-size: 12px;
+    color: #888;
+}
+
+.deleteBtn {
+    float: right;
+    color: red;
+    cursor: pointer;
+}
 </style>
 </head>
 
@@ -224,17 +291,111 @@ color:black;
 
 <div class="right">
 
-<div class="aiHeader">Jean Paul — IA</div>
+    <!-- BOTÓN MENU -->
+    <div class="menuBtn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
-<div class="chat" id="chat"></div>
+    <div class="aiHeader">Jean Paul — IA</div>
 
-<div class="inputArea">
-<input id="message" placeholder="Habla con Jean Paul...">
-<button onclick="send()">Enviar</button>
+    <div class="chat" id="chat"></div>
+
+    <div class="inputArea">
+        <input id="message" placeholder="Habla con Jean Paul...">
+        <button onclick="send()">Enviar</button>
+    </div>
+
 </div>
+<div id="historyPanel" class="historyPanel">
+
+    <div class="historyHeader">
+        <span>Historial</span>
+        <button onclick="closeMenu()">✕</button>
+    </div>
+
+    <div id="historyList"></div>
 
 </div>
+<script>
+    function toggleMenu(){
 
+const panel = document.getElementById("historyPanel")
+panel.classList.toggle("active")
+
+if(panel.classList.contains("active")){
+    loadHistory()
+}
+}
+
+function closeMenu(){
+document.getElementById("historyPanel").classList.remove("active")
+}
+
+async function loadHistory(){
+
+try{
+
+    const res = await fetch(API+"/get-history",{
+        method:"POST",
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email:userEmail})
+    })
+
+    const data = await res.json()
+
+    const container = document.getElementById("historyList")
+    container.innerHTML = ""
+
+    data.history.forEach(item => {
+
+        const div = document.createElement("div")
+        div.className = "historyItem"
+
+        div.innerHTML = `
+            <div>${item.message}</div>
+            <div class="historyDate">${item.date}</div>
+            <span class="deleteBtn" onclick="deleteHistory(${item.id})">🗑</span>
+        `
+
+        div.onclick = () => {
+            loadConversation(item)
+        }
+
+        container.appendChild(div)
+    })
+
+}catch(err){
+    console.error(err)
+}
+}
+
+async function deleteHistory(id){
+
+await fetch(API+"/delete-history",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+        id:id,
+        email:userEmail
+    })
+})
+
+loadHistory()
+}
+
+function loadConversation(item){
+
+const chat = document.getElementById("chat")
+chat.innerHTML = ""
+
+addMessage(item.message, "userMsg")
+addMessage(item.response, "aiMsg")
+
+closeMenu()
+}
+</script>
 <script>
 
     const API = "https://jean-paul.onrender.com"

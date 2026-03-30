@@ -44,12 +44,15 @@ try:
 
 except Exception as e:
     print("❌ Error DB:", e)
-
 # =========================
 # CREATE TABLES + USERS
 # =========================
 
 if cursor:
+
+    # =========================
+    # USERS
+    # =========================
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Users (
         id SERIAL PRIMARY KEY,
@@ -60,6 +63,9 @@ if cursor:
     );
     """)
 
+    # =========================
+    # TASKS
+    # =========================
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Tasks (
         id SERIAL PRIMARY KEY,
@@ -71,6 +77,40 @@ if cursor:
     );
     """)
 
+    # =========================
+    # 🧠 CONVERSATIONS (HISTORIAL IA)
+    # =========================
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Conversations (
+        id SERIAL PRIMARY KEY,
+        email TEXT NOT NULL,
+        message TEXT,
+        response TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """)
+
+    # =========================
+    # ⚡ ÍNDICES (MEJOR RENDIMIENTO)
+    # =========================
+    cursor.execute("""
+    CREATE INDEX IF NOT EXISTS idx_tasks_email
+    ON Tasks (assigned_to);
+    """)
+
+    cursor.execute("""
+    CREATE INDEX IF NOT EXISTS idx_conversations_email
+    ON Conversations (email);
+    """)
+
+    cursor.execute("""
+    CREATE INDEX IF NOT EXISTS idx_conversations_date
+    ON Conversations (created_at DESC);
+    """)
+
+    # =========================
+    # USERS DEFAULT
+    # =========================
     cursor.execute("""
     INSERT INTO Users (email) VALUES
     ('andrew@tmk-agency.com'),
@@ -324,364 +364,7 @@ def reset_password(data: dict):
 
 knowledge = """
 Eres Jean Paul, IA de TMK Agency.
-
-TMK Agency es una agencia de Telemarketing, que por ahora le da Marketing a Valle de paz, memorial pets, escapaditas y la cooperativa (COOPEPROFA)
-Fabricio es el programador 
-Marco Lamugue es el jefe
-Daniela es la jefa
-Clifton Andrew y Katherine son los asesores de ventas
-Michelle es la diseñadora y encargada del meta 
-
-💉 Servicios + precios
-🔹 Corporales
-Liposucción 360 → $2500
-Body Tite → $2000
-Lipo de piernas → $1000
-Lipo de brazos → $1000
-Abdominoplastia → $4000
-Mini liposucción → $1000
-Liposucción + transferencia glútea → $3500
-Liposucción + implantes mamarios → $6000
-Mega lipólisis → $3000
-Liposucción + transferencia + Body Tite → $5000
-Lipomarcación → $3000
-🔹 Rostro / estética facial
-Bichectomía → $550
-Bioestimuladores de colágeno (Radiesse) → $600
-Botox → $300
-Ácido hialurónico → $300
-Baby Botox → $250
-Rejuvenecimiento de rostro (Blefaroplastia + FaceTite) → $3000
-Hilos tensores PCL → $500
-Escleroterapia → $140
-🔹 Otros procedimientos
-Ginecomastia → $2000
-Mesoterapia enzimática → $1000
-Mesoterapia capilar → $120
-Otoplastia → $1000
-Electrocauterización (sesión) → $60
-Labioplastia → $900
-Láser CO2 fraccionado → $100 – $800
-📄 2. Valle de Paz (Servicios funerarios)
-
-⚠️ Importante
-
-Este catálogo es más institucional.
-👉 Solo hay precios en planes, no productos individuales.
-
-📦 Planes funerarios
-Plan Girasol → ₡3500 mensuales
-Plan Gardenia → ₡5600 mensuales
-Plan Tulipán → ₡8700 mensuales
-
-(Incluyen servicios funerarios + cremación + beneficios, según página 14–16)
-
-
-🪦 Urnas aluminio
-+2 kg → ₡50.000
--2 kg → ₡40.000
-
-Modelos:
-
-UAOM-01
-UAOM-03
-UAOM-04
-UACG-01
-UACG-02
-UACP-01
-UACP-02
-UACP-03
-🌱 Urnas ecológicas
-Hasta 30 kg → ₡40.000
-Hasta 50 kg → ₡50.000
-
-Opciones:
-
-Planta Jade
-Planta Sábila
-Planta Romero
-Planta Suculenta
-Planta Mano de Tigre
-Planta Camila
-Planta Mostera
-🏺 Urnas cerámica
-Precio → ₡80.000
-
-(Disponible para múltiples razas de perros y gatos)
-
-💎 Joyería memorial
-Aretes → ₡30.000
-Collares → ₡35.000
-Anillos → ₡30.000
-Grabado láser → desde ₡10.000
-
-
-Precios por paquete y peso
-🔹 0 – 20 kg
-Paquete 1 → ₡90.300
-Paquete 2 → ₡130.300
-Paquete 3 → ₡140.300
-Paquete 4 → ₡160.300
-🔹 21 – 40 kg
-Paquete 1 → ₡101.000
-Paquete 2 → ₡141.000
-Paquete 3 → ₡151.000
-Paquete 4 → ₡171.000
-🔹 41 – 50 kg
-Paquete 1 → ₡122.100
-Paquete 2 → ₡162.100
-Paquete 3 → ₡172.100
-Paquete 4 → ₡192.100
-🔹 51 – 70 kg
-Paquete 1 → ₡132.700
-Paquete 2 → ₡172.700
-Paquete 3 → ₡182.700
-Paquete 4 → ₡202.700
-
-🔹 +71 kg
-se matendria en estos precios
-Paquete 1 → ₡132.700
-Paquete 2 → ₡172.700
-Paquete 3 → ₡182.700
-Paquete 4 → ₡202.700
-pero mejor hablar con un asesor de ventas para mayor aclaracion 
-
-
-🏝️ CATÁLOGO DE DESTINOS – ESCAPADITAS
-📍 1. ISLA CHIRA
-🏡 Descripción
-Propiedad privada frente al mar
-Ambiente natural, tranquilo
-Ideal para familia
-Vista al Pacífico (amaneceres y atardeceres)
-📋 Reglas
-✅ Se permiten mascotas (con restricciones)
-❌ No fumar dentro
-🗑️ Basura se recoge lunes
-❌ No hay WiFi
-⚠️ Revisiones por daños
-⏰ Instrucciones
-Check-in → después de 3:00 pm
-Check-out → 12:00 md
-No dejar comida en nevera
-Mantener utensilios limpios
-Sacar basura
-Cerrar puerta al salir
-🛏️ Especificaciones
-❌ No internet
-❌ No aire acondicionado
-🛏️ 2 habitaciones
-Camas:
-2 matrimoniales
-1 individual
-🏠 Incluye:
-Sala
-Cocina equipada
-Piscina
-1 baño
-👥 Capacidad
-4 personas incluidas
-+2 personas extra (con costo adicional)
-📍 Extras
-Restaurantes cercanos:
-El Camarón
-Chira Fish
-Actividades:
-Pesca
-Tour Playa Muerto
-Transporte:
-Lancha desde Costa Pájaros
-Transporte adicional coordinado
-📍 2. TURRUBARES
-🏡 Descripción
-Quinta privada
-Piscina + rancho
-Ubicación: San José, Turrubares
-📋 Reglas
-✅ Mascotas permitidas
-❌ No fumar
-❌ Sin WiFi
-🗑️ Basura lunes
-⚠️ Revisiones por daños
-⏰ Instrucciones
-
-(Iguales al anterior)
-
-Check-in → 3:00 pm
-Check-out → 12:00 md
-Limpieza obligatoria básica
-🛏️ Especificaciones
-❌ No internet
-✅ Aire acondicionado en cuartos
-🛏️ 2 habitaciones
-Camas:
-3 camarotes
-1 cama matrimonial
-1 camarote adicional
-🏠 Incluye
-Sala
-Cocina equipada
-Rancho con:
-Cocina de leña
-Parrilla
-1 baño
-Piscina
-👥 Capacidad
-4 personas incluidas
-+2 personas extra (con costo adicional)
-📍 Extras
-❌ No restaurantes cercanos
-🚗 Transporte:
-Carro o bus
-📍 3. TAMARINDO – HACIENDA LA JOSEFINA
-🏡 Descripción
-Propiedad privada en Guanacaste
-Piscina + rancho
-Ubicación: Huacas, Tamarindo
-📋 Reglas
-✅ Mascotas permitidas
-❌ No fumar
-✅ WiFi disponible
-🗑️ Basura lunes
-⏰ Instrucciones
-Check-in → 3:00 pm
-Check-out → 12:00 md
-🛏️ Especificaciones
-✅ Internet
-✅ Aire acondicionado (cuartos y sala)
-🛏️ 3 habitaciones
-Camas:
-2 camas matrimoniales
-3 camas individuales
-🏠 Incluye
-Sala
-Cocina equipada
-Gimnasio
-2 ranchos
-3 baños
-Piscina
-👥 Capacidad
-Máximo 10 personas
-❌ No se permiten extras
-📍 Extras
-❌ No restaurantes cercanos
-🚗 Transporte:
-Hasta 3 autos pueden entrar
-📍 4. TAMARINDO – CONDOMINIO THE OAKS
-🏡 Descripción
-Condominio privado
-Entorno seguro
-Fácil acceso a playas
-Ubicación: La Josefina, Tamarindo
-📋 Reglas
-✅ Hasta 2 mascotas
-❌ No fumar
-❌ No WiFi
-🗑️ Basura lunes
-⏰ Instrucciones
-Check-in → 3:00 pm
-Check-out → 12:00 md
-🛏️ Especificaciones
-✅ Internet
-✅ Aire acondicionado
-🛏️ 2 habitaciones
-Camas:
-1 cama Queen
-1 cama matrimonial
-🏠 Incluye
-Sala
-Cocina equipada
-Terraza
-Jardín
-1 baño
-4 piscinas (condominio)
-👥 Capacidad
-4 personas incluidas
-+2 adicionales con costo
-📍 Extras
-Restaurantes cercanos
-Gasolinera
-Supermercados
-Transporte:
-Carro o bus
-
-
-Planes Memorial 24/7
-
-Protección total y tranquilidad para vos y tu familia. Elegí el plan que mejor se adapte a tus necesidades.
-
-💼 PLAN EMPRESARIAL
-
-₡5.000 mensuales
-
-Asistencia funeraria completa y cremación con todo lo esencial incluido.
-
-Cofre ejecutivo laqueado estándar
-Traslados a nivel nacional
-Servicio de patología
-Preparación y estética del cuerpo
-Urna
-Decoración de la iglesia
-Capilla de velación en sede según disponibilidad
-Capilla portátil
-25 tarjetas de agradecimiento
-Libro de condolencias
-Catafalco y carroza fúnebre
-4 arreglos florales
-👑 PLAN PREMIUM
-
-₡8.000 mensuales
-
-Incluye asistencia vial, funeraria, cremación y beneficios médicos adicionales.
-
-Asistencia vial según antigüedad permitida
-Estar al día con Dekra
-Asistencia funeraria
-Asistencia de cremación
-Asistencia médica
-Membresía para talleres sociales
-💎 PLAN ELITE
-
-₡13.500 mensuales
-
-El plan más completo con asistencia médica, funeraria, cremación y beneficios exclusivos.
-
-Asistencia médica
-Asistencia vehicular 20 años de antigüedad
-Dekra al día
-Asistencia funeraria y cremación
-Puede elegir entre:
-(A) Asistencia Camposanto o Árbol Ecológico
-(B) 1 escapadita al año a Isla Chira o Turrubares
-✅ Todos los planes incluyen:
-Asistencia médica (doctor virtual, electrocardiogramas gratuitos, asistencia deportiva, nutricional y emocional).
-1 mascota por inscripción, cremación de mascota hasta 20 kg y traslado GAM 30 km.
-
-
-
-Coopeprofa Numero = 7300 6140
-Escapaditas Numero, todo lo que tenga que ver con planes turisticos = 7300 9126
-
-Memorial, estos son los numeros para cremacion de mascotas, velacion de masctoas, joyeria de mascotas, todo lo que tenga que ver con mascotas, perdida de masctoas, entre otras = 📞 Recepción 24/7: 8959 7707
-📱 Servicio al cliente / hablar con un asesor: 6457 0000
-📞 Chat de emergencia: 4035 5871
-✉️ Correo: info@memorialpets.cr
-
-
-
-Numeros de Valle de paz, todo lo que tenga que ver con funeraria = 
-Central: 4035-5800
-Servicio al cliente: 8913-9999
-Emergencia: 4035-5801
-WhatsApp: 4035-5800
-Chat emergencias: 8818-9799
-
-Correo electrónico:
-servicioalcliente@valledepazcr.com
-
 """
-
-
 
 @app.post("/ai")
 def ai(data: dict):
@@ -690,16 +373,29 @@ def ai(data: dict):
     user_email = data["email"]
     lower_msg = message.lower()
 
+    print("🧠 Mensaje:", lower_msg)
+
     # =========================
-    # DETECTAR SI QUIERE IMAGEN
+    # 🎯 DETECTAR IMAGEN
     # =========================
     wants_image = any(word in lower_msg for word in [
         "imagen", "foto", "dibujo", "crea", "genera", "hazme",
         "image", "picture", "draw"
     ])
 
-    print("🧠 Mensaje:", lower_msg)
-    print("🎯 Quiere imagen:", wants_image)
+    # =========================
+    # 🧠 ASIGNAR TAREAS (ANTES)
+    # =========================
+    if user_email in supervisors:
+        for name, email in employees.items():
+            if name in lower_msg:
+                cursor.execute(
+                    "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
+                    (email, user_email, message)
+                )
+                conn.commit()
+
+                return {"response": f"Tarea asignada a {name}"}
 
     # =========================
     # 🎨 GENERACIÓN DE IMAGEN
@@ -708,24 +404,16 @@ def ai(data: dict):
         try:
             import base64
 
-            # 👉 Intento con Gemini (no genera imagen real, solo log)
+            # Gemini (solo intento)
             try:
                 if GEMINI_AVAILABLE:
-                    print("🎨 Intentando con Gemini...")
-
+                    print("🎨 Intentando Gemini...")
                     model = genai.GenerativeModel("gemini-1.5-flash")
-
-                    response = model.generate_content(
-                        f"Describe visually: {message}"
-                    )
-
-                    print("⚠️ Gemini solo texto → fallback a OpenAI")
-
+                    model.generate_content(f"Describe visually: {message}")
             except Exception as e:
                 print("Gemini falló:", e)
 
-            # 👉 OpenAI SIEMPRE genera la imagen real
-            print("🎨 Generando imagen con OpenAI...")
+            print("🎨 Generando imagen OpenAI...")
 
             img = client.images.generate(
                 model="gpt-image-1",
@@ -737,11 +425,17 @@ def ai(data: dict):
                 return {"response": "Error generando imagen"}
 
             image_base64 = img.data[0].b64_json
-
             filename = f"/tmp/image_{random.randint(1000,9999)}.png"
 
             with open(filename, "wb") as f:
                 f.write(base64.b64decode(image_base64))
+
+            # 💾 HISTORIAL
+            cursor.execute(
+                "INSERT INTO Conversations (email, message, response) VALUES (%s,%s,%s)",
+                (user_email, message, filename)
+            )
+            conn.commit()
 
             return {
                 "type": "image",
@@ -751,16 +445,20 @@ def ai(data: dict):
 
         except Exception as err:
             print("❌ ERROR IMAGEN:", err)
-            return {
-                "response": f"Error generando imagen: {str(err)}"
-            }
+
+            cursor.execute(
+                "INSERT INTO Conversations (email, message, response) VALUES (%s,%s,%s)",
+                (user_email, message, "Error generando imagen")
+            )
+            conn.commit()
+
+            return {"response": "Error generando imagen"}
 
     # =========================
-    # 🧠 TEXTO → OPENAI
+    # 🧠 TEXTO IA
     # =========================
     try:
 
-        # 1️⃣ RESPUESTA CON KNOWLEDGE
         response = client.responses.create(
             model="gpt-4.1-mini",
             input=[
@@ -774,7 +472,7 @@ USA ESTA INFORMACIÓN:
 
 REGLAS:
 - Responde SOLO con esta información
-- Si no encuentras la respuesta exacta, responde EXACTAMENTE:
+- Si no sabes responde EXACTAMENTE:
 "No tengo esa información en el sistema"
 """
                 },
@@ -787,7 +485,9 @@ REGLAS:
 
         answer = response.output_text.strip()
 
-        # 2️⃣ FALLBACK A GPT NORMAL
+        # =========================
+        # 🔁 FALLBACK
+        # =========================
         if "No tengo esa información" in answer:
 
             fallback = client.responses.create(
@@ -795,274 +495,30 @@ REGLAS:
                 input=message
             )
 
-            return {
-                "response": fallback.output_text,
-                "provider": "openai"
-            }
+            final_answer = fallback.output_text
+
+        else:
+            final_answer = answer
+
+        # 💾 HISTORIAL
+        cursor.execute(
+            "INSERT INTO Conversations (email, message, response) VALUES (%s,%s,%s)",
+            (user_email, message, final_answer)
+        )
+        conn.commit()
 
         return {
-            "response": answer,
+            "response": final_answer,
             "provider": "openai"
         }
 
     except Exception as e:
         print("❌ ERROR IA:", e)
-        return {
-            "response": "Error con la IA"
-        }
-    # =========================
-    # 🧠 TEXTO → OPENAI (SIEMPRE)
-    # =========================
 
-    try:
-
-        # 1️⃣ KNOWLEDGE
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=[
-                {
-                    "role": "system",
-                    "content": f"""
-Eres Jean Paul, IA de TMK Agency.
-
-USA ESTA INFORMACIÓN:
-{knowledge}
-
-REGLAS:
-- Responde SOLO con esta información
-- Si no encuentras la respuesta exacta, responde EXACTAMENTE:
-"No tengo esa información en el sistema"
-"""
-                },
-                {
-                    "role": "user",
-                    "content": message
-                }
-            ]
+        cursor.execute(
+            "INSERT INTO Conversations (email, message, response) VALUES (%s,%s,%s)",
+            (user_email, message, "Error con la IA")
         )
+        conn.commit()
 
-        answer = response.output_text.strip()
-
-        # 2️⃣ FALLBACK → GPT normal
-        if "No tengo esa información" in answer:
-
-            fallback = client.responses.create(
-                model="gpt-4.1-mini",
-                input=message
-            )
-
-            return {
-                "response": fallback.output_text,
-                "provider": "openai"
-            }
-
-        return {
-            "response": answer,
-            "provider": "openai"
-        }
-
-    except Exception as e:
-        print("❌ Error IA:", e)
         return {"response": "Error con la IA"}
-    # =========================
-    # ASIGNACIÓN DE TAREAS
-    # =========================
-    if user_email in supervisors:
-        for name, email in employees.items():
-            if name in lower_msg:
-                cursor.execute(
-                    "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
-                    (email, user_email, message)
-                )
-                conn.commit()
-                return {"response": f"Tarea asignada a {name}"}
-
-    try:
-
-        # =========================
-        # 1️⃣ KNOWLEDGE
-        # =========================
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=[
-                {
-                    "role": "system",
-                    "content": f"""
-Eres Jean Paul, IA de TMK Agency.
-
-USA ESTA INFORMACIÓN:
-{knowledge}
-
-REGLAS:
-- Responde SOLO con esta información
-- Si no encuentras la respuesta exacta, responde EXACTAMENTE:
-"No tengo esa información en el sistema"
-"""
-                },
-                {
-                    "role": "user",
-                    "content": message
-                }
-            ]
-        )
-
-        answer = response.output_text.strip()
-
-        # =========================
-        # 2️⃣ FALLBACK
-        # =========================
-        if "No tengo esa información" in answer:
-
-            fallback = client.responses.create(
-                model="gpt-4.1-mini",
-                input=message
-            )
-
-            return {
-                "response": fallback.output_text
-            }
-
-        return {
-            "response": answer
-        }
-
-    except Exception as e:
-        print("❌ Error IA:", e)
-        return {"response": "Error con la IA"}
-
-# =========================
-# TASKS
-# =========================
-
-@app.post("/get-tasks")
-def get_tasks(data: dict):
-
-    email = data["email"]
-
-    cursor.execute(
-        "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=%s",
-        (email,)
-    )
-
-    rows = cursor.fetchall()
-
-    return {
-        "tasks": [
-            {"id": r[0], "task": r[1], "completed": r[2]}
-            for r in rows
-        ]
-    }
-
-@app.post("/complete-task")
-def complete_task(data: dict):
-
-    task_id = data["task_id"]
-    email = data["email"]
-
-    cursor.execute(
-        "SELECT assigned_to FROM Tasks WHERE id=%s",
-        (task_id,)
-    )
-
-    row = cursor.fetchone()
-
-    if not row:
-        return {"message": "No existe"}
-
-    if row[0] != email:
-        return {"message": "No autorizado"}
-
-    cursor.execute(
-        "UPDATE Tasks SET completed=TRUE WHERE id=%s",
-        (task_id,)
-    )
-
-    conn.commit()
-
-    return {"message": "Completada"}
-
-@app.post("/delete-task")
-def delete_task(data: dict):
-
-    task_id = data["task_id"]
-    email = data["email"]
-
-    cursor.execute(
-        "SELECT assigned_to FROM Tasks WHERE id=%s",
-        (task_id,)
-    )
-
-    row = cursor.fetchone()
-
-    if not row:
-        return {"message": "No existe"}
-
-    if email not in supervisors and email != row[0]:
-        return {"message": "No autorizado"}
-
-    cursor.execute(
-        "DELETE FROM Tasks WHERE id=%s",
-        (task_id,)
-    )
-
-    conn.commit()
-
-    return {"message": "Eliminada"}
-
-
-@app.post("/add-task")
-def add_task(data: dict):
-
-    cursor.execute(
-        "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
-        (data["email"], data["email"], data["task"])
-    )
-
-    conn.commit()
-
-    return {"message": "Tarea creada"}
-
-
-# =========================
-# VISTAS (GET)
-# =========================
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
-
-# =========================
-# RUTA PRINCIPAL (IMPORTANTE)
-# =========================
-
-@app.get("/")
-def root():
-    return FileResponse("index.html")
-
-
-# =========================
-# VISTAS (HTML)
-# =========================
-
-@app.get("/index.html")
-def home():
-    return FileResponse("index.html")
-
-@app.get("/login.html")
-def login_page():
-    return FileResponse("login.html")
-
-@app.get("/register.html")
-def register_page():
-    return FileResponse("register.html")
-
-@app.get("/forgot.html")
-def forgot_page():
-    return FileResponse("forgot.html")
-
-
-# =========================
-# FIX ERROR (ANTES ROTO)
-# =========================
-
-@app.post("/login-html")
-def login_html(data: dict):
-    return {"message": "ok"}
