@@ -762,6 +762,68 @@ Memorial, estos son los numeros para cremacion de mascotas, velacion de masctoas
 
 
 
+
+
+Estos son los links de pago de cualquier producto de MEMORIAL PETS, entonces si alguien te pide el link de pago o algun link para pagar o una forma de pago, decirle que tenemos sinpe, efectivo, tarjeta y los links de pago que son estos 
+UAOM-01 = https://buy.onvopay.com/live_JXhyRcLNmKGqBI3Nmo_GsrVm1K4
+
+UAOM-03 = https://buy.onvopay.com/live_t8VulbLYiYs9zFiXwBF7qQCt_Cc
+
+UAOM-04 = https://buy.onvopay.com/live_iQvDHU6H1WTulCeRWq_StO8Q6vA
+
+UACG-01 = https://buy.onvopay.com/live_9RnyeOxNgrUjB-l8UfWkJNXJ7wc
+
+UACG-02 = https://buy.onvopay.com/live_ZAY1EGBqIPs9fPXv8YeyUjNjcbw
+
+UACP-01 = https://buy.onvopay.com/live_SU0oJDFqFXVlFqSUHnNRsFowT1Y
+
+UACP-02 = https://buy.onvopay.com/live_9iRqebCVEjLtlgudpU9C_q25WiU
+
+UACP-03 = https://buy.onvopay.com/live_XOWPIqMZDSD5crt8ZG3SQ7LT8ws
+
+Planta Jade = https://buy.onvopay.com/live_ZAY1EGBqIPs9fPXv8YeyUjNjcbw
+
+Planta Sábila = https://buy.onvopay.com/live_zLJLC2WjcmdowZyzk7h1rCiBBDg
+
+Planta Romero = https://buy.onvopay.com/live_lhn73SP8IFzDDMOzkR-SlCQU5Mc
+
+Planta Suculenta = https://buy.onvopay.com/live_neK9zsZxfv5X0WbxNrp0ygwSie8
+
+Planta Mano de Tigre = https://buy.onvopay.com/live_Qm3hkWy1K_GVYKJTO7X7G4r680I
+
+Planta Camila = https://buy.onvopay.com/live_OWgKxPs4uE3PnQZGLlthk3m-R-w
+
+Planta Monstera = https://buy.onvopay.com/live_x1iniiFNxHZwtKb5IrZUD2A3WRI
+
+Aretes = https://buy.onvopay.com/live_aIl8DvYw8EufoSzhLWLEtVqvZjk
+
+Anillos = https://buy.onvopay.com/live_aIl8DvYw8EufoSzhLWLEtVqvZjk
+
+Pulseras = https://buy.onvopay.com/live_bssDdYbk2dwodntW-RBm2rf177g
+
+Accesorios = https://buy.onvopay.com/live_wlt97U3adJBY9JrWN_hNQOskRUo
+
+Collares = https://buy.onvopay.com/live_FFygDuaMe28P8j0DcZWmWKUAlRw
+
+Llaveros = https://buy.onvopay.com/live_6FpGKSrV0s37deDUyV17xt2kz7s
+
+Relicarios = https://buy.onvopay.com/live_kT4RcglgW5iO5203nHK7cLmnDbw
+
+Grabado láser = https://buy.onvopay.com/live_jXbNWAmhzJ1vmS1iGJ_RLNxXOJg
+
+Lienzo 30 × 30 cm = https://buy.onvopay.com/live_11odI2W7NQP9foU-FyVB4DLEQiY
+
+Huella de yeso = https://buy.onvopay.com/live_n51G9bS_t8RKVyNzc0QU4NST_MQ
+
+Cuadros conmemorativos = https://buy.onvopay.com/live_3fn0kO-iMUsfm1JNtqdTLjPOwo4
+
+Oso elaborado con cobija = https://buy.onvopay.com/live_IVmc86l0S1G8W7_yR1eqo9U5CRs
+
+
+
+
+
+
 Numeros de Valle de paz, todo lo que tenga que ver con funeraria = 
 Central: 4035-5800
 Servicio al cliente: 8913-9999
