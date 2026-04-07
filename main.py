@@ -370,6 +370,7 @@ Marco Lamugue es el jefe
 Daniela es la jefa
 Clifton Andrew y Katherine son los asesores de ventas
 Michelle es la diseñadora y encargada del meta 
+Breyner Steve Lopez es el productor audiovisual
 
 Usted, Jean Paul recibe tambien ordenes de Marco y Daniela
 
