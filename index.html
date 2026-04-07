@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>TMK Agency</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -15,12 +17,13 @@ box-sizing:border-box;
 font-family:Poppins;
 }
 
-body{
-height:100vh;
-display:flex;
-background:linear-gradient(135deg,#050505,#0e0e0e);
-color:white;
-overflow:hidden;
+body {
+  height: 100vh;
+  height: 100dvh; /* fix móvil */
+  display: flex;
+  background: linear-gradient(135deg, #050505, #0e0e0e);
+  color: white;
+  overflow: hidden;
 }
 
 /* LEFT PANEL */
@@ -286,12 +289,287 @@ color:black;
     border-color: #ffffff;
     background: rgba(0,0,0,0.05);
 }
+
+/* Agrega esto al final de todo tu CSS */
+
+/* --- TABLET --- */
+@media (max-width: 1023px) {
+  .left  { width: 42%; padding: 20px; }
+  .right { width: 58%; }
+  .message { max-width: 85%; }
+}
+
+/* --- MÓVIL --- */
+@media (max-width: 767px) {
+
+  body {
+    flex-direction: column;
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  /* Panel izquierdo → drawer oculto */
+  .left {
+    position: fixed !important;
+    top: 0;
+    left: -100% !important;
+    width: 82% !important;
+    max-width: 300px;
+    height: 100%;
+    z-index: 3000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding: 20px 16px;
+    border-right: 1px solid #2a2a2a;
+  }
+
+  .left.open {
+    left: 0 !important;
+  }
+
+  /* Panel derecho → ocupa toda la pantalla */
+  .right {
+    width: 100% !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  /* Overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 2500;
+  }
+  .overlay.active { display: block; }
+
+  /* Input — evita zoom en iOS */
+  .inputArea input,
+  .add input {
+    font-size: 16px !important;
+  }
+
+  .message { max-width: 90%; }
+  .chat { padding: 14px; }
+  .inputArea { padding: 10px 12px; }
+}
+
+.taskBtn {
+  display: none; /* oculto en desktop y tablet */
+}
+
+@media (max-width: 767px) {
+  .taskBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .aiHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* =====================
+   OVERLAY
+===================== */
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 2500;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* =====================
+   RESPONSIVE — TABLET
+===================== */
+
+@media (max-width: 1023px) {
+  .left {
+    width: 42%;
+    padding: 20px;
+  }
+
+  .right {
+    width: 58%;
+  }
+
+  .message {
+    max-width: 85%;
+  }
+}
+
+/* =====================
+   RESPONSIVE — MÓVIL
+===================== */
+
+@media (max-width: 767px) {
+
+  body {
+    flex-direction: column;
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  .left {
+    position: fixed !important;
+    top: 0;
+    left: -100% !important;
+    width: 82% !important;
+    max-width: 300px;
+    height: 100%;
+    z-index: 3000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding: 20px 16px;
+    border-right: 1px solid #2a2a2a;
+  }
+
+  .left.open {
+    left: 0 !important;
+  }
+
+  .closePanelBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-end;
+    background: transparent;
+    border: 1px solid #555;
+    color: #aaa;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+
+  .closePanelBtn:hover {
+    border-color: #d4af37;
+    color: #d4af37;
+  }
+
+  .right {
+    width: 100% !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  .aiHeader {
+    padding: 14px 16px;
+  }
+
+  .taskBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+
+  .chat {
+    padding: 14px;
+  }
+
+  .inputArea {
+    padding: 10px 12px;
+  }
+
+  .inputArea input,
+  .add input {
+    font-size: 16px !important;
+  }
+}
+
+/* =====================
+   PANTALLAS MUY PEQUEÑAS
+===================== */
+
+@media (max-width: 360px) {
+  .logo {
+    font-size: 17px;
+  }
+
+  .inputArea button {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+}
+
+/* =====================
+   BOTÓN CERRAR PANEL (DEFAULT)
+===================== */
+
+.closePanelBtn {
+  display: none;
+}
+
+@media (max-width: 767px) {
+
+.closePanelBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid #555;
+  color: #aaa;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+}
+
+@media (max-width: 767px) {
+  .menuBtn {
+    top: 7% !important;
+    transform: translateY(-50%);
+  }
+}
 </style>
 </head>
 
-<body>
+<body>    
+
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
 
 <div class="left">
+
+<button class="closePanelBtn" onclick="closePanel()">✕ Cerrar</button>
+
 
 <div class="logo">TMK Agency</div>
 
@@ -322,6 +600,8 @@ color:black;
         <span></span>
     </div>
 
+    <button class="taskBtn" onclick="openPanel()">☑ Tareas</button>
+    
     <div class="aiHeader">Jean Paul — IA</div>
 
     <div class="chat" id="chat"></div>
@@ -674,6 +954,18 @@ closeMenu()
         }
     })
     
+    </script>
+
+    <script>
+function openPanel() {
+  document.querySelector('.left').classList.add('open');
+  document.getElementById('overlay').classList.add('active');
+}
+
+function closePanel() {
+  document.querySelector('.left').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+}
     </script>
 </body>
 </html>
