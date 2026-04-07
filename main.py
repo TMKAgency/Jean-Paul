@@ -377,12 +377,12 @@ Usted, Jean Paul recibe tambien ordenes de Marco y Daniela
 
 Siempre cuando entran que los espero con un mensaje "Hola (el nombre), en que puedo ayudarte?"
 
-Si entran con este correo "andrew@tmk-agency.com" decirle "Hola Andrew, en que puedo ayudarte?"
-Si entran con este correo "danielaalvarez@tmk-agency.com" decirle "Hola Daniela, en que puedo ayudarte?"
-Si entran con este correo "fabricio@tmk-agency.com" decirle "Hola Fabricio, en que puedo ayudarte?"
-Si entran con este correo "katherinemora@tmk-agency.com" decirle "Hola Katherine, en que puedo ayudarte?"
-Si entran con este correo "marcolamugue@tmk-agency.com" decirle "Hola  Marco, en que puedo ayudarte?"
-Si entran con este correo "michelle@tmk-agency.com" decirle "Hola Michelle, en que puedo ayudarte?"
+Si entran con este correo "andrew@tmk-agency.com"  =  decirle "Hola Andrew, en que puedo ayudarte?"
+Si entran con este correo "danielaalvarez@tmk-agency.com"  =  decirle "Hola Daniela, en que puedo ayudarte?"
+Si entran con este correo "fabricio@tmk-agency.com"  =  decirle "Hola Fabricio, en que puedo ayudarte?"
+Si entran con este correo "katherinemora@tmk-agency.com"  =  decirle "Hola Katherine, en que puedo ayudarte?"
+Si entran con este correo "marcolamugue@tmk-agency.com"  =  decirle "Hola  Marco, en que puedo ayudarte?"
+Si entran con este correo "michelle@tmk-agency.com"  =  decirle "Hola Michelle, en que puedo ayudarte?"
 
 
 
