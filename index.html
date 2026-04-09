@@ -299,62 +299,65 @@ color:black;
   .message { max-width: 85%; }
 }
 
-/* --- MÓVIL --- */
+/* =====================
+   FIX MÓVIL PRINCIPAL
+===================== */
+
 @media (max-width: 767px) {
 
-  body {
-    flex-direction: column;
-    overflow: hidden;
-    height: 100dvh;
-  }
+body {
+  flex-direction: column;
+  overflow: hidden;
+  height: 100dvh;
+  width: 100vw; /* ← evita desbordamiento horizontal */
+}
 
-  /* Panel izquierdo → drawer oculto */
-  .left {
-    position: fixed !important;
-    top: 0;
-    left: -100% !important;
-    width: 82% !important;
-    max-width: 300px;
-    height: 100%;
-    z-index: 3000;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-    padding: 20px 16px;
-    border-right: 1px solid #2a2a2a;
-  }
+.right {
+  width: 100vw !important; /* ← fuerza ancho exacto */
+  max-width: 100vw;        /* ← evita que se salga */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
 
-  .left.open {
-    left: 0 !important;
-  }
+/* Header con alineación correcta */
+.aiHeader {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
 
-  /* Panel derecho → ocupa toda la pantalla */
-  .right {
-    width: 100% !important;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-  }
+/* Input area no se corta */
+.inputArea {
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box; /* ← incluye padding en el ancho */
+  flex-shrink: 0;
+}
 
-  /* Overlay */
-  .overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.65);
-    z-index: 2500;
-  }
-  .overlay.active { display: block; }
+.inputArea input {
+  font-size: 16px !important;
+  min-width: 0; /* ← permite que el flex-item se encoja */
+}
 
-  /* Input — evita zoom en iOS */
-  .inputArea input,
-  .add input {
-    font-size: 16px !important;
-  }
+.inputArea button {
+  flex-shrink: 0;     /* ← no se encoge ni se corta */
+  white-space: nowrap;
+  padding: 14px 16px;
+}
 
-  .message { max-width: 90%; }
-  .chat { padding: 14px; }
-  .inputArea { padding: 10px 12px; }
+/* menuBtn alineado al header */
+.menuBtn {
+  position: static !important; /* ← quita el absolute */
+  transform: none !important;
+  width: 26px;
+  height: 20px;
+  flex-shrink: 0;
+}
 }
 
 .taskBtn {
