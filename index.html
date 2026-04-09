@@ -352,11 +352,12 @@ body {
 
 /* menuBtn alineado al header */
 .menuBtn {
-  position: static !important; /* ← quita el absolute */
+  position: static !important;
   transform: none !important;
   width: 26px;
   height: 20px;
   flex-shrink: 0;
+  margin-left: auto; /* 🔥 ESTA ES LA CLAVE */
 }
 }
 
@@ -493,6 +494,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
+    margin-right: 57px;
   }
 
   .message {
@@ -596,23 +598,26 @@ body {
 
 <div class="right">
 
-    <!-- BOTÓN MENU -->
-    <div class="menuBtn" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+  <div class="aiHeader">
 
-    <button class="taskBtn" onclick="openPanel()">☑ Tareas</button>
-    
-    <div class="aiHeader">Jean Paul — IA</div>
+      <button class="taskBtn" onclick="openPanel()">☑ Tareas</button>
 
-    <div class="chat" id="chat"></div>
+      <div class="title">Jean Paul — IA</div>
 
-    <div class="inputArea">
-        <input id="message" placeholder="Habla con Jean Paul...">
-        <button onclick="send()">Enviar</button>
-    </div>
+      <div class="menuBtn" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+
+  </div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="inputArea">
+      <input id="message" placeholder="Habla con Jean Paul...">
+      <button onclick="send()">Enviar</button>
+  </div>
 
 </div>
 <div id="historyPanel" class="historyPanel">
