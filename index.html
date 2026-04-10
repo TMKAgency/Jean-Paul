@@ -724,20 +724,44 @@ closeMenu()
     // INIT SEGURO
     // ======================
     
-    window.onload = () => {
-    
-        userEmail = localStorage.getItem("email")
-    
-        if(!userEmail){
-            alert("Debes iniciar sesión")
-            window.location = "login.html"
-            return
-        }
-    
-        document.getElementById("userEmail").innerText = "Usuario: " + userEmail
-    
-        loadTasks()
-    }
+    window.onload = async () => {
+
+userEmail = localStorage.getItem("email")
+
+if(!userEmail){
+    alert("Debes iniciar sesión")
+    window.location = "login.html"
+    return
+}
+
+document.getElementById("userEmail").innerText = "Usuario: " + userEmail
+
+loadTasks()
+
+// ======================
+// 🔥 WELCOME AUTOMÁTICO (SIN REPETIR)
+// ======================
+
+try{
+
+if(!sessionStorage.getItem("welcomeShown")){
+
+    const res = await fetch(API + "/welcome", {
+        method:"POST",
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({ email: userEmail })
+    })
+
+    const data = await res.json()
+
+    addMessage(data.message, "aiMsg")
+
+    sessionStorage.setItem("welcomeShown", "true")
+}
+
+}catch(err){
+console.error("Error welcome:", err)
+}
     
     // ======================
     // CHAT IA
@@ -779,6 +803,7 @@ closeMenu()
     
     }
     
+  }
     // ======================
     // UI CHAT
     // ======================
