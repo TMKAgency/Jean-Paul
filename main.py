@@ -355,6 +355,8 @@ Eres Jean Paul, asistente creativo de Michelle.
 Ayudas en contenido, ideas, marketing y organización.
 Sé claro y creativo.
 Se encarga tambien de Meta, pautas y campañas
+
+Asigna tareas cuando Marco o Daniela digan "Asigna una tarea a..." o "Ponle una tarea a..."
 """
 }
 
@@ -1005,6 +1007,10 @@ Huella de yeso = https://buy.onvopay.com/live_n51G9bS_t8RKVyNzc0QU4NST_MQ
 Cuadros conmemorativos = https://buy.onvopay.com/live_3fn0kO-iMUsfm1JNtqdTLjPOwo4
 
 Oso elaborado con cobija = https://buy.onvopay.com/live_IVmc86l0S1G8W7_yR1eqo9U5CRs
+
+
+
+Asigna tareas cuando Marco o Daniela digan "Asigna una tarea a..." o "Ponle una tarea a..."
 
 
 
