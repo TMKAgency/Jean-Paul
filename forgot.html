@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Recuperar contraseña</title>
 
 <style>
-
 body{
 height:100vh;
 display:flex;
@@ -19,8 +17,13 @@ color:white;
 .box{
 background:#111;
 padding:40px;
-border-radius:12px;
+border-radius:14px;
 width:350px;
+box-shadow:0 0 20px rgba(255,255,255,0.05);
+}
+
+h2{
+margin-bottom:20px;
 }
 
 input{
@@ -29,7 +32,9 @@ padding:12px;
 margin-bottom:15px;
 background:#1c1c1c;
 border:none;
+border-radius:8px;
 color:white;
+outline:none;
 }
 
 button{
@@ -37,54 +42,101 @@ width:100%;
 padding:12px;
 background:white;
 border:none;
+border-radius:8px;
 color:black;
 cursor:pointer;
+font-weight:bold;
 }
 
+button:hover{
+opacity:0.9;
+}
+
+/* Código centrado */
+.code-input{
+text-align:center;
+font-size:20px;
+letter-spacing:5px;
+}
+
+/* Password wrapper */
+.password-box{
+position:relative;
+}
+
+.eye{
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+color:#aaa;
+}
 </style>
 
 </head>
 
 <body>
 
-    <div class="box">
+<div class="box">
 
-        <h2>Recuperar contraseña</h2>
-        
-        <!-- PASO 1 -->
-        <div id="step1">
-          <input type="email" id="email" placeholder="Correo">
-          <button onclick="sendCode()">Enviar código</button>
-        </div>
-        
-        <!-- PASO 2 -->
+<h2>Recuperar contraseña</h2>
+
+<!-- PASO 1 -->
+<div id="step1">
+  <input type="email" id="email" placeholder="Correo">
+  <button onclick="sendCode()">Enviar código</button>
+</div>
+
+<!-- PASO 2 -->
 <div id="step2" style="display:none;">
-    <input 
-      type="text" 
-      id="code" 
-      placeholder="Código"
-      maxlength="6"
-      oninput="autoVerifyCode()"
-    >
-    <p id="status" style="font-size:12px; margin-top:5px;"></p>
+  <input 
+    type="text" 
+    id="code" 
+    class="code-input"
+    placeholder="------"
+    maxlength="6"
+    oninput="autoVerifyCode()"
+  >
+  <p id="status" style="font-size:12px;"></p>
+</div>
+
+<!-- PASO 3 -->
+<div id="step3" style="display:none;">
+
+  <div class="password-box">
+    <input type="password" id="newPassword" placeholder="Nueva contraseña">
+    <span class="eye" onclick="togglePassword('newPassword')">👁</span>
   </div>
-        
-        <!-- PASO 3 -->
-        <div id="step3" style="display:none;">
-          <input type="password" id="newPassword" placeholder="Nueva contraseña">
-          <button onclick="resetPassword()">Cambiar contraseña</button>
-        </div>
-        
-        </div>
+
+  <div class="password-box">
+    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña">
+    <span class="eye" onclick="togglePassword('confirmPassword')">👁</span>
+  </div>
+
+  <button onclick="resetPassword()">Cambiar contraseña</button>
+
+</div>
+
+</div>
 
 <script>
 
 const API = "https://jean-paul.onrender.com"
-
 let userEmail = ""
+let verifying = false
 
+// =========================
+// SEND CODE
+// =========================
 async function sendCode(){
-  const email = document.getElementById("email").value
+  const email = document.getElementById("email").value.trim()
+
+  if(!email){
+    alert("Ingresa un correo")
+    return
+  }
+
   userEmail = email
 
   const res = await fetch(`${API}/send-code`, {
@@ -96,7 +148,6 @@ async function sendCode(){
   const data = await res.json()
 
   if(data.message === "Código enviado correctamente"){
-    alert("Código enviado al correo")
     document.getElementById("step1").style.display = "none"
     document.getElementById("step2").style.display = "block"
   }else{
@@ -104,63 +155,13 @@ async function sendCode(){
   }
 }
 
-
-async function verifyCode(){
-  const code = document.getElementById("code").value
-
-  const res = await fetch(`${API}/verify-code`, {
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      email: userEmail,
-      code: code
-    })
-  })
-
-  const data = await res.json()
-
-  if(data.valid){
-    alert("Código correcto")
-    document.getElementById("step2").style.display = "none"
-    document.getElementById("step3").style.display = "block"
-  }else{
-    alert("Código incorrecto")
-  }
-}
-
-
-
-async function resetPassword(){
-  const password = document.getElementById("newPassword").value
-  const code = document.getElementById("code").value
-
-  const res = await fetch(`${API}/reset-password`, {
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      email: userEmail,
-      code: code,
-      password: password
-    })
-  })
-
-  const data = await res.json()
-
-  alert(data.message)
-
-  if(data.message === "Contraseña actualizada"){
-    window.location.href = "/login.html"
-  }
-}
-
-
-let verifying = false
-
+// =========================
+// AUTO VERIFY CODE
+// =========================
 async function autoVerifyCode(){
   const code = document.getElementById("code").value
   const status = document.getElementById("status")
 
-  // Evita llamadas innecesarias
   if(code.length !== 6 || verifying) return
 
   verifying = true
@@ -181,7 +182,7 @@ async function autoVerifyCode(){
 
     if(data.valid){
       status.innerText = "Código correcto ✅"
-      status.style.color = "green"
+      status.style.color = "lightgreen"
 
       setTimeout(() => {
         document.getElementById("step2").style.display = "none"
@@ -193,13 +194,59 @@ async function autoVerifyCode(){
       status.style.color = "red"
     }
 
-  } catch (error){
+  } catch {
     status.innerText = "Error de conexión"
     status.style.color = "red"
   }
 
   verifying = false
 }
+
+// =========================
+// RESET PASSWORD
+// =========================
+async function resetPassword(){
+  const password = document.getElementById("newPassword").value
+  const confirm = document.getElementById("confirmPassword").value
+  const code = document.getElementById("code").value
+
+  if(password.length < 6){
+    alert("La contraseña debe tener mínimo 6 caracteres")
+    return
+  }
+
+  if(password !== confirm){
+    alert("Las contraseñas no coinciden")
+    return
+  }
+
+  const res = await fetch(`${API}/reset-password`, {
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      email: userEmail,
+      code: code,
+      password: password
+    })
+  })
+
+  const data = await res.json()
+
+  alert(data.message)
+
+  if(data.message === "Contraseña actualizada"){
+    window.location.href = "/login.html"
+  }
+}
+
+// =========================
+// TOGGLE PASSWORD 👁
+// =========================
+function togglePassword(id){
+  const input = document.getElementById(id)
+  input.type = input.type === "password" ? "text" : "password"
+}
+
 </script>
 
 </body>

@@ -1081,7 +1081,7 @@ def reset_password(data: dict):
 
     if row[0] == code:
         cursor.execute(
-            "UPDATE Users SET password_hash=%s, reset_code=NULL WHERE email=%s",
+            "UPDATE Users SET password_hash=%s, reset_code=NULL, code_expiration=NULL WHERE email=%s",
             (password, email)
         )
         conn.commit()
