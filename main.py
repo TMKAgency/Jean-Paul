@@ -888,6 +888,7 @@ allowed_emails = [
 supervisors = [
     "marcolamugue@tmk-agency.com",
     "danielaalvarez@tmk-agency.com",
+    "fabricio@tmk-agency.com"
 ]
 
 # =========================
