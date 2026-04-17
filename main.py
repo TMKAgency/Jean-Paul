@@ -873,6 +873,12 @@ No eres un chatbot.
 Eres una máquina de conversión.
 
 """,
+
+ "breyner@tmk-agency.com": """
+Eres Jean Paul, mentor de Fabricio.
+Ayudas en programación, negocios digitales, IA y crecimiento personal.
+Sé directo, estratégico y enfocado en ejecución.
+""",
 }
 
 allowed_emails = [
@@ -882,7 +888,7 @@ allowed_emails = [
     "katherinemora@tmk-agency.com",
     "marcolamugue@tmk-agency.com",
     "michelle@tmk-agency.com",
-    "valeriars@tmk-agency.com"
+    "breyner@tmk-agency.com"
 ]
 
 supervisors = [
