@@ -11,17 +11,11 @@ from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, RedirectResponse
 from datetime import datetime, timedelta
 import google.generativeai as genai
-from fastapi.responses import StreamingResponse
-import pandas as pd
-import io
-from datetime import datetime
 
 # =========================
 # DB CONNECTION
 # =========================
 
-
-tasks = []
 
 try:
     import google.generativeai as genai
@@ -1924,22 +1918,25 @@ Si no sabes responde EXACTAMENTE:
         return {"response": "Error con la IA"}
     
 
+
 @app.post("/get-tasks")
 def get_tasks(data: dict):
 
     email = data["email"]
 
-    user_tasks = [
-        {
-            "id": t["id"],
-            "task": t["task_text"],
-            "completed": t["completed"]
-        }
-        for t in tasks
-        if t["assigned_to"] == email
-    ]
+    cursor.execute(
+        "SELECT id, task_text, completed FROM Tasks WHERE assigned_to=%s",
+        (email,)
+    )
 
-    return {"tasks": user_tasks}
+    rows = cursor.fetchall()
+
+    return {
+        "tasks": [
+            {"id": r[0], "task": r[1], "completed": r[2]}
+            for r in rows
+        ]
+    }
 
 @app.post("/complete-task")
 def complete_task(data: dict):
@@ -1947,17 +1944,27 @@ def complete_task(data: dict):
     task_id = data["task_id"]
     email = data["email"]
 
-    for t in tasks:
-        if t["id"] == task_id:
+    cursor.execute(
+        "SELECT assigned_to FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
 
-            # validar que la tarea le pertenece
-            if t["assigned_to"] != email:
-                return {"message": "No autorizado"}
+    row = cursor.fetchone()
 
-            t["completed"] = True
-            return {"message": "Completada"}
+    if not row:
+        return {"message": "No existe"}
 
-    return {"message": "No existe"}
+    if row[0] != email:
+        return {"message": "No autorizado"}
+
+    cursor.execute(
+        "UPDATE Tasks SET completed=TRUE WHERE id=%s",
+        (task_id,)
+    )
+
+    conn.commit()
+
+    return {"message": "Completada"}
 
 @app.post("/delete-task")
 def delete_task(data: dict):
@@ -1965,47 +1972,41 @@ def delete_task(data: dict):
     task_id = data["task_id"]
     email = data["email"]
 
-    for t in tasks:
-        if t["id"] == task_id:
+    cursor.execute(
+        "SELECT assigned_to FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
 
-            # validar permisos
-            if email not in supervisors and email != t["assigned_to"]:
-                return {"message": "No autorizado"}
+    row = cursor.fetchone()
 
-            tasks.remove(t)
-            return {"message": "Eliminada"}
+    if not row:
+        return {"message": "No existe"}
 
-    return {"message": "No existe"}
+    if email not in supervisors and email != row[0]:
+        return {"message": "No autorizado"}
 
+    cursor.execute(
+        "DELETE FROM Tasks WHERE id=%s",
+        (task_id,)
+    )
 
-# contador global para evitar IDs duplicados
-task_counter = 1
+    conn.commit()
+
+    return {"message": "Eliminada"}
+
 
 @app.post("/add-task")
 def add_task(data: dict):
 
-    global task_counter
+    cursor.execute(
+        "INSERT INTO Tasks (assigned_to, assigned_by, task_text) VALUES (%s,%s,%s)",
+        (data["email"], data["email"], data["task"])
+    )
 
-    creator_email = data["email"]          # quien crea
-    assigned_to = data["assigned_to"]      # a quién se le asigna
-
-    # 🔒 VALIDAR QUE SEA SUPERVISOR
-    if creator_email not in supervisors:
-        return {"message": "No autorizado"}
-
-    new_task = {
-        "id": task_counter,
-        "assigned_to": assigned_to,
-        "assigned_by": creator_email,
-        "task_text": data["task"],
-        "completed": False,
-        "created_at": datetime.now().strftime("%Y-%m-%d")
-    }
-
-    tasks.append(new_task)
-    task_counter += 1
+    conn.commit()
 
     return {"message": "Tarea creada"}
+
 
 # =========================
 # VISTAS (GET)
@@ -2117,42 +2118,3 @@ def welcome(data: dict):
 
 
 
-# =========================
-# 📊 EXPORTAR EXCEL DEL MES
-# =========================
-@app.post("/export-tasks")
-def export_tasks(data: dict):
-
-    email = data["email"]
-    now = datetime.now()
-
-    filtered_tasks = []
-
-    for t in tasks:
-        if t["assigned_to"] == email:
-
-            task_date = datetime.strptime(t["created_at"], "%Y-%m-%d")
-
-            if task_date.month == now.month and task_date.year == now.year:
-                filtered_tasks.append(t)
-
-    df = pd.DataFrame([
-        {
-            "Tarea": t["task_text"],
-            "Completada": t["completed"],
-            "Fecha": t["created_at"]
-        }
-        for t in filtered_tasks
-    ])
-
-    output = io.BytesIO()
-    df.to_excel(output, index=False)
-    output.seek(0)
-
-    return StreamingResponse(
-        output,
-        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        headers={
-            "Content-Disposition": "attachment; filename=tareas_mes.xlsx"
-        }
-    )
