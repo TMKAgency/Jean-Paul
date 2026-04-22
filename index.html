@@ -583,6 +583,9 @@ body {
 <!-- 👇 AQUÍ -->
 <div class="logout">
 <button onclick="logout()">Cerrar sesión</button>
+<button id="btnExportExcel">
+  Descargar reporte mensual
+</button>
 </div>
 
 <h3>Tareas</h3>
@@ -1002,5 +1005,94 @@ function closePanel() {
   document.getElementById('overlay').classList.remove('active');
 }
     </script>
+    <script>
+      
+      // ==========================
+      // 🔔 RECORDATORIO FIN DE MES
+      // ==========================
+      function isLastDayOfMonth() {
+          const today = new Date()
+          const tomorrow = new Date(today)
+          tomorrow.setDate(today.getDate() + 1)
+      
+          return tomorrow.getDate() === 1
+      }
+      
+      function showMonthlyReminder() {
+          const todayStr = new Date().toDateString()
+          const lastShown = localStorage.getItem("lastReminder")
+      
+          if (isLastDayOfMonth() && lastShown !== todayStr) {
+              alert("⚠️ Hoy es el último día del mes. Debes crear tu reporte de tareas.")
+              localStorage.setItem("lastReminder", todayStr)
+          }
+      }
+      
+      // Ejecutar al cargar
+      showMonthlyReminder()
+      
+      
+      // ==========================
+      // 📊 EXPORTAR EXCEL
+      // ==========================
+      async function exportExcel() {
+      
+          const email = localStorage.getItem("email")
+      
+          if (!email) {
+              alert("No se encontró el usuario logueado")
+              return
+          }
+      
+          try {
+      
+              const res = await fetch(`${API}/export-tasks`, {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ email })
+              })
+      
+              if (!res.ok) {
+                  alert("Error al generar el Excel")
+                  return
+              }
+      
+              const blob = await res.blob()
+      
+              const url = window.URL.createObjectURL(blob)
+              const a = document.createElement("a")
+      
+              a.href = url
+              a.download = "reporte_tareas_mes.xlsx"
+      
+              document.body.appendChild(a)
+              a.click()
+              a.remove()
+      
+              window.URL.revokeObjectURL(url)
+      
+          } catch (error) {
+              console.error(error)
+              alert("Error de conexión con el servidor")
+          }
+      }
+      
+      
+      // ==========================
+      // 🖱️ EVENTO BOTÓN
+      // ==========================
+      document.addEventListener("DOMContentLoaded", () => {
+      
+          const btn = document.getElementById("btnExportExcel")
+      
+          if (btn) {
+              btn.addEventListener("click", exportExcel)
+          }
+      
+      })
+      
+      </script>
 </body>
 </html>
