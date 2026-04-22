@@ -1986,17 +1986,23 @@ def add_task(data: dict):
 
     global task_counter
 
+    creator_email = data["email"]          # quien crea
+    assigned_to = data["assigned_to"]      # a quién se le asigna
+
+    # 🔒 VALIDAR QUE SEA SUPERVISOR
+    if creator_email not in supervisors:
+        return {"message": "No autorizado"}
+
     new_task = {
         "id": task_counter,
-        "assigned_to": data["email"],
-        "assigned_by": data["email"],  # luego puedes cambiar quién asigna
+        "assigned_to": assigned_to,
+        "assigned_by": creator_email,
         "task_text": data["task"],
         "completed": False,
         "created_at": datetime.now().strftime("%Y-%m-%d")
     }
 
     tasks.append(new_task)
-
     task_counter += 1
 
     return {"message": "Tarea creada"}
