@@ -2118,3 +2118,31 @@ def welcome(data: dict):
 
 
 
+@app.post("/get-assigned-tasks")
+def get_assigned_tasks(data: dict):
+    email = data["email"]
+    
+    if email not in supervisors:
+        return {"message": "No autorizado", "tasks": []}
+    
+    cursor.execute("""
+        SELECT t.id, t.assigned_to, t.task_text, t.completed, t.created_at
+        FROM Tasks t
+        WHERE t.assigned_by = %s
+        ORDER BY t.created_at DESC
+    """, (email,))
+    
+    rows = cursor.fetchall()
+    
+    return {
+        "tasks": [
+            {
+                "id": r[0],
+                "assigned_to": r[1],
+                "task": r[2],
+                "completed": r[3],
+                "date": r[4].strftime("%Y-%m-%d %H:%M")
+            }
+            for r in rows
+        ]
+    }

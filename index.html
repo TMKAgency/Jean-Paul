@@ -588,6 +588,12 @@ body {
   📊 Exportar tareas del mes
 </button>
 
+<button 
+  id="assignedTasksBtn" 
+  onclick="openAssignedTasksPopup()">
+  👥 Ver tareas asignadas
+</button>
+
 </div>
 
 <h3>Tareas</h3>
@@ -636,253 +642,441 @@ body {
 
 </div>
 <script>
- const API = "https://jean-paul.onrender.com"
+  const API = "https://jean-paul.onrender.com"
+ 
+ const SUPERVISORS = [
+     "marcolamugue@tmk-agency.com",
+     "danielaalvarez@tmk-agency.com",
+     "fabricio@tmk-agency.com"
+ ]
+ 
+ let userEmail = null
+ 
+ window.onload = async () => {
+     userEmail = localStorage.getItem("email")
+ 
+     if(!userEmail){
+         alert("Debes iniciar sesión")
+         window.location = "login.html"
+         return
+     }
+ 
+     document.getElementById("userEmail").innerText = "Usuario: " + userEmail
+ 
+     // Mostrar botón solo a supervisores
+     if(SUPERVISORS.includes(userEmail)){
+         document.getElementById("assignedTasksBtn").style.display = "block"
+     }
+ 
+     loadTasks()
+     checkEndOfMonth()
+ 
+     try{
+         if(!sessionStorage.getItem("welcomeShown")){
+             const res = await fetch(API + "/welcome", {
+                 method:"POST",
+                 headers:{'Content-Type':'application/json'},
+                 body:JSON.stringify({ email: userEmail })
+             })
+             const data = await res.json()
+             addMessage(data.message, "aiMsg")
+             sessionStorage.setItem("welcomeShown", "true")
+         }
+     }catch(err){
+         console.error("Error welcome:", err)
+     }
+ }
+ 
+ // ======================
+ // FIN DE MES: ALERTA + BOTÓN
+ // ======================
+ 
+ function checkEndOfMonth() {
+     const today = new Date()
+     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+ 
+     if(today.getDate() === lastDay) {
+         document.getElementById("exportBtn").style.display = "block"
+ 
+         if(!sessionStorage.getItem("endOfMonthAlertShown")){
+             setTimeout(() => {
+                 addMessage("⚠️ Hoy es el último día del mes. Podés exportar el resumen de tareas del mes con el botón 'Exportar tareas del mes' en el panel izquierdo.", "aiMsg")
+                 sessionStorage.setItem("endOfMonthAlertShown", "true")
+             }, 1500)
+         }
+     }
+ }
+ 
+ // ======================
+ // EXPORTAR EXCEL
+ // ======================
+ 
+ async function exportTasks() {
+     try {
+         const res = await fetch(API + "/get-tasks", {
+             method: "POST",
+             headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify({ email: userEmail })
+         })
+ 
+         const data = await res.json()
+ 
+         if(!data.tasks || data.tasks.length === 0){
+             alert("No tenés tareas para exportar.")
+             return
+         }
+ 
+         const now = new Date()
+         const month = now.toLocaleString('es-CR', { month: 'long' })
+         const year = now.getFullYear()
+ 
+         let csv = `Reporte de Tareas — ${month} ${year}\n`
+         csv += `Usuario,${userEmail}\n\n`
+         csv += `N°,Tarea,Estado\n`
+ 
+         data.tasks.forEach((t, i) => {
+             const estado = t.completed ? "Completada" : "Pendiente"
+             csv += `${i + 1},"${t.task.replace(/"/g, '""')}",${estado}\n`
+         })
+ 
+         const completadas = data.tasks.filter(t => t.completed).length
+         const pendientes = data.tasks.filter(t => !t.completed).length
+ 
+         csv += `\nTotal tareas,${data.tasks.length}`
+         csv += `\nCompletadas,${completadas}`
+         csv += `\nPendientes,${pendientes}`
+ 
+         const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
+         const url = URL.createObjectURL(blob)
+         const a = document.createElement("a")
+         a.href = url
+         a.download = `tareas_${month}_${year}_${userEmail.split("@")[0]}.csv`
+         a.click()
+         URL.revokeObjectURL(url)
+ 
+         addMessage(`✅ Archivo exportado: tareas de ${month} ${year}.`, "aiMsg")
+ 
+     } catch(err) {
+         console.error(err)
+         alert("Error exportando tareas")
+     }
+ }
+ 
+ // ======================
+ // POPUP TAREAS ASIGNADAS
+ // ======================
+ 
+ async function openAssignedTasksPopup() {
+     document.getElementById("assignedPopupOverlay").style.display = "flex"
+     document.getElementById("assignedTasksList").innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>Cargando...</p>"
+ 
+     try {
+         const res = await fetch(API + "/get-assigned-tasks", {
+             method: "POST",
+             headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify({ email: userEmail })
+         })
+ 
+         const data = await res.json()
+ 
+         const list = document.getElementById("assignedTasksList")
+         list.innerHTML = ""
+ 
+         if(!data.tasks || data.tasks.length === 0){
+             list.innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>No has asignado tareas aún.</p>"
+             return
+         }
+ 
+         // Agrupar por usuario
+         const grouped = {}
+         data.tasks.forEach(t => {
+             if(!grouped[t.assigned_to]) grouped[t.assigned_to] = []
+             grouped[t.assigned_to].push(t)
+         })
+ 
+         Object.entries(grouped).forEach(([email, tasks]) => {
+             const userName = email.split("@")[0]
+             const completadas = tasks.filter(t => t.completed).length
+             const total = tasks.length
+ 
+             const section = document.createElement("div")
+             section.style.cssText = "margin-bottom:20px;"
+ 
+             section.innerHTML = `
+                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">
+                     <span style="font-weight:600;color:#d4af37;font-size:15px;">👤 ${userName}</span>
+                     <span style="font-size:12px;color:#888;">${completadas}/${total} completadas</span>
+                 </div>
+             `
+ 
+             tasks.forEach(t => {
+                 const item = document.createElement("div")
+                 item.style.cssText = `
+                     display:flex;
+                     align-items:center;
+                     gap:10px;
+                     padding:10px 12px;
+                     border-radius:8px;
+                     margin-bottom:8px;
+                     background:${t.completed ? '#1a2a1a' : '#1e1e1e'};
+                     border-left:3px solid ${t.completed ? '#4caf50' : '#d4af37'};
+                 `
+ 
+                 item.innerHTML = `
+                     <span style="font-size:16px;">${t.completed ? '✅' : '⏳'}</span>
+                     <div style="flex:1;">
+                         <div style="font-size:13px;color:${t.completed ? '#888' : '#fff'};${t.completed ? 'text-decoration:line-through;' : ''}">${t.task}</div>
+                         <div style="font-size:11px;color:#555;margin-top:2px;">${t.date}</div>
+                     </div>
+                     <span style="font-size:11px;padding:3px 8px;border-radius:12px;background:${t.completed ? '#1f3a1f' : '#2a2200'};color:${t.completed ? '#4caf50' : '#d4af37'};">
+                         ${t.completed ? 'Completada' : 'Pendiente'}
+                     </span>
+                 `
+                 section.appendChild(item)
+             })
+ 
+             list.appendChild(section)
+         })
+ 
+     } catch(err) {
+         console.error(err)
+         document.getElementById("assignedTasksList").innerHTML = "<p style='color:red;text-align:center;padding:20px;'>Error cargando tareas.</p>"
+     }
+ }
+ 
+ function closeAssignedTasksPopup() {
+     document.getElementById("assignedPopupOverlay").style.display = "none"
+ }
+ 
+ // Cerrar popup al hacer click fuera
+ document.addEventListener("click", function(e) {
+     const overlay = document.getElementById("assignedPopupOverlay")
+     if(e.target === overlay) closeAssignedTasksPopup()
+ })
+ 
+ // ======================
+ // CHAT IA
+ // ======================
+ 
+ async function send(){
+     const input = document.getElementById("message")
+     const msg = input.value.trim()
+ 
+     if(!msg) return
+ 
+     addMessage(msg, "userMsg")
+     input.value = ""
+ 
+     try{
+         const res = await fetch(API+"/ai",{
+             method:"POST",
+             headers:{'Content-Type':'application/json'},
+             body:JSON.stringify({ message:msg, email:userEmail })
+         })
+ 
+         const data = await res.json()
+         addMessage(data.response || "Error en respuesta", "aiMsg")
+         loadTasks()
+ 
+     }catch(err){
+         console.error(err)
+         addMessage("Error conectando con el servidor", "aiMsg")
+     }
+ }
+ 
+ function addMessage(text, type){
+     const chat = document.getElementById("chat")
+     const div = document.createElement("div")
+     div.className = "message " + type
+     div.innerText = text
+     chat.appendChild(div)
+     chat.scrollTop = chat.scrollHeight
+ }
+ 
+ // ======================
+ // TASKS
+ // ======================
+ 
+ async function loadTasks(){
+     try{
+         const res = await fetch(API+"/get-tasks",{
+             method:"POST",
+             headers:{'Content-Type':'application/json'},
+             body:JSON.stringify({email:userEmail})
+         })
+ 
+         const data = await res.json()
+         const container = document.getElementById("tasks")
+         container.innerHTML = ""
+ 
+         data.tasks.forEach(t => {
+             const div = document.createElement("div")
+             div.className = "task" + (t.completed ? " completed" : "")
+             div.innerHTML = `
+             <div class="task-left">
+                 <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
+                 <span>${t.task}</span>
+             </div>
+             <button onclick="removeTask(${t.id})">🗑</button>
+             `
+             container.appendChild(div)
+         })
+ 
+     }catch(err){
+         console.error("Error cargando tareas:", err)
+     }
+ }
+ 
+ async function addTask(){
+     const input = document.getElementById("taskInput")
+     const text = input.value.trim()
+ 
+     if(!text){ alert("Escribe una tarea"); return }
+ 
+     try{
+         const res = await fetch(API+"/add-task",{
+             method:"POST",
+             headers:{'Content-Type':'application/json'},
+             body:JSON.stringify({ email: userEmail, task: text })
+         })
+ 
+         const data = await res.json()
+ 
+         if(data.message !== "Tarea creada"){ alert("Error: " + data.message); return }
+ 
+         input.value = ""
+         loadTasks()
+ 
+     }catch(err){
+         console.error(err)
+         alert("Error agregando tarea")
+     }
+ }
+ 
+ async function complete(id){
+     try{
+         await fetch(API+"/complete-task",{
+             method:"POST",
+             headers:{'Content-Type':'application/json'},
+             body:JSON.stringify({ task_id: id, email: userEmail })
+         })
+         loadTasks()
+     }catch(err){
+         console.error(err)
+     }
+ }
+ 
+ async function removeTask(id){
+     try{
+         await fetch(API+"/delete-task",{
+             method:"POST",
+             headers:{'Content-Type':'application/json'},
+             body:JSON.stringify({ task_id: id, email: userEmail })
+         })
+         loadTasks()
+     }catch(err){
+         console.error(err)
+     }
+ }
+ 
+ function logout(){
+     localStorage.removeItem("email")
+     window.location = "login.html"
+ }
+ 
+ document.addEventListener("DOMContentLoaded", () => {
+     const input = document.getElementById("message")
+     if(input){
+         input.addEventListener("keydown", function(event) {
+             if (event.key === "Enter") { event.preventDefault(); send() }
+         })
+     }
+ })
+ 
+ // History panel
+ function toggleMenu() {
+     document.getElementById("historyPanel").classList.toggle("active")
+     if(document.getElementById("historyPanel").classList.contains("active")) loadHistory()
+ }
+ 
+ function closeMenu() {
+     document.getElementById("historyPanel").classList.remove("active")
+ }
+ 
+ async function loadHistory() {
+     try {
+         const res = await fetch(API + "/get-history", {
+             method: "POST",
+             headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify({ email: userEmail })
+         })
+         const data = await res.json()
+         const list = document.getElementById("historyList")
+         list.innerHTML = ""
+ 
+         data.history.forEach(h => {
+             const item = document.createElement("div")
+             item.className = "historyItem"
+             item.innerHTML = `
+                 <div class="historyContent">
+                     <div onclick="loadConversation(${h.id}, '${h.message.replace(/'/g,"\\'")}', '${h.response ? h.response.replace(/'/g,"\\'") : ""}')">
+                         <div class="historyDate">${h.date}</div>
+                         <div>${h.message.substring(0,50)}...</div>
+                     </div>
+                     <span class="deleteBtn" onclick="deleteHistory(${h.id})">🗑</span>
+                 </div>
+             `
+             list.appendChild(item)
+         })
+     } catch(err) {
+         console.error(err)
+     }
+ }
+ 
+ function loadConversation(id, msg, res) {
+     addMessage(msg, "userMsg")
+     if(res) addMessage(res, "aiMsg")
+     closeMenu()
+ }
+ 
+ async function deleteHistory(id) {
+     try {
+         await fetch(API + "/delete-history", {
+             method: "POST",
+             headers: {'Content-Type': 'application/json'},
+             body: JSON.stringify({ id: id, email: userEmail })
+         })
+         loadHistory()
+     } catch(err) {
+         console.error(err)
+     }
+ }
+ 
+ function openPanel() {
+     document.querySelector(".left").classList.add("open")
+     document.getElementById("overlay").classList.add("active")
+ }
+ 
+ function closePanel() {
+     document.querySelector(".left").classList.remove("open")
+     document.getElementById("overlay").classList.remove("active")
+ }
+ </script>
 
-let userEmail = null
+ <!-- POPUP TAREAS ASIGNADAS -->
+<div id="assignedPopupOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:5000; justify-content:center; align-items:center; padding:20px;">
+  <div style="background:#111; border:1px solid #2a2a2a; border-radius:12px; width:100%; max-width:520px; max-height:80vh; display:flex; flex-direction:column; overflow:hidden;">
+    
+    <!-- Header -->
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:18px 20px; border-bottom:1px solid #2a2a2a;">
+      <span style="font-weight:600; color:#d4af37; font-size:16px;">👥 Tareas asignadas</span>
+      <button onclick="closeAssignedTasksPopup()" style="background:none; border:1px solid #555; color:#aaa; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:13px;">✕ Cerrar</button>
+    </div>
 
-window.onload = async () => {
-    userEmail = localStorage.getItem("email")
+    <!-- Lista -->
+    <div id="assignedTasksList" style="overflow-y:auto; padding:16px; flex:1;"></div>
 
-    if(!userEmail){
-        alert("Debes iniciar sesión")
-        window.location = "login.html"
-        return
-    }
-
-    document.getElementById("userEmail").innerText = "Usuario: " + userEmail
-
-    loadTasks()
-    checkEndOfMonth()
-
-    try{
-        if(!sessionStorage.getItem("welcomeShown")){
-            const res = await fetch(API + "/welcome", {
-                method:"POST",
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify({ email: userEmail })
-            })
-            const data = await res.json()
-            addMessage(data.message, "aiMsg")
-            sessionStorage.setItem("welcomeShown", "true")
-        }
-    }catch(err){
-        console.error("Error welcome:", err)
-    }
-}
-
-// ======================
-// FIN DE MES: ALERTA + BOTÓN
-// ======================
-
-function checkEndOfMonth() {
-    const today = new Date()
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
-
-    if(today.getDate() === lastDay) {
-        document.getElementById("exportBtn").style.display = "block"
-
-        if(!sessionStorage.getItem("endOfMonthAlertShown")){
-            setTimeout(() => {
-                addMessage("⚠️ Hoy es el último día del mes. Podés exportar el resumen de tareas del mes con el botón 'Exportar tareas del mes' en el panel izquierdo.", "aiMsg")
-                sessionStorage.setItem("endOfMonthAlertShown", "true")
-            }, 1500)
-        }
-    }
-}
-
-// ======================
-// EXPORTAR EXCEL
-// ======================
-
-async function exportTasks() {
-    try {
-        const res = await fetch(API + "/get-tasks", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ email: userEmail })
-        })
-
-        const data = await res.json()
-
-        if(!data.tasks || data.tasks.length === 0){
-            alert("No tenés tareas para exportar.")
-            return
-        }
-
-        const now = new Date()
-        const month = now.toLocaleString('es-CR', { month: 'long' })
-        const year = now.getFullYear()
-
-        let csv = `Reporte de Tareas — ${month} ${year}\n`
-        csv += `Usuario,${userEmail}\n\n`
-        csv += `N°,Tarea,Estado\n`
-
-        data.tasks.forEach((t, i) => {
-            const estado = t.completed ? "Completada" : "Pendiente"
-            csv += `${i + 1},"${t.task.replace(/"/g, '""')}",${estado}\n`
-        })
-
-        const completadas = data.tasks.filter(t => t.completed).length
-        const pendientes = data.tasks.filter(t => !t.completed).length
-
-        csv += `\nTotal tareas,${data.tasks.length}`
-        csv += `\nCompletadas,${completadas}`
-        csv += `\nPendientes,${pendientes}`
-
-        const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.href = url
-        a.download = `tareas_${month}_${year}_${userEmail.split("@")[0]}.csv`
-        a.click()
-        URL.revokeObjectURL(url)
-
-        addMessage(`✅ Archivo exportado: tareas de ${month} ${year}.`, "aiMsg")
-
-    } catch(err) {
-        console.error(err)
-        alert("Error exportando tareas")
-    }
-}
-
-// ======================
-// CHAT IA
-// ======================
-
-async function send(){
-    const input = document.getElementById("message")
-    const msg = input.value.trim()
-
-    if(!msg) return
-
-    addMessage(msg, "userMsg")
-    input.value = ""
-
-    try{
-        const res = await fetch(API+"/ai",{
-            method:"POST",
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ message:msg, email:userEmail })
-        })
-
-        const data = await res.json()
-        addMessage(data.response || "Error en respuesta", "aiMsg")
-        loadTasks()
-
-    }catch(err){
-        console.error(err)
-        addMessage("Error conectando con el servidor", "aiMsg")
-    }
-}
-
-function addMessage(text, type){
-    const chat = document.getElementById("chat")
-    const div = document.createElement("div")
-    div.className = "message " + type
-    div.innerText = text
-    chat.appendChild(div)
-    chat.scrollTop = chat.scrollHeight
-}
-
-// ======================
-// TASKS
-// ======================
-
-async function loadTasks(){
-    try{
-        const res = await fetch(API+"/get-tasks",{
-            method:"POST",
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({email:userEmail})
-        })
-
-        const data = await res.json()
-        const container = document.getElementById("tasks")
-        container.innerHTML = ""
-
-        data.tasks.forEach(t => {
-            const div = document.createElement("div")
-            div.className = "task" + (t.completed ? " completed" : "")
-            div.innerHTML = `
-            <div class="task-left">
-                <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
-                <span>${t.task}</span>
-            </div>
-            <button onclick="removeTask(${t.id})">🗑</button>
-            `
-            container.appendChild(div)
-        })
-
-    }catch(err){
-        console.error("Error cargando tareas:", err)
-    }
-}
-
-async function addTask(){
-    const input = document.getElementById("taskInput")
-    const text = input.value.trim()
-
-    if(!text){ alert("Escribe una tarea"); return }
-
-    try{
-        const res = await fetch(API+"/add-task",{
-            method:"POST",
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ email: userEmail, task: text })
-        })
-
-        const data = await res.json()
-
-        if(data.message !== "Tarea creada"){ alert("Error: " + data.message); return }
-
-        input.value = ""
-        loadTasks()
-
-    }catch(err){
-        console.error(err)
-        alert("Error agregando tarea")
-    }
-}
-
-async function complete(id){
-    try{
-        await fetch(API+"/complete-task",{
-            method:"POST",
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ task_id: id, email: userEmail })
-        })
-        loadTasks()
-    }catch(err){
-        console.error(err)
-    }
-}
-
-async function removeTask(id){
-    try{
-        await fetch(API+"/delete-task",{
-            method:"POST",
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({ task_id: id, email: userEmail })
-        })
-        loadTasks()
-    }catch(err){
-        console.error(err)
-    }
-}
-
-function logout(){
-    localStorage.removeItem("email")
-    window.location = "login.html"
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("message")
-    if(input){
-        input.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") { event.preventDefault(); send() }
-        })
-    }
-})
-    </script>
-</body>
+  </div>
+</div>
+ </body>
 </html>
