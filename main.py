@@ -1058,7 +1058,8 @@ allowed_emails = [
     "katherinemora@tmk-agency.com",
     "marcolamugue@tmk-agency.com",
     "michelle@tmk-agency.com",
-    "breyner@tmk-agency.com"
+    "breyner@tmk-agency.com",
+    "alanys@tmk-agency.com"
 ]
 
 supervisors = [
