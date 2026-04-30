@@ -875,8 +875,21 @@ body {
          })
  
          const data = await res.json()
-         addMessage(data.response || "Error en respuesta", "aiMsg")
-         loadTasks()
+         if(data.type === "image" && data.image_url) {
+    const chat = document.getElementById("chat")
+    const div = document.createElement("div")
+    div.className = "message aiMsg"
+    const img = document.createElement("img")
+    img.src = API + data.image_url
+    img.style.cssText = "max-width:100%;border-radius:8px;margin-top:6px;"
+    div.appendChild(img)
+    chat.appendChild(div)
+    chat.scrollTop = chat.scrollHeight
+} else {
+    addMessage(data.response || "Error en respuesta", "aiMsg")
+}
+
+loadTasks()
  
      }catch(err){
          console.error(err)
