@@ -2,251 +2,481 @@
 <html>
 <head>
 <title>Recuperar contraseña</title>
-
 <style>
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#0b0b0b;
-font-family:Poppins;
-color:white;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.box{
-background:#111;
-padding:40px;
-border-radius:14px;
-width:350px;
-box-shadow:0 0 20px rgba(255,255,255,0.05);
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b0b0b;
+  font-family: 'Poppins', sans-serif;
+  color: white;
 }
 
-h2{
-margin-bottom:20px;
+.box {
+  background: #111;
+  padding: 40px;
+  border-radius: 14px;
+  width: 360px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.05);
 }
 
-input{
-width:100%;
-padding:12px;
-margin-bottom:15px;
-background:#1c1c1c;
-border:none;
-border-radius:8px;
-color:white;
-outline:none;
+/* Dots de progreso */
+.dots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 24px;
 }
 
-button{
-width:100%;
-padding:12px;
-background:white;
-border:none;
-border-radius:8px;
-color:black;
-cursor:pointer;
-font-weight:bold;
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #333;
+  transition: background 0.3s;
 }
 
-button:hover{
-opacity:0.9;
+.dot.active {
+  background: white;
 }
 
-/* Código centrado */
-.code-input{
-text-align:center;
-font-size:20px;
-letter-spacing:5px;
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
 }
 
-/* Password wrapper */
-.password-box{
-position:relative;
+.sub {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 24px;
+  line-height: 1.5;
 }
 
-.eye{
-position:absolute;
-right:10px;
-top:50%;
-transform:translateY(-50%);
-cursor:pointer;
-color:#aaa;
+label {
+  font-size: 12px;
+  color: #888;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.field {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #1c1c1c;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #555;
+}
+
+.code-input {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 10px;
+  font-weight: 600;
+  padding: 14px;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 4px;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Status */
+.status {
+  font-size: 12px;
+  min-height: 18px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Eye toggle */
+.eye {
+  position: absolute;
+  right: 12px;
+  top: 36px;
+  cursor: pointer;
+  color: #666;
+  font-size: 15px;
+  user-select: none;
+}
+
+/* Botón volver */
+.back-btn {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 12px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: #aaa;
+}
+
+/* Steps */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+/* Paso 4 - éxito */
+.success-wrap {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.success-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.success-wrap h2 {
+  margin-bottom: 8px;
+}
+
+.success-wrap .sub {
+  margin-bottom: 0;
+}
+
+.countdown {
+  color: white;
+  font-weight: 600;
 }
 </style>
-
 </head>
-
 <body>
 
 <div class="box">
 
-<h2>Recuperar contraseña</h2>
-
-<!-- PASO 1 -->
-<div id="step1">
-  <input type="email" id="email" placeholder="Correo">
-  <button onclick="sendCode()">Enviar código</button>
-</div>
-
-<!-- PASO 2 -->
-<div id="step2" style="display:none;">
-  <input 
-    type="text" 
-    id="code" 
-    class="code-input"
-    placeholder="------"
-    maxlength="6"
-    oninput="autoVerifyCode()"
-  >
-  <p id="status" style="font-size:12px;"></p>
-</div>
-
-<!-- PASO 3 -->
-<div id="step3" style="display:none;">
-
-  <div class="password-box">
-    <input type="password" id="newPassword" placeholder="Nueva contraseña">
-    <span class="eye" onclick="togglePassword('newPassword')">👁</span>
+  <!-- Dots progreso -->
+  <div class="dots" id="dotsBar">
+    <div class="dot active" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
   </div>
 
-  <div class="password-box">
-    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña">
-    <span class="eye" onclick="togglePassword('confirmPassword')">👁</span>
+  <!-- PASO 1: Correo -->
+  <div class="step active" id="step1">
+    <h2>Recuperar contraseña</h2>
+    <p class="sub">Ingresá tu correo corporativo y te enviamos un código de verificación.</p>
+
+    <div class="field">
+      <label>Correo corporativo</label>
+      <input type="email" id="email" placeholder="nombre@tmk-agency.com" />
+    </div>
+
+    <div class="status" id="st1"></div>
+
+    <button class="btn" id="btn1" onclick="sendCode()">Enviar código</button>
   </div>
 
-  <button onclick="resetPassword()">Cambiar contraseña</button>
+  <!-- PASO 2: Código -->
+  <div class="step" id="step2">
+    <button class="back-btn" onclick="goBack(1)">← Volver</button>
 
-</div>
+    <h2>Verificar código</h2>
+    <p class="sub" id="sub2">Ingresá el código de 6 dígitos enviado a tu correo.</p>
+
+    <div class="field">
+      <label>Código de verificación</label>
+      <input
+        type="text"
+        id="code"
+        class="code-input"
+        placeholder="------"
+        maxlength="6"
+        inputmode="numeric"
+        oninput="onCodeInput()"
+      />
+    </div>
+
+    <div class="status" id="st2"></div>
+  </div>
+
+  <!-- PASO 3: Nueva contraseña -->
+  <div class="step" id="step3">
+    <h2>Nueva contraseña</h2>
+    <p class="sub">Elegí una contraseña segura con mínimo 6 caracteres.</p>
+
+    <div class="field">
+      <label>Nueva contraseña</label>
+      <input type="password" id="newPassword" placeholder="••••••••" />
+      <span class="eye" onclick="togglePw('newPassword')">👁</span>
+    </div>
+
+    <div class="field">
+      <label>Confirmar contraseña</label>
+      <input type="password" id="confirmPassword" placeholder="••••••••" oninput="checkMatch()" />
+      <span class="eye" onclick="togglePw('confirmPassword')">👁</span>
+    </div>
+
+    <div class="status" id="st3"></div>
+
+    <button class="btn" id="btn3" onclick="resetPassword()">Cambiar contraseña</button>
+  </div>
+
+  <!-- PASO 4: Éxito -->
+  <div class="step" id="step4">
+    <div class="success-wrap">
+      <span class="success-icon">✅</span>
+      <h2>¡Contraseña actualizada!</h2>
+      <p class="sub">
+        Serás redirigido al login en <span class="countdown" id="countdown">3</span> segundos...
+      </p>
+    </div>
+  </div>
 
 </div>
 
 <script>
-
 const API = "https://jean-paul.onrender.com"
 let userEmail = ""
 let verifying = false
 
 // =========================
-// SEND CODE
+// NAVEGACIÓN DE PASOS
 // =========================
-async function sendCode(){
+function showStep(n) {
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"))
+  document.getElementById("step" + n).classList.add("active")
+
+  // Actualizar dots (solo pasos 1-3)
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById("d" + i)
+    dot.className = "dot" + (i <= n ? " active" : "")
+  }
+
+  // Ocultar dots en paso de éxito
+  if (n === 4) {
+    document.getElementById("dotsBar").style.display = "none"
+  }
+}
+
+function goBack(n) {
+  showStep(n)
+  setStatus("st2", "", "")
+}
+
+// =========================
+// UTILIDAD STATUS
+// =========================
+function setStatus(id, msg, color) {
+  const el = document.getElementById(id)
+  el.textContent = msg
+  el.style.color = color || "#888"
+}
+
+// =========================
+// PASO 1 — ENVIAR CÓDIGO
+// =========================
+async function sendCode() {
   const email = document.getElementById("email").value.trim()
 
-  if(!email){
-    alert("Ingresa un correo")
+  if (!email) {
+    setStatus("st1", "Ingresá tu correo", "#e24b4a")
     return
   }
 
   userEmail = email
-
-  const res = await fetch(`${API}/send-code`, {
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email})
-  })
-
-  const data = await res.json()
-
-  if(data.message === "Código enviado correctamente"){
-    document.getElementById("step1").style.display = "none"
-    document.getElementById("step2").style.display = "block"
-  }else{
-    alert(data.message)
-  }
-}
-
-// =========================
-// AUTO VERIFY CODE
-// =========================
-async function autoVerifyCode(){
-  const code = document.getElementById("code").value
-  const status = document.getElementById("status")
-
-  if(code.length !== 6 || verifying) return
-
-  verifying = true
-  status.innerText = "Verificando..."
-  status.style.color = "#888"
+  const btn = document.getElementById("btn1")
+  btn.disabled = true
+  btn.textContent = "Enviando..."
+  setStatus("st1", "", "")
 
   try {
-    const res = await fetch(`${API}/verify-code`, {
-      method:"POST",
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        email: userEmail,
-        code: code
-      })
+    const res = await fetch(`${API}/send-code`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
     })
 
     const data = await res.json()
 
-    if(data.valid){
-      status.innerText = "Código correcto ✅"
-      status.style.color = "lightgreen"
-
-      setTimeout(() => {
-        document.getElementById("step2").style.display = "none"
-        document.getElementById("step3").style.display = "block"
-      }, 500)
-
+    if (data.message === "Código enviado correctamente") {
+      document.getElementById("sub2").textContent = `Código enviado a ${email}`
+      showStep(2)
     } else {
-      status.innerText = "Código incorrecto ❌"
-      status.style.color = "red"
+      setStatus("st1", data.message || "Error enviando el código", "#e24b4a")
     }
 
   } catch {
-    status.innerText = "Error de conexión"
-    status.style.color = "red"
+    setStatus("st1", "Error de conexión. Intentá de nuevo.", "#e24b4a")
+  }
+
+  btn.disabled = false
+  btn.textContent = "Enviar código"
+}
+
+// =========================
+// PASO 2 — VERIFICAR CÓDIGO
+// =========================
+async function onCodeInput() {
+  // Solo permitir números
+  const input = document.getElementById("code")
+  input.value = input.value.replace(/\D/g, "")
+
+  const code = input.value
+
+  if (code.length !== 6 || verifying) return
+
+  verifying = true
+  setStatus("st2", "Verificando...", "#888")
+
+  try {
+    const res = await fetch(`${API}/verify-code`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: userEmail, code })
+    })
+
+    const data = await res.json()
+
+    if (data.valid) {
+      setStatus("st2", "Código correcto ✅", "#4caf50")
+      setTimeout(() => showStep(3), 500)
+    } else {
+      setStatus("st2", "Código incorrecto. Verificá e intentá de nuevo.", "#e24b4a")
+      document.getElementById("code").value = ""
+    }
+
+  } catch {
+    setStatus("st2", "Error de conexión. Intentá de nuevo.", "#e24b4a")
   }
 
   verifying = false
 }
 
 // =========================
-// RESET PASSWORD
+// PASO 3 — VALIDAR MATCH
 // =========================
-async function resetPassword(){
-  const password = document.getElementById("newPassword").value
-  const confirm = document.getElementById("confirmPassword").value
-  const code = document.getElementById("code").value
+function checkMatch() {
+  const p1 = document.getElementById("newPassword").value
+  const p2 = document.getElementById("confirmPassword").value
 
-  if(password.length < 6){
-    alert("La contraseña debe tener mínimo 6 caracteres")
-    return
-  }
-
-  if(password !== confirm){
-    alert("Las contraseñas no coinciden")
-    return
-  }
-
-  const res = await fetch(`${API}/reset-password`, {
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      email: userEmail,
-      code: code,
-      password: password
-    })
-  })
-
-  const data = await res.json()
-
-  alert(data.message)
-
-  if(data.message === "Contraseña actualizada"){
-    window.location.href = "/login.html"
+  if (p2 && p1 !== p2) {
+    setStatus("st3", "Las contraseñas no coinciden", "#e24b4a")
+  } else {
+    setStatus("st3", "", "")
   }
 }
 
 // =========================
-// TOGGLE PASSWORD 👁
+// PASO 3 — CAMBIAR CONTRASEÑA
 // =========================
-function togglePassword(id){
+async function resetPassword() {
+  const password = document.getElementById("newPassword").value
+  const confirm  = document.getElementById("confirmPassword").value
+  const code     = document.getElementById("code").value
+
+  if (password.length < 6) {
+    setStatus("st3", "La contraseña debe tener mínimo 6 caracteres", "#e24b4a")
+    return
+  }
+
+  if (password !== confirm) {
+    setStatus("st3", "Las contraseñas no coinciden", "#e24b4a")
+    return
+  }
+
+  const btn = document.getElementById("btn3")
+  btn.disabled = true
+  btn.textContent = "Guardando..."
+  setStatus("st3", "", "")
+
+  try {
+    const res = await fetch(`${API}/reset-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: userEmail, code, password })
+    })
+
+    const data = await res.json()
+
+    if (data.message === "Contraseña actualizada") {
+      showStep(4)
+
+      // Countdown y redirección
+      let t = 3
+      const interval = setInterval(() => {
+        t--
+        document.getElementById("countdown").textContent = t
+        if (t <= 0) {
+          clearInterval(interval)
+          window.location.href = "/login.html"
+        }
+      }, 1000)
+
+    } else {
+      setStatus("st3", data.message || "Error al cambiar la contraseña", "#e24b4a")
+    }
+
+  } catch {
+    setStatus("st3", "Error de conexión. Intentá de nuevo.", "#e24b4a")
+  }
+
+  btn.disabled = false
+  btn.textContent = "Cambiar contraseña"
+}
+
+// =========================
+// TOGGLE PASSWORD
+// =========================
+function togglePw(id) {
   const input = document.getElementById(id)
   input.type = input.type === "password" ? "text" : "password"
 }
-
 </script>
 
 </body>

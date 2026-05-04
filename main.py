@@ -1174,44 +1174,46 @@ def login(data: dict):
 
 @app.post("/send-code")
 def send_code(data: dict):
-
+ 
     if not cursor:
         return {"message": "DB no disponible"}
-
+ 
     email = data["email"]
-
+ 
+    # Solo correos autorizados de TMK
     if email not in allowed_emails:
         return {"message": "Correo no autorizado"}
-
+ 
+    # Generar código y expiración (10 minutos desde ahora)
     code = str(random.randint(100000, 999999))
     expiration = datetime.utcnow() + timedelta(minutes=10)
-
+ 
+    # Guardar código en la DB
     cursor.execute(
-    "UPDATE Users SET reset_code=%s, code_expiration=%s WHERE email=%s",
-    (code, expiration, email)
-)
-
+        "UPDATE Users SET reset_code=%s, code_expiration=%s WHERE email=%s",
+        (code, expiration, email)
+    )
     conn.commit()
-
+ 
+    # Enviar correo con el código
     try:
-        msg = MIMEText(f"Tu código de recuperación es: {code}")
-        msg["Subject"] = "Recuperación de contraseña"
+        msg = MIMEText(f"Tu código de recuperación de contraseña es: {code}\n\nEste código expira en 10 minutos.")
+        msg["Subject"] = "Recuperación de contraseña - TMK Agency"
         msg["From"] = os.getenv("EMAIL_USER")
         msg["To"] = email
-
+ 
         server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         server.login(
             os.getenv("EMAIL_USER"),
             os.getenv("EMAIL_PASS")
         )
-
         server.send_message(msg)
         server.quit()
-
+ 
     except Exception as e:
         print("❌ Error enviando correo:", e)
         return {"message": "Error enviando correo"}
-
+ 
     return {"message": "Código enviado correctamente"}
 
 # =========================
@@ -1220,26 +1222,36 @@ def send_code(data: dict):
 
 @app.post("/verify-code")
 def verify_code(data: dict):
-
+ 
     email = data["email"]
-    code = data["code"]
-
+    code  = data["code"]
+ 
     cursor.execute(
-    "SELECT reset_code, code_expiration FROM Users WHERE email=%s",
-    (email,)
-)
-
+        "SELECT reset_code, code_expiration FROM Users WHERE email=%s",
+        (email,)
+    )
     row = cursor.fetchone()
-
+ 
+    # Usuario no encontrado
     if not row:
         return {"valid": False}
-
+ 
     saved_code, expiration = row
-
-    if expiration is None or expiration < datetime.utcnow():
+ 
+    # Sin código guardado
+    if not saved_code:
         return {"valid": False}
+ 
+    # Código expirado
+    if expiration is None or expiration < datetime.utcnow():
+        return {"valid": False, "message": "El código expiró, solicitá uno nuevo"}
+ 
+    # Código incorrecto
+    if saved_code != code:
+        return {"valid": False}
+ 
+    return {"valid": True}
 
-    return {"valid": saved_code == code}
 
 # =========================
 # RESET PASSWORD
@@ -1247,30 +1259,38 @@ def verify_code(data: dict):
 
 @app.post("/reset-password")
 def reset_password(data: dict):
-
-    email = data["email"]
-    code = data["code"]
+ 
+    email    = data["email"]
+    code     = data["code"]
     password = hash_password(data["password"])
-
+ 
     cursor.execute(
-        "SELECT reset_code FROM Users WHERE email=%s",
+        "SELECT reset_code, code_expiration FROM Users WHERE email=%s",
         (email,)
     )
-
     row = cursor.fetchone()
-
+ 
     if not row:
         return {"message": "Usuario no encontrado"}
-
-    if row[0] == code:
-        cursor.execute(
-            "UPDATE Users SET password_hash=%s, reset_code=NULL, code_expiration=NULL WHERE email=%s",
-            (password, email)
-        )
-        conn.commit()
-        return {"message": "Contraseña actualizada"}
-
-    return {"message": "Código incorrecto"}
+ 
+    saved_code, expiration = row
+ 
+    # Verificar expiración
+    if expiration is None or expiration < datetime.utcnow():
+        return {"message": "El código expiró, solicitá uno nuevo"}
+ 
+    # Verificar código
+    if saved_code != code:
+        return {"message": "Código incorrecto"}
+ 
+    # Actualizar contraseña y limpiar código
+    cursor.execute(
+        "UPDATE Users SET password_hash=%s, reset_code=NULL, code_expiration=NULL WHERE email=%s",
+        (password, email)
+    )
+    conn.commit()
+ 
+    return {"message": "Contraseña actualizada"}
 
 # =========================
 # IA
