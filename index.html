@@ -3,387 +3,443 @@
 <head>
 <meta charset="UTF-8">
 <title>TMK Agency</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins;
 }
 
 body {
   height: 100vh;
-  height: 100dvh; /* fix móvil */
+  height: 100dvh;
   display: flex;
   background: linear-gradient(135deg, #050505, #0e0e0e);
   color: white;
   overflow: hidden;
 }
 
-/* LEFT PANEL */
+/* =====================
+   LEFT PANEL (TASKS)
+===================== */
 
 .left{
-width:35%;
-background:rgba(15,15,15,0.9);
-border-right:1px solid #1f1f1f;
-padding:35px;
-display:flex;
-flex-direction:column;
+  width:35%;
+  background:rgba(15,15,15,0.9);
+  border-right:1px solid #1f1f1f;
+  padding:35px;
+  display:flex;
+  flex-direction:column;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
 }
 
 .logo{
-font-size:20px;
-font-weight:600;
-margin-bottom:30px;
-color:#d4af37;
+  font-size:20px;
+  font-weight:600;
+  color:#d4af37;
+  padding-left: 33%;
 }
 
 .user{
-font-size:14px;
-color:#bbb;
-margin-bottom:30px;
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:30px;
 }
 
 .tasks{
-flex:1;
-overflow:auto;
+  flex:1;
+  overflow:auto;
 }
 
 .task{
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:#1b1b1b;
-padding:14px;
-border-radius:8px;
-margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#1b1b1b;
+  padding:14px;
+  border-radius:8px;
+  margin-bottom:10px;
 }
 
 .task.completed span{
-text-decoration:line-through;
-color:#666;
+  text-decoration:line-through;
+  color:#666;
 }
 
 .task-left{
-display:flex;
-gap:10px;
-align-items:center;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .task button{
-background:none;
-border:none;
-color:#888;
-cursor:pointer;
-font-size:16px;
+  background:none;
+  border:none;
+  color:#888;
+  cursor:pointer;
+  font-size:16px;
 }
 
 .task button:hover{
-color:red;
+  color:red;
 }
 
 .add{
-margin-top:15px;
-display:flex;
-gap:10px;
+  margin-top:15px;
+  display:flex;
+  gap:10px;
 }
 
 .add input{
-flex:1;
-padding:12px;
-background:#1e1e1e;
-border:none;
-border-radius:6px;
-color:white;
+  flex:1;
+  padding:12px;
+  background:#1e1e1e;
+  border:none;
+  border-radius:6px;
+  color:white;
 }
 
 .add button{
-padding:12px 18px;
-background:#d4af37;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* RIGHT */
-
-.right{
-width:65%;
-display:flex;
-flex-direction:column;
-}
-
-.aiHeader{
-padding:20px 30px;
-background:#0f0f0f;
-border-bottom:1px solid #1f1f1f;
-color:#d4af37;
-}
-
-.chat{
-flex:1;
-padding:30px;
-overflow:auto;
-display:flex;
-flex-direction:column;
-gap:20px;
-}
-
-.message{
-max-width:70%;
-padding:14px 18px;
-border-radius:12px;
-}
-
-.userMsg{
-align-self:flex-end;
-background:white;
-color:black;
-}
-
-.aiMsg{
-align-self:flex-start;
-background:linear-gradient(135deg,#d4af37,#f3d27a);
-color:black;
-}
-
-.inputArea{
-display:flex;
-padding:20px;
-background:#0f0f0f;
-gap:10px;
-}
-
-.inputArea input{
-flex:1;
-padding:14px;
-background:#1c1c1c;
-border:none;
-border-radius:8px;
-color:white;
-}
-
-.inputArea button{
-padding:14px 24px;
-background:linear-gradient(135deg,#d4af37,#f3d27a);
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-
-.logout{
-margin-bottom:20px;
-}
-
-.logout button{
-width:100%;
-padding:10px;
-background:transparent;
-border:1px solid #d4af37;
-color:#d4af37;
-border-radius:6px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.logout button:hover{
-background:#d4af37;
-color:black;
-}
-
-.menuBtn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 30px;
-    height: 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.menuBtn span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background: #f1c40f; /* amarillo TMK */
-    border-radius: 2px;
-    transition: 0.3s;
-}
-
-.historyPanel {
-    position: fixed;
-    top: 0;
-    right: -350px; /* 👈 oculto fuera de la pantalla */
-    width: 350px;
-    height: 100vh;
-    background: #0d0d0d;
-    border-left: 1px solid #222; /* 👈 cambia el lado del borde */
-    transition: 0.3s;
-    z-index: 2000;
-    overflow-y: auto;
-}
-
-.historyPanel.active {
-    right: 0; /* 👈 aparece desde la derecha */
-}
-
-.historyHeader {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    font-weight: bold;
-    border-bottom: 1px solid #222;
-}
-
-.historyItem {
-    padding: 15px;
-    border-bottom: 1px solid #1a1a1a;
-    cursor: pointer;
-}
-
-.historyItem:hover {
-    background: #1a1a1a;
-}
-
-.historyDate {
-    font-size: 12px;
-    color: #888;
-}
-
-.historyContent {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* 🔥 centra vertical */
-    gap: 10px;
-}
-
-.deleteBtn {
-    color: red;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.historyHeader button {
-    background: none;
-    border: 1px solid transparent;
-    color: #ffffff;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.historyHeader button:hover {
-    border-color: #ffffff;
-    background: rgba(0,0,0,0.05);
-}
-
-/* Agrega esto al final de todo tu CSS */
-
-/* --- TABLET --- */
-@media (max-width: 1023px) {
-  .left  { width: 42%; padding: 20px; }
-  .right { width: 58%; }
-  .message { max-width: 85%; }
+  padding:12px 18px;
+  background:#d4af37;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-family: Poppins;
 }
 
 /* =====================
-   FIX MÓVIL PRINCIPAL
+   RIGHT PANEL (CHAT)
 ===================== */
 
-@media (max-width: 767px) {
-
-body {
-  flex-direction: column;
-  overflow: hidden;
-  height: 100dvh;
-  width: 100vw; /* ← evita desbordamiento horizontal */
+.right{
+  width:65%;
+  display:flex;
+  flex-direction:column;
 }
 
-.right {
-  width: 100vw !important; /* ← fuerza ancho exacto */
-  max-width: 100vw;        /* ← evita que se salga */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  overflow: hidden;
-}
+/* =====================
+   AI HEADER — NEW DESIGN
+===================== */
 
-/* Header con alineación correcta */
-.aiHeader {
-  padding: 14px 16px;
+.aiHeader{
+  padding: 0 20px;
+  height: 60px;
+  background:#0f0f0f;
+  border-bottom:1px solid #1f1f1f;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
 }
 
-/* Input area no se corta */
-.inputArea {
-  padding: 10px 12px;
-  width: 100%;
-  box-sizing: border-box; /* ← incluye padding en el ancho */
-  flex-shrink: 0;
-}
-
-.inputArea input {
-  font-size: 16px !important;
-  min-width: 0; /* ← permite que el flex-item se encoja */
-}
-
-.inputArea button {
-  flex-shrink: 0;     /* ← no se encoge ni se corta */
-  white-space: nowrap;
-  padding: 14px 16px;
-}
-
-/* menuBtn alineado al header */
-.menuBtn {
-  position: static !important;
-  transform: none !important;
+/* Hamburger button — LEFT */
+.hamburgerBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 26px;
-  height: 20px;
+  height: 18px;
+  cursor: pointer;
   flex-shrink: 0;
-  margin-left: auto; /* 🔥 ESTA ES LA CLAVE */
-}
+  padding: 0;
+  background: none;
+  border: none;
 }
 
+.hamburgerBtn span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #d4af37;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.hamburgerBtn:hover span {
+  background: #f3d27a;
+}
+
+/* Center title */
+.aiHeader .title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d4af37;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* Clock / History button — RIGHT */
+.clockBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.2s;
+  flex-shrink: 0;
+}
+
+.clockBtn:hover {
+  color: #d4af37;
+  background: rgba(212,175,55,0.08);
+}
+
+.clockBtn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Tasks btn (mobile only — sits left of center title) */
 .taskBtn {
-  display: none; /* oculto en desktop y tablet */
+  display: none;
 }
 
-@media (max-width: 767px) {
-  .taskBtn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-  }
+/* =====================
+   SLIDE MENU (LEFT) — Acciones
+===================== */
 
-  .aiHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.slideMenu {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  background: #0d0d0d;
+  border-right: 1px solid #222;
+  transition: left 0.3s ease;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+}
+
+.slideMenu.active {
+  left: 0;
+}
+
+.slideMenuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #222;
+}
+
+.slideMenuHeader span {
+  font-weight: 600;
+  color: #d4af37;
+  font-size: 15px;
+}
+
+.slideMenuHeader button {
+  background: none;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.slideMenuHeader button:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+.slideMenuBody {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slideMenuBtn {
+  width: 100%;
+  padding: 13px 16px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-size: 14px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.2s;
+}
+
+.slideMenuBtn:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+  background: rgba(212,175,55,0.05);
+}
+
+.slideMenuBtn.danger {
+  border-color: #2a1a1a;
+  color: #c0392b;
+}
+
+.slideMenuBtn.danger:hover {
+  border-color: #c0392b;
+  background: rgba(192,57,43,0.05);
+}
+
+/* =====================
+   HISTORY PANEL (RIGHT)
+===================== */
+
+.historyPanel {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 340px;
+  height: 100vh;
+  background: #0d0d0d;
+  border-left: 1px solid #222;
+  transition: right 0.3s ease;
+  z-index: 4000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.historyPanel.active {
+  right: 0;
+}
+
+.historyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid #222;
+  color: #d4af37;
+  flex-shrink: 0;
+}
+
+.historyHeader button {
+  background: none;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.historyHeader button:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+.historyItem {
+  padding: 15px;
+  border-bottom: 1px solid #1a1a1a;
+  cursor: pointer;
+}
+
+.historyItem:hover {
+  background: #1a1a1a;
+}
+
+.historyDate {
+  font-size: 12px;
+  color: #888;
+}
+
+.historyContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.deleteBtn {
+  color: red;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* =====================
+   CHAT
+===================== */
+
+.chat{
+  flex:1;
+  padding:30px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.message{
+  max-width:70%;
+  padding:14px 18px;
+  border-radius:12px;
+}
+
+.userMsg{
+  align-self:flex-end;
+  background:white;
+  color:black;
+}
+
+.aiMsg{
+  align-self:flex-start;
+  background:linear-gradient(135deg,#d4af37,#f3d27a);
+  color:black;
+}
+
+.inputArea{
+  display:flex;
+  padding:20px;
+  background:#0f0f0f;
+  gap:10px;
+}
+
+.inputArea input{
+  flex:1;
+  padding:14px;
+  background:#1c1c1c;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-family: Poppins;
+}
+
+.inputArea button{
+  padding:14px 24px;
+  background:linear-gradient(135deg,#d4af37,#f3d27a);
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-family: Poppins;
+  font-weight: 600;
 }
 
 /* =====================
@@ -394,8 +450,8 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  z-index: 2500;
+  background: rgba(0,0,0,0.65);
+  z-index: 3500;
 }
 
 .overlay.active {
@@ -407,18 +463,9 @@ body {
 ===================== */
 
 @media (max-width: 1023px) {
-  .left {
-    width: 42%;
-    padding: 20px;
-  }
-
-  .right {
-    width: 58%;
-  }
-
-  .message {
-    max-width: 85%;
-  }
+  .left { width: 42%; padding: 20px; }
+  .right { width: 58%; }
+  .message { max-width: 85%; }
 }
 
 /* =====================
@@ -431,6 +478,7 @@ body {
     flex-direction: column;
     overflow: hidden;
     height: 100dvh;
+    width: 100vw;
   }
 
   .left {
@@ -452,7 +500,7 @@ body {
   }
 
   .closePanelBtn {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 6px;
     align-self: flex-end;
@@ -473,14 +521,16 @@ body {
 
   .right {
     width: 100% !important;
+    max-width: 100vw;
     flex: 1;
     display: flex;
     flex-direction: column;
     height: 100dvh;
+    overflow: hidden;
   }
 
   .aiHeader {
-    padding: 14px 16px;
+    padding: 0 14px;
   }
 
   .taskBtn {
@@ -494,602 +544,668 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
-    margin-right: 57px;
+    font-family: Poppins;
+    flex-shrink: 0;
   }
 
-  .message {
-    max-width: 90%;
-  }
-
-  .chat {
-    padding: 14px;
-  }
+  .message { max-width: 90%; }
+  .chat { padding: 14px; }
 
   .inputArea {
     padding: 10px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
   }
 
-  .inputArea input,
-  .add input {
+  .inputArea input {
     font-size: 16px !important;
-  }
-}
-
-/* =====================
-   PANTALLAS MUY PEQUEÑAS
-===================== */
-
-@media (max-width: 360px) {
-  .logo {
-    font-size: 17px;
+    min-width: 0;
   }
 
   .inputArea button {
-    padding: 14px 12px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 14px 16px;
+  }
+
+  /* On mobile, hide hamburger center title and show taskBtn instead */
+  .aiHeader .title {
     font-size: 13px;
+  }
+
+  .historyPanel {
+    width: 290px;
+  }
+
+  .slideMenu {
+    width: 270px;
   }
 }
 
-/* =====================
-   BOTÓN CERRAR PANEL (DEFAULT)
-===================== */
+@media (max-width: 360px) {
+  .inputArea button {
+    padding: 14px 10px;
+    font-size: 13px;
+  }
+}
 
 .closePanelBtn {
   display: none;
 }
 
-@media (max-width: 767px) {
-
-.closePanelBtn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-end;
-  background: transparent;
-  border: 1px solid #555;
-  color: #aaa;
-  padding: 7px 14px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  margin-bottom: 16px;
+/* hide export btn by default — shown by JS only on last day of month */
+#exportBtn {
+  display: none;
 }
 
+/* hide assigned tasks btn — shown only to supervisors */
+#assignedTasksBtn {
+  display: none;
 }
 
-@media (max-width: 767px) {
-  .menuBtn {
-    top: 7% !important;
-    transform: translateY(-50%);
-  }
-}
 </style>
 </head>
 
-<body>    
+<body>
 
-<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<!-- Global overlay (closes any open panel) -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
 
-
+<!-- ===========================
+     LEFT PANEL — Tasks
+=========================== -->
 <div class="left">
 
-<button class="closePanelBtn" onclick="closePanel()">✕ Cerrar</button>
+  <button class="closePanelBtn" onclick="closePanel()">✕ Cerrar</button>
 
+  <div class="logoRow">
+    <button class="hamburgerBtn" onclick="toggleSlideMenu()" title="Menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="logo">TMK Agency</div>
+  </div>
+  <br><br>
+  <div class="user" id="userEmail"></div>
 
-<div class="logo">TMK Agency</div>
+  <h3 style="margin-bottom:14px;font-size:14px;color:#888;text-transform:uppercase;letter-spacing:1px;">Tareas</h3>
 
-<div class="user" id="userEmail"></div>
+  <div class="tasks" id="tasks"></div>
 
-<!-- 👇 AQUÍ -->
-<div class="logout">
-<button onclick="logout()">Cerrar sesión</button>
-<br>
-<button id="exportBtn" onclick="exportTasks()" style="margin-top: 20px;" >
-  📊 Exportar tareas del mes
-</button>
-
-<button style="margin-top: 20px;" 
-  id="assignedTasksBtn" 
-  onclick="openAssignedTasksPopup()">
-  👥 Ver tareas asignadas
-</button>
-
-</div>
-
-<h3>Tareas</h3>
-
-<div class="tasks" id="tasks"></div>
-
-<div class="add">
-<input id="taskInput" placeholder="Nueva tarea">
-<button onclick="addTask()">Agregar</button>
-</div>
+  <div class="add">
+    <input id="taskInput" placeholder="Nueva tarea">
+    <button onclick="addTask()">Agregar</button>
+  </div>
 
 </div>
 
+<!-- ===========================
+     RIGHT PANEL — Chat
+=========================== -->
 <div class="right">
 
   <div class="aiHeader">
 
-      <button class="taskBtn" onclick="openPanel()">☑ Tareas</button>
+    <!-- LEFT: Mobile task panel button -->
+    <button class="taskBtn" onclick="openPanel()">☑ Tareas</button>
 
-      <div class="title">Jean Paul — IA</div>
+    <!-- CENTER: Title -->
+    <div class="title">Jean Paul — IA</div>
 
-      <div class="menuBtn" onclick="toggleMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-      </div>
+    <!-- RIGHT: Clock → history panel -->
+    <button class="clockBtn" onclick="toggleHistory()" title="Historial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+    </button>
 
   </div>
 
   <div class="chat" id="chat"></div>
 
   <div class="inputArea">
-      <input id="message" placeholder="Habla con Jean Paul...">
-      <button onclick="send()">Enviar</button>
+    <input id="message" placeholder="Habla con Jean Paul...">
+    <button onclick="send()">Enviar</button>
   </div>
 
 </div>
-<div id="historyPanel" class="historyPanel">
 
-    <div class="historyHeader">
-        <span>Historial</span>
-        <button onclick="closeMenu()">✕</button>
-    </div>
+<!-- ===========================
+     SLIDE MENU — Actions (LEFT)
+=========================== -->
+<div id="slideMenu" class="slideMenu">
 
-    <div id="historyList"></div>
+  <div class="slideMenuHeader">
+    <span>⚙ Opciones</span>
+    <button onclick="closeSlideMenu()">✕</button>
+  </div>
+
+  <div class="slideMenuBody">
+
+    <button class="slideMenuBtn" id="assignedTasksBtn" onclick="openAssignedTasksPopup(); closeSlideMenu()">
+      👥 Ver tareas asignadas
+    </button>
+
+    <button class="slideMenuBtn" id="exportBtn" onclick="exportTasks(); closeSlideMenu()">
+      📊 Exportar tareas del mes
+    </button>
+
+    <button class="slideMenuBtn danger" onclick="logout()">
+      🔓 Cerrar sesión
+    </button>
+
+  </div>
 
 </div>
-<script>
-  const API = "https://jean-paul.onrender.com"
- 
- const SUPERVISORS = [
-     "marcolamugue@tmk-agency.com",
-     "danielaalvarez@tmk-agency.com",
-     "fabricio@tmk-agency.com"
- ]
- 
- let userEmail = null
- 
- window.onload = async () => {
-     userEmail = localStorage.getItem("email")
- 
-     if(!userEmail){
-         alert("Debes iniciar sesión")
-         window.location = "login.html"
-         return
-     }
- 
-     document.getElementById("userEmail").innerText = "Usuario: " + userEmail
- 
-     // Mostrar botón solo a supervisores
-     if(SUPERVISORS.includes(userEmail)){
-         document.getElementById("assignedTasksBtn").style.display = "block"
-     }
- 
-     loadTasks()
-     checkEndOfMonth()
- 
-     try{
-         if(!sessionStorage.getItem("welcomeShown")){
-             const res = await fetch(API + "/welcome", {
-                 method:"POST",
-                 headers:{'Content-Type':'application/json'},
-                 body:JSON.stringify({ email: userEmail })
-             })
-             const data = await res.json()
-             addMessage(data.message, "aiMsg")
-             sessionStorage.setItem("welcomeShown", "true")
-         }
-     }catch(err){
-         console.error("Error welcome:", err)
-     }
- }
- 
- // ======================
- // FIN DE MES: ALERTA + BOTÓN
- // ======================
- 
- function checkEndOfMonth() {
-     const today = new Date()
-     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
- 
-     if(today.getDate() === lastDay) {
-         document.getElementById("exportBtn").style.display = "block"
- 
-         if(!sessionStorage.getItem("endOfMonthAlertShown")){
-             setTimeout(() => {
-                 addMessage("⚠️ Hoy es el último día del mes. Podés exportar el resumen de tareas del mes con el botón 'Exportar tareas del mes' en el panel izquierdo.", "aiMsg")
-                 sessionStorage.setItem("endOfMonthAlertShown", "true")
-             }, 1500)
-         }
-     }
- }
- 
- // ======================
- // EXPORTAR EXCEL
- // ======================
- 
- async function exportTasks() {
-     try {
-         const res = await fetch(API + "/get-tasks", {
-             method: "POST",
-             headers: {'Content-Type': 'application/json'},
-             body: JSON.stringify({ email: userEmail })
-         })
- 
-         const data = await res.json()
- 
-         if(!data.tasks || data.tasks.length === 0){
-             alert("No tenés tareas para exportar.")
-             return
-         }
- 
-         const now = new Date()
-         const month = now.toLocaleString('es-CR', { month: 'long' })
-         const year = now.getFullYear()
- 
-         let csv = `Reporte de Tareas — ${month} ${year}\n`
-         csv += `Usuario,${userEmail}\n\n`
-         csv += `N°,Tarea,Estado\n`
- 
-         data.tasks.forEach((t, i) => {
-             const estado = t.completed ? "Completada" : "Pendiente"
-             csv += `${i + 1},"${t.task.replace(/"/g, '""')}",${estado}\n`
-         })
- 
-         const completadas = data.tasks.filter(t => t.completed).length
-         const pendientes = data.tasks.filter(t => !t.completed).length
- 
-         csv += `\nTotal tareas,${data.tasks.length}`
-         csv += `\nCompletadas,${completadas}`
-         csv += `\nPendientes,${pendientes}`
- 
-         const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
-         const url = URL.createObjectURL(blob)
-         const a = document.createElement("a")
-         a.href = url
-         a.download = `tareas_${month}_${year}_${userEmail.split("@")[0]}.csv`
-         a.click()
-         URL.revokeObjectURL(url)
- 
-         addMessage(`✅ Archivo exportado: tareas de ${month} ${year}.`, "aiMsg")
- 
-     } catch(err) {
-         console.error(err)
-         alert("Error exportando tareas")
-     }
- }
- 
- // ======================
- // POPUP TAREAS ASIGNADAS
- // ======================
- 
- async function openAssignedTasksPopup() {
-     document.getElementById("assignedPopupOverlay").style.display = "flex"
-     document.getElementById("assignedTasksList").innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>Cargando...</p>"
- 
-     try {
-         const res = await fetch(API + "/get-assigned-tasks", {
-             method: "POST",
-             headers: {'Content-Type': 'application/json'},
-             body: JSON.stringify({ email: userEmail })
-         })
- 
-         const data = await res.json()
- 
-         const list = document.getElementById("assignedTasksList")
-         list.innerHTML = ""
- 
-         if(!data.tasks || data.tasks.length === 0){
-             list.innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>No has asignado tareas aún.</p>"
-             return
-         }
- 
-         // Agrupar por usuario
-         const grouped = {}
-         data.tasks.forEach(t => {
-             if(!grouped[t.assigned_to]) grouped[t.assigned_to] = []
-             grouped[t.assigned_to].push(t)
-         })
- 
-         Object.entries(grouped).forEach(([email, tasks]) => {
-             const userName = email.split("@")[0]
-             const completadas = tasks.filter(t => t.completed).length
-             const total = tasks.length
- 
-             const section = document.createElement("div")
-             section.style.cssText = "margin-bottom:20px;"
- 
-             section.innerHTML = `
-                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">
-                     <span style="font-weight:600;color:#d4af37;font-size:15px;">👤 ${userName}</span>
-                     <span style="font-size:12px;color:#888;">${completadas}/${total} completadas</span>
-                 </div>
-             `
- 
-             tasks.forEach(t => {
-                 const item = document.createElement("div")
-                 item.style.cssText = `
-                     display:flex;
-                     align-items:center;
-                     gap:10px;
-                     padding:10px 12px;
-                     border-radius:8px;
-                     margin-bottom:8px;
-                     background:${t.completed ? '#1a2a1a' : '#1e1e1e'};
-                     border-left:3px solid ${t.completed ? '#4caf50' : '#d4af37'};
-                 `
- 
-                 item.innerHTML = `
-                     <span style="font-size:16px;">${t.completed ? '✅' : '⏳'}</span>
-                     <div style="flex:1;">
-                         <div style="font-size:13px;color:${t.completed ? '#888' : '#fff'};${t.completed ? 'text-decoration:line-through;' : ''}">${t.task}</div>
-                         <div style="font-size:11px;color:#555;margin-top:2px;">${t.date}</div>
-                     </div>
-                     <span style="font-size:11px;padding:3px 8px;border-radius:12px;background:${t.completed ? '#1f3a1f' : '#2a2200'};color:${t.completed ? '#4caf50' : '#d4af37'};">
-                         ${t.completed ? 'Completada' : 'Pendiente'}
-                     </span>
-                 `
-                 section.appendChild(item)
-             })
- 
-             list.appendChild(section)
-         })
- 
-     } catch(err) {
-         console.error(err)
-         document.getElementById("assignedTasksList").innerHTML = "<p style='color:red;text-align:center;padding:20px;'>Error cargando tareas.</p>"
-     }
- }
- 
- function closeAssignedTasksPopup() {
-     document.getElementById("assignedPopupOverlay").style.display = "none"
- }
- 
- // Cerrar popup al hacer click fuera
- document.addEventListener("click", function(e) {
-     const overlay = document.getElementById("assignedPopupOverlay")
-     if(e.target === overlay) closeAssignedTasksPopup()
- })
- 
- // ======================
- // CHAT IA
- // ======================
- 
- async function send(){
-     const input = document.getElementById("message")
-     const msg = input.value.trim()
- 
-     if(!msg) return
- 
-     addMessage(msg, "userMsg")
-     input.value = ""
- 
-     try{
-         const res = await fetch(API+"/ai",{
-             method:"POST",
-             headers:{'Content-Type':'application/json'},
-             body:JSON.stringify({ message:msg, email:userEmail })
-         })
- 
-         const data = await res.json()
-         if(data.type === "image" && data.image_url) {
-    const chat = document.getElementById("chat")
-    const div = document.createElement("div")
-    div.className = "message aiMsg"
-    const img = document.createElement("img")
-    img.src = API + data.image_url
-    img.style.cssText = "max-width:100%;border-radius:8px;margin-top:6px;"
-    div.appendChild(img)
-    chat.appendChild(div)
-    chat.scrollTop = chat.scrollHeight
-} else {
-    addMessage(data.response || "Error en respuesta", "aiMsg")
-}
 
-loadTasks()
- 
-     }catch(err){
-         console.error(err)
-         addMessage("Error conectando con el servidor", "aiMsg")
-     }
- }
- 
- function addMessage(text, type){
-     const chat = document.getElementById("chat")
-     const div = document.createElement("div")
-     div.className = "message " + type
-     div.innerText = text
-     chat.appendChild(div)
-     chat.scrollTop = chat.scrollHeight
- }
- 
- // ======================
- // TASKS
- // ======================
- 
- async function loadTasks(){
-     try{
-         const res = await fetch(API+"/get-tasks",{
-             method:"POST",
-             headers:{'Content-Type':'application/json'},
-             body:JSON.stringify({email:userEmail})
-         })
- 
-         const data = await res.json()
-         const container = document.getElementById("tasks")
-         container.innerHTML = ""
- 
-         data.tasks.forEach(t => {
-             const div = document.createElement("div")
-             div.className = "task" + (t.completed ? " completed" : "")
-             div.innerHTML = `
-             <div class="task-left">
-                 <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
-                 <span>${t.task}</span>
-             </div>
-             <button onclick="removeTask(${t.id})">🗑</button>
-             `
-             container.appendChild(div)
-         })
- 
-     }catch(err){
-         console.error("Error cargando tareas:", err)
-     }
- }
- 
- async function addTask(){
-     const input = document.getElementById("taskInput")
-     const text = input.value.trim()
- 
-     if(!text){ alert("Escribe una tarea"); return }
- 
-     try{
-         const res = await fetch(API+"/add-task",{
-             method:"POST",
-             headers:{'Content-Type':'application/json'},
-             body:JSON.stringify({ email: userEmail, task: text })
-         })
- 
-         const data = await res.json()
- 
-         if(data.message !== "Tarea creada"){ alert("Error: " + data.message); return }
- 
-         input.value = ""
-         loadTasks()
- 
-     }catch(err){
-         console.error(err)
-         alert("Error agregando tarea")
-     }
- }
- 
- async function complete(id){
-     try{
-         await fetch(API+"/complete-task",{
-             method:"POST",
-             headers:{'Content-Type':'application/json'},
-             body:JSON.stringify({ task_id: id, email: userEmail })
-         })
-         loadTasks()
-     }catch(err){
-         console.error(err)
-     }
- }
- 
- async function removeTask(id){
-     try{
-         await fetch(API+"/delete-task",{
-             method:"POST",
-             headers:{'Content-Type':'application/json'},
-             body:JSON.stringify({ task_id: id, email: userEmail })
-         })
-         loadTasks()
-     }catch(err){
-         console.error(err)
-     }
- }
- 
- function logout(){
-     localStorage.removeItem("email")
-     window.location = "login.html"
- }
- 
- document.addEventListener("DOMContentLoaded", () => {
-     const input = document.getElementById("message")
-     if(input){
-         input.addEventListener("keydown", function(event) {
-             if (event.key === "Enter") { event.preventDefault(); send() }
-         })
-     }
- })
- 
- // History panel
- function toggleMenu() {
-     document.getElementById("historyPanel").classList.toggle("active")
-     if(document.getElementById("historyPanel").classList.contains("active")) loadHistory()
- }
- 
- function closeMenu() {
-     document.getElementById("historyPanel").classList.remove("active")
- }
- 
- async function loadHistory() {
-     try {
-         const res = await fetch(API + "/get-history", {
-             method: "POST",
-             headers: {'Content-Type': 'application/json'},
-             body: JSON.stringify({ email: userEmail })
-         })
-         const data = await res.json()
-         const list = document.getElementById("historyList")
-         list.innerHTML = ""
- 
-         data.history.forEach(h => {
-             const item = document.createElement("div")
-             item.className = "historyItem"
-             item.innerHTML = `
-                 <div class="historyContent">
-                     <div onclick="loadConversation(${h.id}, '${h.message.replace(/'/g,"\\'")}', '${h.response ? h.response.replace(/'/g,"\\'") : ""}')">
-                         <div class="historyDate">${h.date}</div>
-                         <div>${h.message.substring(0,50)}...</div>
-                     </div>
-                     <span class="deleteBtn" onclick="deleteHistory(${h.id})">🗑</span>
-                 </div>
-             `
-             list.appendChild(item)
-         })
-     } catch(err) {
-         console.error(err)
-     }
- }
- 
- function loadConversation(id, msg, res) {
-     addMessage(msg, "userMsg")
-     if(res) addMessage(res, "aiMsg")
-     closeMenu()
- }
- 
- async function deleteHistory(id) {
-     try {
-         await fetch(API + "/delete-history", {
-             method: "POST",
-             headers: {'Content-Type': 'application/json'},
-             body: JSON.stringify({ id: id, email: userEmail })
-         })
-         loadHistory()
-     } catch(err) {
-         console.error(err)
-     }
- }
- 
- function openPanel() {
-     document.querySelector(".left").classList.add("open")
-     document.getElementById("overlay").classList.add("active")
- }
- 
- function closePanel() {
-     document.querySelector(".left").classList.remove("open")
-     document.getElementById("overlay").classList.remove("active")
- }
- </script>
+<!-- ===========================
+     HISTORY PANEL (RIGHT)
+=========================== -->
+<div id="historyPanel" class="historyPanel">
 
- <!-- POPUP TAREAS ASIGNADAS -->
+  <div class="historyHeader">
+    <span>🕐 Historial</span>
+    <button onclick="closeHistory()">✕</button>
+  </div>
+
+  <div id="historyList"></div>
+
+</div>
+
+<!-- ===========================
+     POPUP — Tareas asignadas
+=========================== -->
 <div id="assignedPopupOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:5000; justify-content:center; align-items:center; padding:20px;">
   <div style="background:#111; border:1px solid #2a2a2a; border-radius:12px; width:100%; max-width:520px; max-height:80vh; display:flex; flex-direction:column; overflow:hidden;">
     
-    <!-- Header -->
     <div style="display:flex; justify-content:space-between; align-items:center; padding:18px 20px; border-bottom:1px solid #2a2a2a;">
       <span style="font-weight:600; color:#d4af37; font-size:16px;">👥 Tareas asignadas</span>
-      <button onclick="closeAssignedTasksPopup()" style="background:none; border:1px solid #555; color:#aaa; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:13px;">✕ Cerrar</button>
+      <button onclick="closeAssignedTasksPopup()" style="background:none; border:1px solid #555; color:#aaa; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:13px; font-family:Poppins;">✕ Cerrar</button>
     </div>
 
-    <!-- Lista -->
     <div id="assignedTasksList" style="overflow-y:auto; padding:16px; flex:1;"></div>
 
   </div>
 </div>
- </body>
+
+<script>
+  const API = "https://jean-paul.onrender.com"
+ 
+  const SUPERVISORS = [
+      "marcolamugue@tmk-agency.com",
+      "danielaalvarez@tmk-agency.com",
+      "fabricio@tmk-agency.com"
+  ]
+ 
+  let userEmail = null
+ 
+  window.onload = async () => {
+      userEmail = localStorage.getItem("email")
+ 
+      if(!userEmail){
+          alert("Debes iniciar sesión")
+          window.location = "login.html"
+          return
+      }
+ 
+      document.getElementById("userEmail").innerText = "Usuario: " + userEmail
+ 
+      if(SUPERVISORS.includes(userEmail)){
+          document.getElementById("assignedTasksBtn").style.display = "flex"
+      }
+ 
+      loadTasks()
+      checkEndOfMonth()
+ 
+      try{
+          if(!sessionStorage.getItem("welcomeShown")){
+              const res = await fetch(API + "/welcome", {
+                  method:"POST",
+                  headers:{'Content-Type':'application/json'},
+                  body:JSON.stringify({ email: userEmail })
+              })
+              const data = await res.json()
+              addMessage(data.message, "aiMsg")
+              sessionStorage.setItem("welcomeShown", "true")
+          }
+      }catch(err){
+          console.error("Error welcome:", err)
+      }
+  }
+ 
+  // ======================
+  // FIN DE MES
+  // ======================
+ 
+  function checkEndOfMonth() {
+      const today = new Date()
+      const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+ 
+      if(today.getDate() === lastDay) {
+          document.getElementById("exportBtn").style.display = "flex"
+ 
+          if(!sessionStorage.getItem("endOfMonthAlertShown")){
+              setTimeout(() => {
+                  addMessage("⚠️ Hoy es el último día del mes. Podés exportar el resumen de tareas del mes con el botón 'Exportar tareas del mes' en el menú.", "aiMsg")
+                  sessionStorage.setItem("endOfMonthAlertShown", "true")
+              }, 1500)
+          }
+      }
+  }
+ 
+  // ======================
+  // EXPORTAR EXCEL
+  // ======================
+ 
+  async function exportTasks() {
+      try {
+          const res = await fetch(API + "/get-tasks", {
+              method: "POST",
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ email: userEmail })
+          })
+ 
+          const data = await res.json()
+ 
+          if(!data.tasks || data.tasks.length === 0){
+              alert("No tenés tareas para exportar.")
+              return
+          }
+ 
+          const now = new Date()
+          const month = now.toLocaleString('es-CR', { month: 'long' })
+          const year = now.getFullYear()
+ 
+          let csv = `Reporte de Tareas — ${month} ${year}\n`
+          csv += `Usuario,${userEmail}\n\n`
+          csv += `N°,Tarea,Estado\n`
+ 
+          data.tasks.forEach((t, i) => {
+              const estado = t.completed ? "Completada" : "Pendiente"
+              csv += `${i + 1},"${t.task.replace(/"/g, '""')}",${estado}\n`
+          })
+ 
+          const completadas = data.tasks.filter(t => t.completed).length
+          const pendientes = data.tasks.filter(t => !t.completed).length
+ 
+          csv += `\nTotal tareas,${data.tasks.length}`
+          csv += `\nCompletadas,${completadas}`
+          csv += `\nPendientes,${pendientes}`
+ 
+          const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement("a")
+          a.href = url
+          a.download = `tareas_${month}_${year}_${userEmail.split("@")[0]}.csv`
+          a.click()
+          URL.revokeObjectURL(url)
+ 
+          addMessage(`✅ Archivo exportado: tareas de ${month} ${year}.`, "aiMsg")
+ 
+      } catch(err) {
+          console.error(err)
+          alert("Error exportando tareas")
+      }
+  }
+ 
+  // ======================
+  // POPUP TAREAS ASIGNADAS
+  // ======================
+ 
+  async function openAssignedTasksPopup() {
+      document.getElementById("assignedPopupOverlay").style.display = "flex"
+      document.getElementById("assignedTasksList").innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>Cargando...</p>"
+ 
+      try {
+          const res = await fetch(API + "/get-assigned-tasks", {
+              method: "POST",
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ email: userEmail })
+          })
+ 
+          const data = await res.json()
+          const list = document.getElementById("assignedTasksList")
+          list.innerHTML = ""
+ 
+          if(!data.tasks || data.tasks.length === 0){
+              list.innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>No has asignado tareas aún.</p>"
+              return
+          }
+ 
+          const grouped = {}
+          data.tasks.forEach(t => {
+              if(!grouped[t.assigned_to]) grouped[t.assigned_to] = []
+              grouped[t.assigned_to].push(t)
+          })
+ 
+          Object.entries(grouped).forEach(([email, tasks]) => {
+              const userName = email.split("@")[0]
+              const completadas = tasks.filter(t => t.completed).length
+              const total = tasks.length
+ 
+              const section = document.createElement("div")
+              section.style.cssText = "margin-bottom:20px;"
+ 
+              section.innerHTML = `
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">
+                      <span style="font-weight:600;color:#d4af37;font-size:15px;">👤 ${userName}</span>
+                      <span style="font-size:12px;color:#888;">${completadas}/${total} completadas</span>
+                  </div>
+              `
+ 
+              tasks.forEach(t => {
+                  const item = document.createElement("div")
+                  item.style.cssText = `
+                      display:flex;
+                      align-items:center;
+                      gap:10px;
+                      padding:10px 12px;
+                      border-radius:8px;
+                      margin-bottom:8px;
+                      background:${t.completed ? '#1a2a1a' : '#1e1e1e'};
+                      border-left:3px solid ${t.completed ? '#4caf50' : '#d4af37'};
+                  `
+ 
+                  item.innerHTML = `
+                      <span style="font-size:16px;">${t.completed ? '✅' : '⏳'}</span>
+                      <div style="flex:1;">
+                          <div style="font-size:13px;color:${t.completed ? '#888' : '#fff'};${t.completed ? 'text-decoration:line-through;' : ''}">${t.task}</div>
+                          <div style="font-size:11px;color:#555;margin-top:2px;">${t.date}</div>
+                      </div>
+                      <span style="font-size:11px;padding:3px 8px;border-radius:12px;background:${t.completed ? '#1f3a1f' : '#2a2200'};color:${t.completed ? '#4caf50' : '#d4af37'};">
+                          ${t.completed ? 'Completada' : 'Pendiente'}
+                      </span>
+                  `
+                  section.appendChild(item)
+              })
+ 
+              list.appendChild(section)
+          })
+ 
+      } catch(err) {
+          console.error(err)
+          document.getElementById("assignedTasksList").innerHTML = "<p style='color:red;text-align:center;padding:20px;'>Error cargando tareas.</p>"
+      }
+  }
+ 
+  function closeAssignedTasksPopup() {
+      document.getElementById("assignedPopupOverlay").style.display = "none"
+  }
+ 
+  document.addEventListener("click", function(e) {
+      const overlay = document.getElementById("assignedPopupOverlay")
+      if(e.target === overlay) closeAssignedTasksPopup()
+  })
+ 
+  // ======================
+  // CHAT IA
+  // ======================
+ 
+  async function send(){
+      const input = document.getElementById("message")
+      const msg = input.value.trim()
+ 
+      if(!msg) return
+ 
+      addMessage(msg, "userMsg")
+      input.value = ""
+ 
+      try{
+          const res = await fetch(API+"/ai",{
+              method:"POST",
+              headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({ message:msg, email:userEmail })
+          })
+ 
+          const data = await res.json()
+          if(data.type === "image" && data.image_url) {
+              const chat = document.getElementById("chat")
+              const div = document.createElement("div")
+              div.className = "message aiMsg"
+              const img = document.createElement("img")
+              img.src = API + data.image_url
+              img.style.cssText = "max-width:100%;border-radius:8px;margin-top:6px;"
+              div.appendChild(img)
+              chat.appendChild(div)
+              chat.scrollTop = chat.scrollHeight
+          } else {
+              addMessage(data.response || "Error en respuesta", "aiMsg")
+          }
+ 
+          loadTasks()
+ 
+      }catch(err){
+          console.error(err)
+          addMessage("Error conectando con el servidor", "aiMsg")
+      }
+  }
+ 
+  function addMessage(text, type){
+      const chat = document.getElementById("chat")
+      const div = document.createElement("div")
+      div.className = "message " + type
+      div.innerText = text
+      chat.appendChild(div)
+      chat.scrollTop = chat.scrollHeight
+  }
+ 
+  // ======================
+  // TASKS
+  // ======================
+ 
+  async function loadTasks(){
+      try{
+          const res = await fetch(API+"/get-tasks",{
+              method:"POST",
+              headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({email:userEmail})
+          })
+ 
+          const data = await res.json()
+          const container = document.getElementById("tasks")
+          container.innerHTML = ""
+ 
+          data.tasks.forEach(t => {
+              const div = document.createElement("div")
+              div.className = "task" + (t.completed ? " completed" : "")
+              div.innerHTML = `
+              <div class="task-left">
+                  <input type="checkbox" ${t.completed ? "checked":""} onclick="complete(${t.id})">
+                  <span>${t.task}</span>
+              </div>
+              <button onclick="removeTask(${t.id})">🗑</button>
+              `
+              container.appendChild(div)
+          })
+ 
+      }catch(err){
+          console.error("Error cargando tareas:", err)
+      }
+  }
+ 
+  async function addTask(){
+      const input = document.getElementById("taskInput")
+      const text = input.value.trim()
+ 
+      if(!text){ alert("Escribe una tarea"); return }
+ 
+      try{
+          const res = await fetch(API+"/add-task",{
+              method:"POST",
+              headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({ email: userEmail, task: text })
+          })
+ 
+          const data = await res.json()
+ 
+          if(data.message !== "Tarea creada"){ alert("Error: " + data.message); return }
+ 
+          input.value = ""
+          loadTasks()
+ 
+      }catch(err){
+          console.error(err)
+          alert("Error agregando tarea")
+      }
+  }
+ 
+  async function complete(id){
+      try{
+          await fetch(API+"/complete-task",{
+              method:"POST",
+              headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({ task_id: id, email: userEmail })
+          })
+          loadTasks()
+      }catch(err){
+          console.error(err)
+      }
+  }
+ 
+  async function removeTask(id){
+      try{
+          await fetch(API+"/delete-task",{
+              method:"POST",
+              headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({ task_id: id, email: userEmail })
+          })
+          loadTasks()
+      }catch(err){
+          console.error(err)
+      }
+  }
+ 
+  function logout(){
+      localStorage.removeItem("email")
+      window.location = "login.html"
+  }
+ 
+  document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("message")
+      if(input){
+          input.addEventListener("keydown", function(event) {
+              if (event.key === "Enter") { event.preventDefault(); send() }
+          })
+      }
+  })
+ 
+  // ======================
+  // SLIDE MENU (LEFT — Acciones)
+  // ======================
+
+  function toggleSlideMenu() {
+      const menu = document.getElementById("slideMenu")
+      const isOpen = menu.classList.contains("active")
+      closeAll()
+      if(!isOpen) {
+          menu.classList.add("active")
+          document.getElementById("overlay").classList.add("active")
+      }
+  }
+
+  function closeSlideMenu() {
+      document.getElementById("slideMenu").classList.remove("active")
+      document.getElementById("overlay").classList.remove("active")
+  }
+
+  // ======================
+  // HISTORY PANEL (RIGHT)
+  // ======================
+
+  function toggleHistory() {
+      const panel = document.getElementById("historyPanel")
+      const isOpen = panel.classList.contains("active")
+      closeAll()
+      if(!isOpen) {
+          panel.classList.add("active")
+          document.getElementById("overlay").classList.add("active")
+          loadHistory()
+      }
+  }
+
+  function closeHistory() {
+      document.getElementById("historyPanel").classList.remove("active")
+      document.getElementById("overlay").classList.remove("active")
+  }
+
+  function closeAll() {
+      document.getElementById("slideMenu").classList.remove("active")
+      document.getElementById("historyPanel").classList.remove("active")
+      document.getElementById("overlay").classList.remove("active")
+      closePanel()
+  }
+
+  async function loadHistory() {
+      try {
+          const res = await fetch(API + "/get-history", {
+              method: "POST",
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ email: userEmail })
+          })
+          const data = await res.json()
+          const list = document.getElementById("historyList")
+          list.innerHTML = ""
+ 
+          data.history.forEach(h => {
+              const item = document.createElement("div")
+              item.className = "historyItem"
+              item.innerHTML = `
+                  <div class="historyContent">
+                      <div onclick="loadConversation(${h.id}, '${h.message.replace(/'/g,"\\'")}', '${h.response ? h.response.replace(/'/g,"\\'") : ""}')">
+                          <div class="historyDate">${h.date}</div>
+                          <div>${h.message.substring(0,50)}...</div>
+                      </div>
+                      <span class="deleteBtn" onclick="deleteHistory(${h.id})">🗑</span>
+                  </div>
+              `
+              list.appendChild(item)
+          })
+      } catch(err) {
+          console.error(err)
+      }
+  }
+ 
+  function loadConversation(id, msg, res) {
+      addMessage(msg, "userMsg")
+      if(res) addMessage(res, "aiMsg")
+      closeHistory()
+  }
+ 
+  async function deleteHistory(id) {
+      try {
+          await fetch(API + "/delete-history", {
+              method: "POST",
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ id: id, email: userEmail })
+          })
+          loadHistory()
+      } catch(err) {
+          console.error(err)
+      }
+  }
+
+  // ======================
+  // MOBILE TASK PANEL
+  // ======================
+ 
+  function openPanel() {
+      document.querySelector(".left").classList.add("open")
+      document.getElementById("overlay").classList.add("active")
+  }
+ 
+  function closePanel() {
+      document.querySelector(".left").classList.remove("open")
+      // only remove overlay if no other panel is open
+      const slideOpen = document.getElementById("slideMenu").classList.contains("active")
+      const historyOpen = document.getElementById("historyPanel").classList.contains("active")
+      if(!slideOpen && !historyOpen) {
+          document.getElementById("overlay").classList.remove("active")
+      }
+  }
+</script>
+
+</body>
 </html>
