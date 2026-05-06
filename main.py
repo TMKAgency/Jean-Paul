@@ -1731,6 +1731,630 @@ Oso elaborado con cobija = https://buy.onvopay.com/live_IVmc86l0S1G8W7_yR1eqo9U5
 Asigna tareas cuando Marco o Daniela digan "Asigna una tarea a..." o "Ponle una tarea a..."
 
 
+LIBROS DE MARCA DE LAS MARCAS:
+
+DOCUMENTO 1: GUIDE LINE — Valle de Paz
+Archivo original: Guide_Line_Valle_de_Paz__2_.pdf
+
+LA MARCA
+Logotipo: Valle de Paz
+Subtítulo: CAMPOSANTO · FUNERARIA · CREMATORIO
+ÁREA DE PROTECCIÓN
+El área de protección corresponde a 1e, siendo e = altura de la letra "e" del logotipo.
+COLORES CORPORATIVOS
+Color 1:
+PANTONE P 105-16 U
+Web: #003A6E
+R=0  G=58  B=110
+C=97%  M=64%  Y=0%  K=45%
+Color 2:
+PANTONE P 106-16 U
+Web: #0060A1
+R=0  G=96  B=161
+C=97%  M=48%  Y=0%  K=17%
+Color 3:
+PANTONE P 113-13 U
+Web: #3B92CE
+R=59  G=146  B=206
+C=73%  M=30%  Y=0%  K=2%
+Color 4:
+PANTONE P 110-9 U
+Web: #C1D4E8
+R=193  G=212  B=232
+C=24%  M=7%  Y=0%  K=7%
+COLORES ASOCIADOS
+Color Asociado 1:
+PANTONE P 162-11 U
+Web: #B1B277
+R=177  G=178  B=119
+C=35%  M=20%  Y=60%  K=5%
+Color Asociado 2:
+PANTONE P 153-15 U
+Web: #3F5F3D
+R=63  G=95  B=61
+C=75%  M=40%  Y=80%  K=35%
+Color Asociado 3:
+PANTONE P 117-15 U
+Web: #136B86
+R=19  G=107  B=134
+C=85%  M=40%  Y=30%  K=20%
+Color Asociado 4:
+PANTONE P 123-10 U
+Web: #8AC0CB
+R=138  G=192  B=203
+C=50%  M=10%  Y=20%  K=0%
+Color Asociado 5:
+PANTONE P 101-16 U
+Web: #162338
+R=22  G=35  B=56
+C=100%  M=85%  Y=50%  K=55%
+MARCA VACIADA
+Versión del logotipo en blanco sobre fondos de color (cielo azul claro).
+MARCA BLANCO Y NEGRO
+Versión monocromática del logotipo en negro sobre fondo blanco.
+TIPOGRAFÍA
+Fuentes del sistema tipográfico:
+— Barroque
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— AB Abril Fatface
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Cookie
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Montserrat
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Edwardian Script
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Open Sans Light
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Montserrat SemiBold
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Open Sans
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Montserrat ExtraBold
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+— Open Sans Extra Bold
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+abcdefghijklmnñopqrstuvwxyz
+1234567890(!@#$&,?:;)
+ 
+DOCUMENTO 2: LIBRO DE MARCA — Valle de Paz
+Archivo original: LIBRO_DE_MARCA_VALLE.pdf
+
+Introducción
+Valle de Paz proyecta su imagen al exterior y a las personas que la componen de forma comunicativa.
+El estilo de la empresa, la consistencia en la forma y la estabilidad en la comunicación empresarial determinan la personalidad de la empresa y hacen que la identidad corporativa sea reconocible.
+El propósito de este manual es describir de manera clara e inequívoca el isologo de Valle de Paz y explicar cómo se debe desarrollar este isologo en las distintas aplicaciones de comunicación que requiere la empresa, internos y externos.
+Este manual tiene como objetivo capacitar a todos los responsables del desarrollo y representación de imágenes de Valle de Paz para estandarizar, como también unificar parámetros gráficos de manera uniforme. Se debería asegurar de que Valle de Paz cuente con una imagen uniforme, atractiva y fácilmente reconocible, al tiempo que optimiza su eficiencia comunicativa.
+Quiénes Somos
+SOMOS UNA EMPRESA 100% COSTARRICENSE
+Contamos con más de 35 años en el mercado Nacional, siendo la única empresa con múltiples y completos servicios exequiales a nivel nacional.
+Nuestros camposantos son un equilibrio armonioso con el ambiente. Además, nuestras funerarias modernas y elegantes hacen que la despedida sea acogedora y familiar.
+Grupo Valle de Paz es una empresa 100% costarricense que cuenta con 28 años de experiencia en servicios fúnebres. Nuestros camposantos son el reflejo de la experiencia que ha adquirido nuestra empresa.
+Hemos innovado el concepto de camposanto, guardando un equilibrio armonioso con el ambiente. Además somos una empresa líder en Cartago, donde creamos el primer Cementerio Privado de la provincia.
+Sin duda alguna, le atenderemos con el mayor afecto y profesionalismo. Somos una empresa que nos adaptamos a las necesidades de la población costarricense.
+Visión
+Siempre de la mano con nuestros principios, nuestra visión es ser la empresa líder en el sector funerario de Costa Rica y la Región Centroamericana, con el mejor servicio al alcance de empresas y familias.
+Misión
+Brindar un servicio de calidad a las familias asociadas a nuestra institución de tal manera que sientan una cálida ayuda en los momentos más difíciles.
+Valores
+1. Solidaridad
+2. Honestidad
+3. Respeto
+4. Responsabilidad
+5. Trabajo en equipo
+Imagotipo
+La marca de Valle de Paz se configura como un imagotipo basado en la tipografía Edwardian Script, una tipografía manuscrita junto a la forma abstracta de una paloma cuya silueta simula la paloma de paz.
+El trazo en manuscrita transmite afecto, un alto nivel de creatividad, elegancia y sofisticación.
+Composición Del Imagotipo:
+Isotipo  +  Logotipo (Valle de Paz)  +  Logotipo (CAMPOSANTO · FUNERARIA · CREMATORIO)
+Espacio de Seguridad
+Aquí se presenta el espacio delimitado por unos márgenes en torno al imagotipo que debe ser siempre respetado y quedar libre de la intrusión de otros elementos gráficos para asegurar su legibilidad y evitar así una distracción visual.
+Si no cumple las disposiciones, el trabajo debe de ser inválido y no debe ser invadido.
+El área queda definida por los márgenes expuestos en el ejemplo: margen de 1x a cada lado (donde x = ancho de referencia del isotipo).
+Imagotipo Especial
+La marca de Valle de Paz se configura como un imagotipo basado en la tipografía Edwardian Script, una tipografía manuscrita junto a la forma abstracta de una paloma cuya silueta simula al ave de paz.
+El trazo en manuscrita transmite afecto, un alto nivel de creatividad, elegancia y sofisticación.
+Los isologos aquí presentes son variantes del isologo oficial que se deben emplear si se presenta una fecha conmemorativa o un evento especial.
+— Diciembre: Navidad
+— Noviembre: Movember
+— Octubre: Cáncer de mama
+Cromática: Blanco y Negro
+Son las versiones monocromáticas del imagotipo de color. Lo monocromático implica un solo color en todo el diseño del isologo.
+No contiene otros efectos, sombras o formas más que el color seleccionado. Es la versión del isologo que, por necesidades de reproducción o de aplicación, se reproduce únicamente como una mancha continua, sin graduaciones ni sombreados.
+Cromática: Escala de Grises
+Es el sistema ordenado y gradual que cubre un rango limitado de valores de luminosidad entre el blanco, el gris y el negro.
+El número de valores que abarcan las escalas de grises es variable. La escala de grises empleada aquí es de 9 valores propuesta por Denman Ross en 1907.
+Es una herramienta de referencia para familiarizarse con las gradaciones de grises entre el blanco y el negro, percibir el valor de un color independientemente de su tono y medir los valores reales del modelo que se está presentando debido al efecto de contraste.
+Para evitar que cuando un tono claro y otro oscuro entran en contacto se produzca una ilusión óptica que modifique el grado de luminosidad.
+Cromática: Opacidad
+Aquí se presenta una escala de 9 para las opacidades admitidas para el imagotipo de Valle de Paz para su empleo en sus diferentes soportes.
+Es importante considerar que la opacidad se está remitiendo a una escala y no a condiciones excluyentes. Esto significa que puede tener distintos grados.
+Cromática: Aplicación en Fondos
+Es importante aclarar que el imagotipo de Valle de Paz, a la hora de colocarse sobre sus diferentes soportes, si su imagen se puede ver confusa o ininteligible, debe emplearse un fondo el cual ayude a su visualización.
+Usos Correctos
+Para la correcta aplicación de la identidad corporativa en los diferentes soportes es fundamental mantener la uniformidad de sus características técnicas. Para conseguir este propósito es imprescindible, entre otras cuestiones:
+— El empleo del logo.
+— El empleo del imagotipo sin el texto que describe los servicios que son brindados.
+— El empleo del isotipo.
+Usos Incorrectos
+Para la correcta aplicación de la identidad corporativa en los diferentes soportes es fundamental mantener la uniformidad de sus características técnicas. Para conseguir este propósito es imprescindible, entre otras cuestiones:
+— No alterar ni modificar sus proporciones, de manera que se deforme.
+— No aplicar difuminados ni degradados que contorneen la marca.
+— No sombrear.
+— No modificar por separado los elementos de la marca.
+— No alterar colores.
+Construcción del Imagotipo: Cuadrícula
+Es una herramienta que está destinada a ayudar a crear formas con armonía geométrica en el proceso de creación del imagotipo. Esta permite darle un enfoque para crear algo simple y atemporal.
+Esta cuadrícula es hecha a base de una grilla cuadrada, incluyen líneas para alturas, espaciados entre elementos y espacios en blanco.
+El factor común en esta retícula es que emplean una clase de enfoque matemático donde se ayuda al espacio en blanco y espacio lleno usando las ubicaciones a lo largo de la retícula en el proceso de diseño del isologo.
+Construcción del Imagotipo: Tamaño Máximo y Tamaño Mínimo
+Tamaños de imagotipo para imprimir:
+Un imagotipo de 500px o más para imprimir pequeños y una resolución de 1024px o más para impresiones de gran tamaño.
+Las dimensiones óptimas para imagotipo para páginas de medios sociales es de 1024 x 512 px.
+Facebook:
+Publicaciones de enlace: 1200 x 628 px
+Publicaciones de imagen: 1200 x 630 px o 1200 x 1200 px
+Imagen de cubierta: 820 x 312 px
+Perfil de imagen: 170 x 170 px
+Twitter:
+Publicaciones de imagen: 1024 x 675 px
+Imagen de cubierta: 1500 x 500 px
+Perfil de imagen: 400 x 400 px
+Instagram:
+Publicaciones de imagen: 1080 x 1080 px
+Perfil de imagen: 110 x 110 px
+YouTube:
+Imagen en miniatura: 1280 x 720 px
+Imagen de cubierta: 2560 x 1440 px
+Perfil de imagen: 800 x 800 px
+Pinterest:
+Publicaciones de imagen: 1000 x 1500 px
+Perfil de imagen: 240 x 240 px
+LinkedIn:
+Publicaciones de enlace: 1200 x 628 px
+Publicaciones de imagen: 1200 x 1200 px
+Imagen de cubierta: 1584 x 768 px
+Perfil de imagen: 300 x 300 px
+Tamaños para sitio web:
+250 x 100 px
+Para diseño horizontal: 250 x 150 px, 350 x 75 px, 400 x 100 px
+Para diseño vertical: 160 x 160 px
+Tamaños Favicon: 16 x 16 px, 32 x 32 px, 48 x 48 px
+Color Corporativo
+Color 1:
+#04328C
+RGB 4, 50, 140 — HSV 220, 97, 55
+CMYK 97, 64, 0, 45 — LAB 24, 24, -53
+Color 2:
+#076ED3
+RGB 7, 110, 211 — HSV 210, 97, 83
+CMYK 97, 48, 0, 17 — LAB 47, 13, -59
+Color 3:
+#45B0FB
+RGB 69, 176, 251 — HSV 205, 73, 98
+CMYK 73, 30, 0, 2 — LAB 69, -6, -46
+Color 4:
+#B4DCED
+RGB 180, 220, 237 — HSV 198, 24, 93
+CMYK 24, 7, 0, 7 — LAB 86, -9, -13
+Tipografía Corporativa
+La tipografía corporativa asociada a la marca en sus aplicaciones logo-eslogan son tipografías tipo manuscrita.
+La tipografía Edwardian Script tiene un estilo formal y elegante que la hace apta para propósitos personales, profesionales o de negocios. La fuente tiene la apariencia de letras formadas con una pluma de punto de acero flexible, y la parte del cuerpo de la letra tiene trazos delgados y gruesos para reproducir el estilo de un instrumento de escritura variando la presión.
+La tipografía Baroque Script tiene un estilo formal y elegante que la hace apta para propósitos personales, profesionales o de negocios. La fuente tiene la apariencia de letras formadas con una pluma de punto.
+— Eslogan: Baroque Script
+— Logotipo: Edwardian Script
+Tipografía Administrativa
+Las tipografías que se recomiendan para uso interno deben estar disponibles para todos los empleados y ser de gran legibilidad.
+— Arial 13 pt
+— Calibri 13 pt
+— Times New Roman 13 pt
+— Myriad Pro 13 pt
+Tipografía Publicitaria
+Para su uso en las publicaciones y en el material publicitario se propone el uso de las tipografías Print en sus variantes al igual que la tipografía Montserrat.
+— Montserrat Semibold
+— Montserrat Regular
+— Print Bold OT
+— Print Clearly OT
+— Tw Cen MT Condensed
+— Cookie
+Entidad Corporativa
+Aquí se presentan todos los elementos gráficos utilizados para la comunicación o marketing. A continuación se recogen los elementos de papelería comercial y también los elementos más comunes de papelería interna.
+Elementos de papelería y aplicaciones:
+— Tarjeta de presentación
+— Gafete
+— Sobre corporativo
+— Tarjeta de Asociado
+— Carpeta
+— Placas
+— Tarjeta de condolencias
+— Tarjeta de agradecimiento
+— Hoja Membretada
+— Nota interna
+— Esquela
+— Certificados
+— Formulario
+— Separador de libro
+Artículos Promocionales:
+— Alfombrillas
+— USB
+— Bolígrafos, lapiceros, rotuladores
+— Estuches
+— Vasos, tazas
+— Mochilas o bolsa
+— Maletines
+— Paraguas
+— Maletas
+— Llavero
+Vestuario y Señalización
+Camisas:
+La camiseta debe portar el logo a nivel de pecho, justo al lado del corazón. Debe ser de los colores azul, blanco y celeste, de tipo polo.
+Trajes:
+La organización proyecta su imagen al exterior y a las personas que la componen de forma comunicativa.
+Gorra de Chofer:
+La organización proyecta su imagen al exterior y a las personas que la componen de forma comunicativa.
+Gabacha:
+La organización proyecta su imagen al exterior y a las personas que la componen de forma comunicativa.
+Vehículos:
+La organización proyecta su imagen al exterior y a las personas que la componen de forma comunicativa.
+Ventanas:
+La organización proyecta su imagen al exterior y a las personas que la componen de forma comunicativa.
+Responsabilidad Social
+La responsabilidad social es un término que se refiere a la carga, compromiso u obligación, de los miembros de una sociedad ya sea como individuos o como miembros de algún grupo, tanto entre sí como para la sociedad en su conjunto.
+El concepto introduce una valoración positiva o negativa al impacto que una decisión tiene en la sociedad. Esa valorización puede ser tanto ética como legal, etc.
+Generalmente se considera que la responsabilidad social se diferencia de la responsabilidad política porque no se limita a la valoración del ejercicio del poder a través de una autoridad estatal.
+La responsabilidad social es la teoría ética o ideológica de que una entidad ya sea un gobierno, corporación, organización o individuo tiene una responsabilidad hacia la sociedad.
+Esta responsabilidad puede ser "negativa", significando que hay responsabilidad de abstenerse de actuar (actitud de "abstención") o puede ser "positiva", significando que hay una responsabilidad de actuar (actitud proactiva).
+Programas de Responsabilidad Social
+Homenajes de Amor®
+Eventos para despedir a tu ser querido.
+Homenaje de Esperanza
+Campaña de ayuda social para la entrega de comestibles.
+Recuerdos de Amor
+Homenaje virtual para tu ser querido.
+Por una Vida Extraordinaria
+Eventos sin fines de lucro para ayudar a las fundaciones.
+Cuando la Vida Continúa
+Talleres de duelo, charlas para adultos mayores y niños, grabadas y transmitidas.
+Tiempo de Recordar
+Prevención y seguridad vial.
+Memorias de Amor
+Familias que han perdido a un ser querido.
+Tiempo de Amor
+Responsabilidad social referida a adultos mayores.
+ 
+DOCUMENTO 3: GUÍA DE USO DE MARCA — Escapaditas Planes Vacacionales (2024)
+Archivo original: GUIA-GRAFICA-ESCAPADITAS-24.pdf
+
+Logotipo — Colores
+El logotipo de Escapaditas Planes Vacacionales se presenta en tres formatos de color:
+— CMYK
+— RGB
+— PANTONE
+Logotipo — Blanco y Negro
+Variante monocromática del logotipo. Se presentan dos versiones: logotipo blanco sobre fondo negro, y logotipo negro sobre fondo gris claro.
+Área de Respeto
+Respetar el área visual del logotipo es importante y ningún otro elemento gráfico debe ocupar dicho espacio. Para determinar su área mínima de protección se toma como medida de referencia el área superior (marcado en magenta) de la letra "a" de Escapaditas en el logotipo, ubicándola de forma horizontal a su derecha e izquierda y en forma vertical arriba y abajo.
+Tamaño Mínimo Impreso
+Tamaño mínimo de impresión: 4 cm de base.
+Lo que NO hay que hacer — Ejemplos de Mal Uso
+El logotipo representa la marca y el producto en sí y debe reproducirse correctamente con máxima atención al detalle. El logotipo no puede alterarse o manipularse de maneras no establecidas en esta guía visual.
+Ejemplos de mal uso:
+— Cambiar los colores corporativos por colores no autorizados.
+— Modificar las proporciones del logotipo (estirar o comprimir).
+— Cambiar la tipografía del logotipo.
+Tipografía
+Fuentes Primarias:
+— Cream Cake: Se utiliza para enunciados y dar relevancia a textos con importancia.
+— HERO: Se utiliza en textos descriptivos y juego visual en encabezados.
+Fuentes Secundarias:
+— Montserrat: Se utilizan en textos descriptivos y juegos visuales secundarios.
+— Montserrat SemiBold: Se utilizan en textos descriptivos y juegos visuales secundarios.
+Colores
+Paleta Primaria:
+Color 1:
+HEX: #009bb1
+C=100  M=10  Y=30  K=0
+R=0  G=155  B=177
+PANTONE: 3135 C
+Color 2:
+HEX: #00466e
+C=100  M=70  Y=30  K=25
+R=0  G=70  B=110
+PANTONE: 295C
+Color 3:
+HEX: #ffd700
+C=0  M=15  Y=100  K=0
+R=255  G=215  B=0
+PANTONE: 123 C
+Paleta Según Zona a Promocionar:
+— Isla Chira: Tonos azul cielo
+— Santa María de Dota: Tonos verde
+— Tamarindo: Tonos naranja/terracota
+— Turrubares: Tonos verde lima
+Usos de la Paleta de Color — Ejemplos
+Los colores se aplican según la zona geográfica que se está promocionando:
+— Isla Chira: Fondo azul con tipografía en blanco.
+— Casa Tamarindo: Fondo naranja con detalles y tipografía en blanco.
+— Casa Turrubares: Fondo verde lima con tipografía en blanco.
+— Santa María de Dota: Fondo verde oscuro con tipografía en blanco.
+Datos de contacto que aparecen en los materiales: 7300-6140
+Fotografía — Estilo y Uso
+Las imágenes usadas deben ser de casas reales o imágenes de stock referentes a las zonas indicadas, o bien personas o familias felices disfrutando.
+Tipo de Imágenes:
+— Casas: Fotografías de piscinas, interiores (sala-comedor), habitaciones.
+— Paisajes: Vistas aéreas de la Isla Chira, playas, árboles.
+— Disfrutando: Familias con niños, surfistas, parejas en paisaje de montaña.
+ 
+DOCUMENTO 4: MANUAL DE IDENTIDAD CORPORATIVA — Coopeprofa (Cooperativa de Protección Familiar)
+Archivo original: LIBRO_DE_MARCA_COOPEPROFA.pdf
+Versión 3.0 — Mayo 2024
+
+Introducción
+Somos una cooperativa abierta a todos los sectores que les brindamos la posibilidad de obtener servicios, asistencias médicas, servicios odontológicos, consultas legales, asistencia nutricional, psicológica, coberturas para mascotas, asistencia funeraria, turismo nacional y muchos beneficios más.
+Trabajamos para transformar el bienestar económico, social y familiar, para lograr un impacto positivo en la sociedad y el núcleo familiar.
+Para nosotros sus metas y sueños son importantes, por eso trabajamos juntos.
+Misión
+Convertirnos en la cooperativa líder en atención al cliente y experiencia de afiliación, ofreciendo una atención excepcional, ágil, personalizada y en tiempo récord en cada interacción, asegurando así una experiencia única y satisfactoria.
+Visión
+Crear un ambiente donde nuestros afiliados encuentren apoyo, soluciones y momentos preciados junto a sus seres queridos. Nos esforzamos por ser el vínculo que fortalezca los lazos familiares, permitiendo que cada momento sea vivido y disfrutado al máximo.
+Valores
+— Equidad
+— Solidaridad
+— Honestidad
+— Actitud Receptiva
+— Responsabilidad Social
+— Respeto
+Historia
+En el corazón de Costa Rica, desde 1999, nació Coopemonse como respuesta a las necesidades económicas de su comunidad, fundada por colaboradores del Monseñor Sanabria. Hoy, renacida como Coopeprofa (Cooperativa de Protección Familiar) desde hace 4 años, en estrecha colaboración con nuestra empresa hermana, Valle de Paz, nos hemos convertido en una referencia nacional en variadas asistencias para el disfrute de toda la familia.
+Valle de Paz, con más de 38 años de historia, símbolo de calidad y respaldo en el país. Con más de 150 colaboradores, una red de ocho camposantos, un crematorio para personas y otro para mascotas, y doce funerarias estratégicamente ubicadas, con una cobertura en todo el territorio nacional.
+Nuestros camposantos son oasis de paz en armonía con la naturaleza, mientras que nuestras modernas funerarias brindan un ambiente acogedor en momentos difíciles. Nos destacamos en el mercado por nuestra oferta completa de servicios, desde sepulturas hasta cremación, servicios de velación a domicilio y más.
+Más allá de los servicios funerarios, nos comprometemos a brindar apoyo emocional y social a nuestras familias, con talleres de duelo y grupos de apoyo dirigidos por expertos en el manejo del duelo. En Grupo Valle de Paz, transformamos los momentos difíciles en experiencias en las que encontrar compañía y soluciones esenciales.
+Slogan
+VIVE, DISFRUTA, EN FAMILIA...
+Planes familiares y para mascotas
+Nuestro lema "Vive, disfruta en familia..." captura nuestra dedicación a enriquecer la vida de nuestros afiliados. Queremos que vivan plenamente, disfruten momentos en familia y cuiden de sus seres queridos, incluidas sus mascotas. Nuestros planes están diseñados para promover la unión familiar y brindar protección integral a todos los miembros del hogar, reflejando nuestro compromiso con el bienestar y la felicidad de quienes confían en nosotros.
+Logo
+Logo Principal — Imagotipo:
+Nombre: Cooperativa de Protección Familiar
+El logo principal es el imagotipo completo con símbolo y texto.
+Logo Secundario — Imagotipo:
+Versión compacta con el símbolo y el nombre en disposición diferente.
+Icono — Isotipo:
+Solo el símbolo (isotipo) sin texto.
+Márgenes de Seguridad
+Los espacios alrededor del logo son esenciales para que se vea bien en todas partes. Definir estos espacios adecuadamente asegura que nada lo cubra o dificulte su visibilidad, manteniendo así la identidad de la marca y facilitando su reconocimiento en todos los usos.
+— Imagotipo en Papelería: Deja 1 cm de espacio libre alrededor al imprimirlo.
+— Imagotipo en Digital: Dejar un margen de 20 píxeles alrededor en sitios web o redes sociales para evitar que se superponga con otros elementos.
+— Imagotipo en Impresión de Gran Formato: Para vallas o lonas, dejar un margen de al menos 10 cm para que se vea bien desde lejos.
+— Imagotipo en Promocionales: En camisetas o tazas, deja un margen de 5 mm para que se vea bien, incluso en superficies curvas.
+Variantes de Color
+En esta sección de variaciones de color del logo, presentamos siete opciones: seis en tonos de azul y celeste, que simbolizan confianza y seguridad, y una en blanco, que representa pureza y transparencia. Estas versiones aseguran la versatilidad y coherencia del logo en diferentes contextos y fondos, reflejando nuestro compromiso con la claridad y honestidad en nuestros servicios de planes vitalicios y asistencias.
+Usos Correctos
+— En fondo oscuro, usa el logotipo blanco para mantener coherencia.
+— En fondo semioscuro, usa el logotipo blanco para mantener consistencia.
+— En fondo blanco, usa el imagotipo a color para destacarlo.
+En las imágenes, se permite utilizar transparencia color azul. Puedes experimentar con el imagotipo en blanco o en color, con un borde blanco, eligiendo el que se integre mejor con el diseño.
+Las imágenes se presentarán en escala de grises con opacidad en modo de luz suave (Soft Light), con un recuadro de los colores corporativos debajo de cada imagen. Selecciona el logotipo que mejor se adapte según la claridad del fondo en cada caso.
+Usos Incorrectos
+— Integrar el logotipo en un fondo que no se confunda con la paleta de colores corporativos.
+— Cambiar el orden distintivo e identificable de los colores del logo.
+— No cambies los colores de los logotipos usando aquellos que no sean los de la marca.
+— Evita la utilización del logo en un color que disminuya su visibilidad sobre el fondo.
+— Deformar, reflejar o inclinar los logotipos. Estas modificaciones pueden comprometer la coherencia visual, desfigurar los elementos distintivos del logotipo, disminuyendo su reconocimiento y el impacto en el público.
+— Aplicar un contorno de color diferente al blanco o añadir efectos como desvanecimiento, resplandor, sombreado o contorneado de vértices. Estas modificaciones pueden comprometer la coherencia y la integridad de la identidad visual de la marca.
+Interacción con Socios
+1. Espacio entre Logos:
+El margen entre los logos debe ser igual al ancho del símbolo similar a una flecha presente en el logotipo principal, tanto a lo largo como a lo ancho.
+2. Tamaño Relativo de los Logos:
+Asegurar que los logos tengan un tamaño similar y proporcional entre sí. En el caso de que el logotipo del socio sea alargado o circular se recomienda que su tamaño sea proporcional a la palabra "Cooperativa", en el logotipo original.
+3. Alineación y Distribución:
+Mantener una alineación y distribución adecuada dentro del espacio designado entre los logos para una presentación ordenada y equilibrada.
+4. Colores y Estilos:
+Evitar combinaciones de colores que causen conflictos visuales. Mantener la integridad de los estilos gráficos de cada logotipo sin alteraciones.
+5. Contexto de Uso:
+Adaptar la presentación de los logos al contexto específico de la aplicación, asegurando su claridad y legibilidad en medios digitales o impresos.
+6. Permisos y Acuerdos:
+Obtener los permisos necesarios y llegar a acuerdos sobre el uso compartido de los logos, respetando las normativas y directrices de cada empresa.
+Socios que se identifican en el material de co-branding:
+— Coope Pets
+— Cooperativa de Protección Familiar (Coopeprofa)
+— Escapaditas Planes Vacacionales
+— Valle de Paz
+ 
+DOCUMENTO 5: MANUAL DE MARCA — body Medical Esthetic Center (BMEC)
+Archivo original: LIBRO_DE_MARCA-BMEC__1_.pdf
+
+¿Qué Somos?
+Un centro estético que ve más allá de la estética tal cual. Buscamos el bienestar integral del paciente, elevando su imagen y empoderando su persona para que logre alcanzar un alto nivel de confianza.
+¿Qué Hacemos?
+Elevar la confianza de nuestros pacientes a través de procedimientos estéticos, seguros e innovadores.
+Misión
+Realzar la belleza y bienestar de cada persona tanto física como mentalmente mediante procedimientos estéticos seguros, innovadores y personalizados.
+Nuestro compromiso va más allá del tratamiento: ofrecemos un acompañamiento cercano y continuo, con seguimiento post-procedimiento, recordatorios de medicación y asesoría personalizada para asegurar resultados óptimos y una experiencia de cuidado integral.
+Visión
+Ser la clínica estética de referencia en Costa Rica por brindar una atención humana, cercana y transformadora, reconocida por nuestro seguimiento post-proceso único y por crear relaciones de confianza que perduran más allá del tratamiento, impulsando la belleza, la salud y la autoestima de nuestros clientes.
+Conceptualización del Logo — Ejes
+Movimiento:
+Representa evolución, un camino constante mas no igual.
+Brillo:
+Representa un sentimiento, cómo nos sentimos al salir de la clínica, plenos, brillantes, con una alta autoestima, listos para darlo todo.
+Estética:
+Nos guiamos bajo un parámetro, debemos hacer las cosas de una manera limpia, segura y profesional.
+Piel:
+Es nuestro lugar de trabajo, nuestra barrera protectora y es lo que más queremos cuidar. No importa el procedimiento, la piel siempre se ve involucrada y eso nos inspira a crear.
+Conceptualización del Logo — Isotipo
+El isotipo representa las tres capas de la piel. Las líneas en zigzag evocan su textura, así mismo el dinamismo y transformación de la esta, reflejando los cambios positivos que ofrece la clínica.
+Conceptualización del Logo — Tipografía
+Se utiliza una tipografía didona bold, que aporta sofisticación, fuerza visual y prestigio; una elección que posiciona a la clínica desde un lugar de seguridad y exclusividad.
+Nombre del logotipo: body Medical Esthetic Center
+Conceptualización del Logo
+La tipografía didona aporta sofisticación y prestigio, posicionando la marca con seguridad y confianza. El isotipo, inspirado en las tres capas de la piel, refuerza el enfoque humano y estético de la clínica. Juntos, construyen una identidad visual sólida, elegante y coherente con la misión de la clínica.
+Variantes de Color del Logo
+El logotipo se presenta sobre cuatro fondos diferentes:
+— Fondo blanco con logotipo en tono marrón cálido.
+— Fondo marrón oscuro (tono #9C826C) con logotipo en tono beige claro.
+— Fondo beige medio (tono #CCB8A2) con logotipo en blanco.
+— Fondo beige claro (tono #E5D5C3) con logotipo en marrón oscuro.
+Paleta de Colores
+Paleta Principal:
+— #E5D5C3 (beige muy claro)
+— #CCB8A2 (beige claro)
+— #D7C3AF (beige medio claro)
+— #9C826C (marrón beige)
+Paleta Secundaria:
+— #9E543F (terracota/óxido)
+— #000000 (negro)
+— #FFFFFF (blanco)
+Tipografía
+Masqualero — Para Titulares:
+Su contraste y fuerza visual la hacen ideal para jerarquizar la comunicación, diferenciando los titulares del resto de los textos.
+aA bB cC dD eE fF gG hH iI jJ kK lL mM nN ñÑ oO pP qQ rR sS tT uU vV wW xX yY zZ
+1234567890
+Helvetica Neue — Cuerpos de Texto:
+Para los textos secundarios, equilibra perfectamente la fuerza visual de la tipografía para titulares. Neutral y legible, permiten que los titulares brillen con elegancia, mientras que en párrafos y descripciones asegura una lectura clara y profesional.
+Puede utilizarse en cualquier estilo de la familia. De esta forma, la combinación transmite sofisticación sin perder funcionalidad.
+aA bB cC dD eE fF gG hH iI jJ kK lL mM nN ñÑ oO pP qQ rR sS tT uU vV wW xX yY zZ
+1234567890
+Usos Permitidos del Logo
+— Es permitido el uso del isotipo solo.
+— Es permitido el uso del logotipo solo.
+— Es permitido el uso del logo con nuestra paleta de colores.
+— Es permitido el uso de nuestro logo en versión negativo.
+— Es permitido el uso de nuestro logo en versión positivo.
+— Es permitido el uso del logo sobre imagen si hay buen contraste.
+Usos NO Permitidos del Logo
+— No está permitido el uso de bordes.
+— No está permitido el uso de otra paleta de colores.
+— No está permitido aplicar efectos tridimensionales o brillos al logo.
+— No está permitido el uso de texturas o gráficos dentro del logo.
+— No es permitido el uso del logotipo con alteraciones en la composición tipográfica.
+— No se permite el uso del logo sobre fondos que dificulten su lectura.
+Photo Mood
+Las imágenes y fotografías deben tener un look & feel limpio, con tonalidades cálidas.
+Con un enfoque artístico y detalles de los cuerpos, sus pieles y texturas.
+También podemos usar fotografías más conceptuales, siempre con un enfoque bello y estético.
+Iconografía
+La iconografía nos permite dividir entre las áreas y servicios de la clínica. Se pueden usar para dividir materiales, hacer stickers, usarlos como highlights para redes sociales y en los materiales que sean necesarios.
+Iconos por servicio:
+— Depilación láser
+— Inyectables
+— Lifting
+— Moldeadores
+— Baño femenino
+— Baño masculino
+ 
+DOCUMENTO 6: GUÍA / USO DE MARCA — Coope Pets (Memorial)
+Archivo original: LIBRO_DE_MARCA_MEMORIAL__1_.pdf
+
+Índice
+Páginas del documento: 2 — Logotipo / 2 — Variantes / 3 — Área de Respeto / 3 — Tamaño Mínimo Impreso / 4 — Lo que NO hay que hacer / 5 — (Más ejemplos) / 6 — Tipografías / 6 — Colores / 7 — Paleta de Colores / 7 — Usos Paleta / 8 — Fotografías / 9 — Iconografía / 10 — Diagramación Papelería / 11 — Diagramación Anuncios / 12 — Material Digital e Impreso
+Logotipo
+Logotipo principal de Coope Pets.
+Variantes del logotipo.
+Área de Respeto
+Respetar el área visual del logotipo es importante y ningún otro elemento gráfico debe ocupar dicho espacio. Para determinar su área mínima de protección se toma como medida de referencia la letra "P" de Pets en el logotipo, ubicándola de forma vertical a su derecha e izquierda y en forma horizontal arriba y abajo.
+Referencia de área de respeto:
+— P  Horizontal
+— P  Vertical
+Tamaño Mínimo Impreso
+Tamaño mínimo de impresión: 2 cm de base.
+Lo que NO hay que hacer
+El logotipo representa la marca y el producto en sí y debe reproducirse correctamente con máxima atención al detalle. El logotipo no puede alterarse o manipularse de maneras no establecidas en esta guía visual.
+(Ver ejemplos visuales de mal uso en el documento original.)
+Tipografías
+Fuentes Primarias:
+— Helvetica Bold: Se utiliza para enunciados y dar relevancia a textos con importancia.
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890!"·$%&/()=
+— Helvetica Regular: Se utiliza en textos descriptivos y juego visual en encabezados.
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890!"·$%&/()=
+— Helvetica Light: Se utiliza en textos descriptivos y juego visual en encabezados.
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890!"·$%&/()=
+Fuentes Secundarias:
+— Helvetica Neue Condensed Bold: Se utilizan en textos descriptivos y juegos visuales secundarios.
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890!"·$%&/()=
+— Helvetica Neue Medium:
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890!"·$%&/()=
+Paleta de Colores
+Paleta Primaria:
+AZUL — Pantone 654C
+C=100  M=80  Y=28  K=13
+R=25  G=65  B=112
+HEX: #193D70
+CELESTE — Pantone 2985C
+C=65  M=6  Y=11  K=0
+R=77  G=184  B=218
+HEX: #4DB8DA
+CREMA — Pantone 155C al 25%
+C=0  M=4  Y=12  K=0
+R=255  G=246  B=231
+HEX: #FFF6E7
+Paleta Secundaria:
+NEGRO — BLACK
+C=0  M=0  Y=0  K=100
+R=29  G=29  B=27
+HEX: #101018
+ORO — Pantone 110C
+C=24  M=31  Y=100  K=0
+R=206  G=169  B=7
+HEX: #CEA907
+GRIS — Pantone Cool Gray 9C
+C=0  M=0  Y=0  K=70
+R=112  G=111  B=111
+HEX: #706F6F
+GRIS CLARO — Pantone Cool Gray 1C
+C=0  M=0  Y=0  K=20
+R=218  G=218  B=218
+HEX: #DADADA
+Usos Paleta de Color
+(Ver ejemplos visuales de aplicación de la paleta de color en el documento original.)
+Fotografías — Estilo y Uso
+Las imágenes usadas deben contar con un tono emotivo y limpio, evocando calidez humana y sensibilidad. Se permite el uso de imágenes tanto de personas como de mascotas, siempre y cuando no incluyan escenas morbosas, indecorosas y/o indiscretas que afecten al público en general.
+En su mayoría se usan imágenes de bancos de fotos libres de derechos.
+Solamente se podrán utilizar imágenes propias de derecho cuando su dueño lo permita.
+Iconografía — Usos
+El uso de elementos gráficos está permitido, siempre y cuando se conserven las tipografías y colores de la marca, creando así iconos y enunciados que juegan el papel de logos secundarios.
+Planes e iconos identificados:
+— PLAN 1: PREVENTIVOS
+— PLAN 2: nubes
+— PLAN 3: PLANES
+— Icono: Perro nubes
+— Icono: Gato nubes
+Diagramación — Papelería
+Tarjeta de presentación (ejemplo):
+Nombre: Betzabé López Morice
+Puesto: Recepcionista
+Teléfono: 7099-5010
+Diagramación — Anuncios / Material Digital e Impreso
+(Ver ejemplos visuales de anuncios y material digital e impreso en el documento original.),
+
 
 
 
