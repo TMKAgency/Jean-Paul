@@ -596,7 +596,7 @@ body {
 
 /* hide export btn by default — shown by JS only on last day of month */
 #exportBtn {
-  display: none;
+  display: flex;
 }
 
 /* hide assigned tasks btn — shown only to supervisors */
@@ -780,9 +780,14 @@ body {
   // FIN DE MES
   // ======================
  
-  function checkEndOfMonth() {
-      const today = new Date()
-      const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+ function checkEndOfMonth() {
+    const today = new Date()
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+
+    document.getElementById("exportBtn").style.display = "flex"
+
+    if(today.getDate() === lastDay) 
+    {
  
       if(today.getDate() === lastDay) {
           document.getElementById("exportBtn").style.display = "flex"
@@ -795,7 +800,7 @@ body {
           }
       }
   }
- 
+} 
   // ======================
   // EXPORTAR EXCEL
   // ======================
