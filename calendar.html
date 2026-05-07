@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TMK Agency — Calendario</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(135deg, #050505, #0e0e0e);
+  color: white;
+}
+
+/* =====================
+   TOP BAR
+===================== */
+
+.topBar {
+  height: 60px;
+  background: #0f0f0f;
+  border-bottom: 1px solid #1f1f1f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.hamburgerBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 18px;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  border: none;
+  flex-shrink: 0;
+}
+
+.hamburgerBtn span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #d4af37;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.hamburgerBtn:hover span {
+  background: #f3d27a;
+}
+
+.topTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d4af37;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.backBtn {
+  background: none;
+  border: 1px solid #2a2a2a;
+  color: #888;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-size: 13px;
+  transition: 0.2s;
+  flex-shrink: 0;
+}
+
+.backBtn:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+/* =====================
+   CALENDAR WRAPPER
+===================== */
+
+.calendarWrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+}
+
+/* =====================
+   MONTH HEADER
+===================== */
+
+.monthHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.monthTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #d4af37;
+  text-transform: capitalize;
+}
+
+.navBtn {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  color: #ccc;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.navBtn:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+/* =====================
+   GRID
+===================== */
+
+.weekDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.weekDay {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 0;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.dayCell {
+  min-height: 90px;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.dayCell:hover {
+  border-color: #d4af37;
+  background: #181808;
+}
+
+.dayCell.empty {
+  background: transparent;
+  border-color: transparent;
+  cursor: default;
+}
+
+.dayCell.today {
+  border-color: #d4af37;
+  background: #181505;
+}
+
+.dayCell.today .dayNum {
+  background: #d4af37;
+  color: black;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dayNum {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ccc;
+  line-height: 1;
+}
+
+.dayCell.other-month .dayNum {
+  color: #333;
+}
+
+.eventDot {
+  font-size: 11px;
+  background: rgba(212,175,55,0.15);
+  border-left: 2px solid #d4af37;
+  color: #d4af37;
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* =====================
+   MODAL — Add event
+===================== */
+
+.modalOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 4000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modalOverlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal h3 {
+  color: #d4af37;
+  font-size: 16px;
+}
+
+.modal input, .modal textarea, .modal select {
+  width: 100%;
+  padding: 12px;
+  background: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: white;
+  font-family: Poppins;
+  font-size: 14px;
+  resize: none;
+}
+
+.modal input:focus, .modal textarea:focus {
+  outline: none;
+  border-color: #d4af37;
+}
+
+.modalBtns {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.modalBtns button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: Poppins;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.btnCancel {
+  background: #1e1e1e;
+  color: #aaa;
+  border: 1px solid #333 !important;
+}
+
+.btnCancel:hover {
+  border-color: #666 !important;
+  color: #fff;
+}
+
+.btnSave {
+  background: linear-gradient(135deg, #d4af37, #f3d27a);
+  color: black;
+  font-weight: 600;
+}
+
+.btnDelete {
+  background: rgba(192,57,43,0.15);
+  color: #e74c3c;
+  border: 1px solid #c0392b !important;
+}
+
+.btnDelete:hover {
+  background: rgba(192,57,43,0.3);
+}
+
+/* =====================
+   SLIDE MENU (LEFT)
+===================== */
+
+.slideMenu {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  background: #0d0d0d;
+  border-right: 1px solid #222;
+  transition: left 0.3s ease;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+}
+
+.slideMenu.active {
+  left: 0;
+}
+
+.slideMenuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #222;
+}
+
+.slideMenuHeader span {
+  font-weight: 600;
+  color: #d4af37;
+  font-size: 15px;
+}
+
+.slideMenuHeader button {
+  background: none;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.slideMenuHeader button:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+.slideMenuBody {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slideMenuBtn {
+  width: 100%;
+  padding: 13px 16px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-size: 14px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.2s;
+}
+
+.slideMenuBtn:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+  background: rgba(212,175,55,0.05);
+}
+
+.slideMenuBtn.danger {
+  border-color: #2a1a1a;
+  color: #c0392b;
+}
+
+.slideMenuBtn.danger:hover {
+  border-color: #c0392b;
+  background: rgba(192,57,43,0.05);
+}
+
+/* =====================
+   OVERLAY
+===================== */
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 3500;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* =====================
+   ASSIGNED TASKS POPUP
+===================== */
+
+#assignedPopupOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 5000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+
+@media (max-width: 767px) {
+  .calendarWrapper {
+    margin: 20px auto;
+    padding: 0 12px 40px;
+  }
+  .dayCell {
+    min-height: 60px;
+    padding: 5px;
+  }
+  .eventDot {
+    font-size: 9px;
+    padding: 1px 3px;
+  }
+  .dayNum {
+    font-size: 11px;
+  }
+  .weekDay {
+    font-size: 10px;
+  }
+  .monthTitle {
+    font-size: 17px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- ===========================
+     TOP BAR
+=========================== -->
+<div class="topBar">
+
+  <!-- LEFT: Hamburger -->
+  <button class="hamburgerBtn" onclick="toggleSlideMenu()" title="Menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- CENTER: Title -->
+  <div class="topTitle">📅 Calendario</div>
+
+  <!-- RIGHT: Back -->
+  <button class="backBtn" onclick="window.location='index.html'">← Inicio</button>
+
+</div>
+
+<!-- ===========================
+     CALENDAR
+=========================== -->
+<div class="calendarWrapper">
+
+  <div class="monthHeader">
+    <button class="navBtn" onclick="changeMonth(-1)">‹</button>
+    <div class="monthTitle" id="monthTitle"></div>
+    <button class="navBtn" onclick="changeMonth(1)">›</button>
+  </div>
+
+  <div class="weekDays">
+    <div class="weekDay">Dom</div>
+    <div class="weekDay">Lun</div>
+    <div class="weekDay">Mar</div>
+    <div class="weekDay">Mié</div>
+    <div class="weekDay">Jue</div>
+    <div class="weekDay">Vie</div>
+    <div class="weekDay">Sáb</div>
+  </div>
+
+  <div class="daysGrid" id="daysGrid"></div>
+
+</div>
+
+<!-- ===========================
+     MODAL — Add/Edit Event
+=========================== -->
+<div class="modalOverlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">📝 Nuevo evento</h3>
+
+    <input type="text" id="eventTitle" placeholder="Título del evento">
+    <textarea id="eventDesc" rows="3" placeholder="Descripción (opcional)"></textarea>
+    <input type="time" id="eventTime">
+
+    <div class="modalBtns">
+      <button class="btnCancel" onclick="closeModal()">Cancelar</button>
+      <button class="btnDelete" id="btnDelete" style="display:none" onclick="deleteEvent()">🗑 Eliminar</button>
+      <button class="btnSave" onclick="saveEvent()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     SLIDE MENU
+=========================== -->
+<div id="slideMenu" class="slideMenu">
+
+  <div class="slideMenuHeader">
+    <span>⚙ Opciones</span>
+    <button onclick="closeSlideMenu()">✕</button>
+  </div>
+
+  <div class="slideMenuBody">
+
+    <button class="slideMenuBtn" onclick="window.location='index.html'">
+      🏠 Inicio / Chat IA
+    </button>
+
+    <button class="slideMenuBtn" id="assignedTasksBtn" style="display:none" onclick="openAssignedTasksPopup(); closeSlideMenu()">
+      👥 Ver tareas asignadas
+    </button>
+
+    <button class="slideMenuBtn" id="exportBtn" onclick="exportEvents(); closeSlideMenu()">
+      📊 Exportar eventos del mes
+    </button>
+
+    <button class="slideMenuBtn danger" onclick="logout()">
+      🔓 Cerrar sesión
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ===========================
+     POPUP Tareas asignadas
+=========================== -->
+<div id="assignedPopupOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:5000; justify-content:center; align-items:center; padding:20px;">
+  <div style="background:#111; border:1px solid #2a2a2a; border-radius:12px; width:100%; max-width:520px; max-height:80vh; display:flex; flex-direction:column; overflow:hidden;">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:18px 20px; border-bottom:1px solid #2a2a2a;">
+      <span style="font-weight:600; color:#d4af37; font-size:16px;">👥 Tareas asignadas</span>
+      <button onclick="closeAssignedTasksPopup()" style="background:none; border:1px solid #555; color:#aaa; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:13px; font-family:Poppins;">✕ Cerrar</button>
+    </div>
+    <div id="assignedTasksList" style="overflow-y:auto; padding:16px; flex:1;"></div>
+  </div>
+</div>
+
+<script>
+
+const API = "https://jean-paul.onrender.com"
+
+const SUPERVISORS = [
+  "marcolamugue@tmk-agency.com",
+  "danielaalvarez@tmk-agency.com",
+  "fabricio@tmk-agency.com"
+]
+
+let userEmail = null
+let currentYear, currentMonth
+let events = {}         // { "YYYY-MM-DD": [ {title, desc, time}, ... ] }
+let selectedDate = null
+let editingIndex = null
+
+// ======================
+// INIT
+// ======================
+
+window.onload = () => {
+  userEmail = localStorage.getItem("email")
+  if(!userEmail){
+    alert("Debes iniciar sesión")
+    window.location = "login.html"
+    return
+  }
+
+  if(SUPERVISORS.includes(userEmail)){
+    document.getElementById("assignedTasksBtn").style.display = "flex"
+  }
+
+  loadEvents()
+
+  const now = new Date()
+  currentYear = now.getFullYear()
+  currentMonth = now.getMonth()
+  renderCalendar()
+}
+
+// ======================
+// EVENTS — localStorage
+// ======================
+
+function eventsKey() {
+  return "tmk_events_" + userEmail
+}
+
+function loadEvents() {
+  try {
+    const raw = localStorage.getItem(eventsKey())
+    events = raw ? JSON.parse(raw) : {}
+  } catch(e) {
+    events = {}
+  }
+}
+
+function saveEvents() {
+  localStorage.setItem(eventsKey(), JSON.stringify(events))
+}
+
+// ======================
+// CALENDAR RENDER
+// ======================
+
+function changeMonth(dir) {
+  currentMonth += dir
+  if(currentMonth > 11){ currentMonth = 0; currentYear++ }
+  if(currentMonth < 0){ currentMonth = 11; currentYear-- }
+  renderCalendar()
+}
+
+function renderCalendar() {
+  const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+  document.getElementById("monthTitle").innerText = monthNames[currentMonth] + " " + currentYear
+
+  const grid = document.getElementById("daysGrid")
+  grid.innerHTML = ""
+
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay()
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
+  const daysInPrev = new Date(currentYear, currentMonth, 0).getDate()
+
+  const today = new Date()
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`
+
+  // prev month padding
+  for(let i = 0; i < firstDay; i++){
+    const day = daysInPrev - firstDay + i + 1
+    const cell = document.createElement("div")
+    cell.className = "dayCell other-month"
+    cell.innerHTML = `<div class="dayNum">${day}</div>`
+    grid.appendChild(cell)
+  }
+
+  // current month days
+  for(let d = 1; d <= daysInMonth; d++){
+    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`
+    const cell = document.createElement("div")
+    cell.className = "dayCell" + (dateStr === todayStr ? " today" : "")
+    cell.onclick = () => openModal(dateStr)
+
+    cell.innerHTML = `<div class="dayNum">${d}</div>`
+
+    const dayEvents = events[dateStr] || []
+    dayEvents.slice(0, 3).forEach(ev => {
+      const dot = document.createElement("div")
+      dot.className = "eventDot"
+      dot.innerText = (ev.time ? ev.time + " " : "") + ev.title
+      cell.appendChild(dot)
+    })
+    if(dayEvents.length > 3){
+      const more = document.createElement("div")
+      more.className = "eventDot"
+      more.style.color = "#888"
+      more.innerText = `+${dayEvents.length - 3} más`
+      cell.appendChild(more)
+    }
+
+    grid.appendChild(cell)
+  }
+
+  // next month padding
+  const totalCells = firstDay + daysInMonth
+  const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7)
+  for(let i = 1; i <= remaining; i++){
+    const cell = document.createElement("div")
+    cell.className = "dayCell other-month"
+    cell.innerHTML = `<div class="dayNum">${i}</div>`
+    grid.appendChild(cell)
+  }
+}
+
+// ======================
+// MODAL
+// ======================
+
+function openModal(dateStr, index = null) {
+  selectedDate = dateStr
+  editingIndex = index
+
+  const parts = dateStr.split("-")
+  const d = new Date(parts[0], parts[1]-1, parts[2])
+  const label = d.toLocaleDateString("es-CR", { weekday:"long", day:"numeric", month:"long" })
+
+  document.getElementById("modalTitle").innerText = index !== null ? "✏️ Editar evento" : "📝 " + label
+
+  if(index !== null && events[dateStr] && events[dateStr][index]){
+    const ev = events[dateStr][index]
+    document.getElementById("eventTitle").value = ev.title || ""
+    document.getElementById("eventDesc").value = ev.desc || ""
+    document.getElementById("eventTime").value = ev.time || ""
+    document.getElementById("btnDelete").style.display = "inline-flex"
+  } else {
+    document.getElementById("eventTitle").value = ""
+    document.getElementById("eventDesc").value = ""
+    document.getElementById("eventTime").value = ""
+    document.getElementById("btnDelete").style.display = "none"
+  }
+
+  document.getElementById("modalOverlay").classList.add("active")
+  setTimeout(() => document.getElementById("eventTitle").focus(), 100)
+}
+
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("active")
+  selectedDate = null
+  editingIndex = null
+}
+
+function saveEvent() {
+  const title = document.getElementById("eventTitle").value.trim()
+  if(!title){ alert("Escribe un título"); return }
+
+  const ev = {
+    title: title,
+    desc: document.getElementById("eventDesc").value.trim(),
+    time: document.getElementById("eventTime").value
+  }
+
+  if(!events[selectedDate]) events[selectedDate] = []
+
+  if(editingIndex !== null){
+    events[selectedDate][editingIndex] = ev
+  } else {
+    events[selectedDate].push(ev)
+  }
+
+  saveEvents()
+  closeModal()
+  renderCalendar()
+}
+
+function deleteEvent() {
+  if(editingIndex === null || !events[selectedDate]) return
+  events[selectedDate].splice(editingIndex, 1)
+  if(events[selectedDate].length === 0) delete events[selectedDate]
+  saveEvents()
+  closeModal()
+  renderCalendar()
+}
+
+// close modal on overlay click
+document.getElementById("modalOverlay").addEventListener("click", function(e){
+  if(e.target === this) closeModal()
+})
+
+// ======================
+// EXPORT
+// ======================
+
+function exportEvents() {
+  const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+  const monthName = monthNames[currentMonth]
+  const prefix = `${currentYear}-${String(currentMonth+1).padStart(2,"0")}`
+
+  const monthEvents = Object.entries(events)
+    .filter(([date]) => date.startsWith(prefix))
+    .sort(([a],[b]) => a.localeCompare(b))
+
+  if(monthEvents.length === 0){
+    alert("No hay eventos en este mes.")
+    return
+  }
+
+  let csv = `Eventos — ${monthName} ${currentYear}\n`
+  csv += `Usuario,${userEmail}\n\n`
+  csv += `Fecha,Hora,Título,Descripción\n`
+
+  monthEvents.forEach(([date, evs]) => {
+    evs.forEach(ev => {
+      csv += `${date},${ev.time || "—"},"${ev.title.replace(/"/g,'""')}","${(ev.desc||"").replace(/"/g,'""')}"\n`
+    })
+  })
+
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement("a")
+  a.href = url
+  a.download = `calendario_${monthName}_${currentYear}_${userEmail.split("@")[0]}.csv`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+// ======================
+// SLIDE MENU
+// ======================
+
+function toggleSlideMenu() {
+  const menu = document.getElementById("slideMenu")
+  const isOpen = menu.classList.contains("active")
+  closeAll()
+  if(!isOpen){
+    menu.classList.add("active")
+    document.getElementById("overlay").classList.add("active")
+  }
+}
+
+function closeSlideMenu() {
+  document.getElementById("slideMenu").classList.remove("active")
+  document.getElementById("overlay").classList.remove("active")
+}
+
+function closeAll() {
+  document.getElementById("slideMenu").classList.remove("active")
+  document.getElementById("overlay").classList.remove("active")
+}
+
+// ======================
+// ASSIGNED TASKS POPUP
+// ======================
+
+async function openAssignedTasksPopup() {
+  document.getElementById("assignedPopupOverlay").style.display = "flex"
+  document.getElementById("assignedTasksList").innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>Cargando...</p>"
+
+  try {
+    const res = await fetch(API + "/get-assigned-tasks", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email: userEmail })
+    })
+    const data = await res.json()
+    const list = document.getElementById("assignedTasksList")
+    list.innerHTML = ""
+
+    if(!data.tasks || data.tasks.length === 0){
+      list.innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>No has asignado tareas aún.</p>"
+      return
+    }
+
+    const grouped = {}
+    data.tasks.forEach(t => {
+      if(!grouped[t.assigned_to]) grouped[t.assigned_to] = []
+      grouped[t.assigned_to].push(t)
+    })
+
+    Object.entries(grouped).forEach(([email, tasks]) => {
+      const userName = email.split("@")[0]
+      const completadas = tasks.filter(t => t.completed).length
+      const total = tasks.length
+
+      const section = document.createElement("div")
+      section.style.cssText = "margin-bottom:20px;"
+      section.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">
+          <span style="font-weight:600;color:#d4af37;font-size:15px;">👤 ${userName}</span>
+          <span style="font-size:12px;color:#888;">${completadas}/${total} completadas</span>
+        </div>
+      `
+
+      tasks.forEach(t => {
+        const item = document.createElement("div")
+        item.style.cssText = `
+          display:flex; align-items:center; gap:10px;
+          padding:10px 12px; border-radius:8px; margin-bottom:8px;
+          background:${t.completed ? '#1a2a1a' : '#1e1e1e'};
+          border-left:3px solid ${t.completed ? '#4caf50' : '#d4af37'};
+        `
+        item.innerHTML = `
+          <span style="font-size:16px;">${t.completed ? '✅' : '⏳'}</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;color:${t.completed ? '#888' : '#fff'};${t.completed ? 'text-decoration:line-through;' : ''}">${t.task}</div>
+            <div style="font-size:11px;color:#555;margin-top:2px;">${t.date}</div>
+          </div>
+          <span style="font-size:11px;padding:3px 8px;border-radius:12px;background:${t.completed ? '#1f3a1f' : '#2a2200'};color:${t.completed ? '#4caf50' : '#d4af37'};">
+            ${t.completed ? 'Completada' : 'Pendiente'}
+          </span>
+        `
+        section.appendChild(item)
+      })
+
+      list.appendChild(section)
+    })
+
+  } catch(err) {
+    console.error(err)
+    document.getElementById("assignedTasksList").innerHTML = "<p style='color:red;text-align:center;padding:20px;'>Error cargando tareas.</p>"
+  }
+}
+
+function closeAssignedTasksPopup() {
+  document.getElementById("assignedPopupOverlay").style.display = "none"
+}
+
+document.addEventListener("click", function(e){
+  const overlay = document.getElementById("assignedPopupOverlay")
+  if(e.target === overlay) closeAssignedTasksPopup()
+})
+
+// ======================
+// LOGOUT
+// ======================
+
+function logout() {
+  localStorage.removeItem("email")
+  window.location = "login.html"
+}
+
+</script>
+</body>
+</html>
