@@ -542,6 +542,8 @@ body {
     <textarea id="eventDesc" rows="3" placeholder="Descripción (opcional)"></textarea>
     <input type="time" id="eventTime">
 
+    <select id="eventUser"></select>
+
     <div class="modalBtns">
       <button class="btnCancel" onclick="closeModal()">Cancelar</button>
       <button class="btnDelete" id="btnDelete" style="display:none" onclick="deleteEvent()">🗑 Eliminar</button>
@@ -599,11 +601,19 @@ body {
 
 const API = "https://jean-paul.onrender.com"
 
-const SUPERVISORS = [
-  "marcolamugue@tmk-agency.com",
-  "danielaalvarez@tmk-agency.com",
-  "fabricio@tmk-agency.com"
-]
+const USERS = {
+  "all": "Todos",
+  "andrew@tmk-agency.com": "Andrew",
+  "clifton@tmk-agency.com": "Clifton",
+  "fabricio@tmk-agency.com": "Fabricio",
+  "katherinemora@tmk-agency.com": "Katherine",
+  "michelle@tmk-agency.com": "Michelle",
+  "alanys@tmk-agency.com": "Alanys",
+  "breyner@tmk-agency.com": "Breyner",
+  "maria@tmk-agency.com": "Maria Jose",
+  "marcolamugue@tmk-agency.com": "Marco",
+  "danielaalvarez@tmk-agency.com": "Daniela"
+}
 
 let userEmail = null
 let currentYear, currentMonth
@@ -614,6 +624,20 @@ let editingIndex = null
 // ======================
 // INIT
 // ======================
+
+function loadUserOptions() {
+  const select = document.getElementById("eventUser")
+
+  select.innerHTML = ""
+
+  Object.entries(USERS).forEach(([email, name]) => {
+    const option = document.createElement("option")
+    option.value = email
+    option.textContent = name
+    select.appendChild(option)
+  })
+}
+
 
 window.onload = () => {
   userEmail = localStorage.getItem("email")
@@ -628,6 +652,7 @@ window.onload = () => {
   }
 
   loadEvents()
+  loadUserOptions()
 
   const now = new Date()
   currentYear = now.getFullYear()
@@ -699,11 +724,22 @@ function renderCalendar() {
 
     cell.innerHTML = `<div class="dayNum">${d}</div>`
 
-    const dayEvents = events[dateStr] || []
+    const dayEvents = (events[dateStr] || []).filter(ev => {
+  return ev.assignedTo === "all" || ev.assignedTo === userEmail
+})
     dayEvents.slice(0, 3).forEach(ev => {
       const dot = document.createElement("div")
       dot.className = "eventDot"
-      dot.innerText = (ev.time ? ev.time + " " : "") + ev.title
+      const assignedName =
+  ev.assignedTo === "all"
+    ? "🌎"
+    : USERS[ev.assignedTo] || "Usuario"
+
+dot.innerText =
+  (ev.time ? ev.time + " " : "") +
+  ev.title +
+  " • " +
+  assignedName
       cell.appendChild(dot)
     })
     if(dayEvents.length > 3){
@@ -747,11 +783,13 @@ function openModal(dateStr, index = null) {
     document.getElementById("eventTitle").value = ev.title || ""
     document.getElementById("eventDesc").value = ev.desc || ""
     document.getElementById("eventTime").value = ev.time || ""
+    document.getElementById("eventUser").value = ev.assignedTo || "all"
     document.getElementById("btnDelete").style.display = "inline-flex"
   } else {
     document.getElementById("eventTitle").value = ""
     document.getElementById("eventDesc").value = ""
     document.getElementById("eventTime").value = ""
+    document.getElementById("eventUser").value = "all"
     document.getElementById("btnDelete").style.display = "none"
   }
 
@@ -770,10 +808,11 @@ function saveEvent() {
   if(!title){ alert("Escribe un título"); return }
 
   const ev = {
-    title: title,
-    desc: document.getElementById("eventDesc").value.trim(),
-    time: document.getElementById("eventTime").value
-  }
+  title: title,
+  desc: document.getElementById("eventDesc").value.trim(),
+  time: document.getElementById("eventTime").value,
+  assignedTo: document.getElementById("eventUser").value
+}
 
   if(!events[selectedDate]) events[selectedDate] = []
 

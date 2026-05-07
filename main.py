@@ -165,7 +165,11 @@ employees = {
     "fabricio": "fabricio@tmk-agency.com",
     "katherine": "katherinemora@tmk-agency.com",
     "michelle": "michelle@tmk-agency.com",
-    "valeria": "valeriars@tmk-agency.com"
+    "Alanys": "alanys@tmk-agency.com",
+    "Breyner": "breyner@tmk-agency.com",
+    "Maria Jose":"maria@tmk-agency.com",
+    "Marco":"marcolamugue@tmk-agency.com",
+    "Daniela":"danielaalvarez@tmk-agency.com"
 }
 
 # =========================
@@ -1064,7 +1068,10 @@ allowed_emails = [
     "marcolamugue@tmk-agency.com",
     "michelle@tmk-agency.com",
     "breyner@tmk-agency.com",
-    "alanys@tmk-agency.com"
+    "alanys@tmk-agency.com",
+    "maria@tmk-agency.com",
+    "marcolamugue@tmk-agency.com",
+    "danielaalvarez@tmk-agency.com"
 ]
 
 supervisors = [
