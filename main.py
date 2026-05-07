@@ -2693,6 +2693,10 @@ def register_page():
 def forgot_page():
     return FileResponse("forgot.html")
 
+@app.get("/calendar.html")
+def forgot_page():
+    return FileResponse("calendar.html")
+
 
 # =========================
 # FIX ERROR (ANTES ROTO)
