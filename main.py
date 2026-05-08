@@ -77,6 +77,34 @@ if cursor:
     );
     """)
 
+
+    # =========================
+# CALENDAR EVENTS TABLE
+# =========================
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS CalendarEvents (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        description TEXT,
+        event_time TEXT,
+        event_date TEXT NOT NULL,
+        audience TEXT DEFAULT 'all',
+        created_by TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """)
+
+    cursor.execute("""
+    CREATE INDEX IF NOT EXISTS idx_events_date
+    ON CalendarEvents (event_date);
+    """)
+    cursor.execute("""
+    CREATE INDEX IF NOT EXISTS idx_events_audience
+    ON CalendarEvents (audience);
+    """)
+
+    conn.commit()   
+
     # =========================
 # 🌍 PROMPT GLOBAL (EMPRESA)
 # =========================
@@ -2807,3 +2835,109 @@ def get_assigned_tasks(data: dict):
             for r in rows
         ]
     }
+
+
+# =========================
+# CALENDAR EVENTS
+# =========================
+
+@app.post("/add-event")
+def add_event(data: dict):
+    email = data["email"]
+    cursor.execute("""
+        INSERT INTO CalendarEvents (title, description, event_time, event_date, audience, created_by)
+        VALUES (%s, %s, %s, %s, %s, %s) RETURNING id
+    """, (
+        data["title"],
+        data.get("desc", ""),
+        data.get("time", ""),
+        data["date"],
+        data.get("audience", "all"),
+        email
+    ))
+    new_id = cursor.fetchone()[0]
+    conn.commit()
+    return {"message": "ok", "id": new_id}
+
+
+@app.post("/get-events")
+def get_events(data: dict):
+    email = data["email"]
+    month = data["month"]  # formato: "2025-05"
+
+    cursor.execute("""
+        SELECT id, title, description, event_time, event_date, audience, created_by
+        FROM CalendarEvents
+        WHERE event_date LIKE %s
+        ORDER BY event_date, event_time
+    """, (month + "-%",))
+
+    rows = cursor.fetchall()
+
+    # Filtrar por visibilidad
+    is_supervisor = email in supervisors
+
+    def visible(audience, created_by):
+        if audience == "all":
+            return True
+        if audience == email:
+            return True
+        if is_supervisor:
+            return True
+        return False
+
+    result = {}
+    for r in rows:
+        ev_id, title, desc, ev_time, ev_date, audience, created_by = r
+        if not visible(audience, created_by):
+            continue
+        if ev_date not in result:
+            result[ev_date] = []
+        result[ev_date].append({
+            "id": ev_id,
+            "title": title,
+            "desc": desc,
+            "time": ev_time,
+            "audience": audience,
+            "created_by": created_by
+        })
+
+    return {"events": result}
+
+
+@app.post("/edit-event")
+def edit_event(data: dict):
+    email = data["email"]
+    event_id = data["id"]
+
+    cursor.execute("SELECT created_by FROM CalendarEvents WHERE id=%s", (event_id,))
+    row = cursor.fetchone()
+    if not row:
+        return {"message": "No existe"}
+    if row[0] != email and email not in supervisors:
+        return {"message": "No autorizado"}
+
+    cursor.execute("""
+        UPDATE CalendarEvents
+        SET title=%s, description=%s, event_time=%s, audience=%s
+        WHERE id=%s
+    """, (data["title"], data.get("desc",""), data.get("time",""), data.get("audience","all"), event_id))
+    conn.commit()
+    return {"message": "ok"}
+
+
+@app.post("/delete-event")
+def delete_event(data: dict):
+    email = data["email"]
+    event_id = data["id"]
+
+    cursor.execute("SELECT created_by FROM CalendarEvents WHERE id=%s", (event_id,))
+    row = cursor.fetchone()
+    if not row:
+        return {"message": "No existe"}
+    if row[0] != email and email not in supervisors:
+        return {"message": "No autorizado"}
+
+    cursor.execute("DELETE FROM CalendarEvents WHERE id=%s", (event_id,))
+    conn.commit()
+    return {"message": "ok"} 
