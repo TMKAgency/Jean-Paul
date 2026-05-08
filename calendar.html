@@ -267,7 +267,9 @@ body {
   font-size: 16px;
 }
 
-.modal input, .modal textarea, .modal select {
+.modal input,
+.modal textarea,
+.modal select {
   width: 100%;
   padding: 12px;
   background: #1e1e1e;
@@ -277,11 +279,49 @@ body {
   font-family: Poppins;
   font-size: 14px;
   resize: none;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.modal input:focus, .modal textarea:focus {
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus {
   outline: none;
   border-color: #d4af37;
+}
+
+/* Select arrow */
+.selectWrapper {
+  position: relative;
+}
+
+.selectWrapper::after {
+  content: "▾";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #d4af37;
+  pointer-events: none;
+  font-size: 14px;
+}
+
+.selectWrapper select {
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.selectWrapper select option {
+  background: #1e1e1e;
+  color: white;
+}
+
+/* Field label */
+.fieldLabel {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: -10px;
+  padding-left: 2px;
 }
 
 .modalBtns {
@@ -436,18 +476,13 @@ body {
 }
 
 /* =====================
-   ASSIGNED TASKS POPUP
+   EVENT DOT — audience badge
 ===================== */
 
-#assignedPopupOverlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  z-index: 5000;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+.eventAudience {
+  font-size: 10px;
+  color: #888;
+  margin-top: 1px;
 }
 
 /* =====================
@@ -490,20 +525,13 @@ body {
      TOP BAR
 =========================== -->
 <div class="topBar">
-
-  <!-- LEFT: Hamburger -->
   <button class="hamburgerBtn" onclick="toggleSlideMenu()" title="Menú">
     <span></span>
     <span></span>
     <span></span>
   </button>
-
-  <!-- CENTER: Title -->
   <div class="topTitle">📅 Calendario</div>
-
-  <!-- RIGHT: Back -->
   <button class="backBtn" onclick="window.location='index.html'">← Inicio</button>
-
 </div>
 
 <!-- ===========================
@@ -541,6 +569,26 @@ body {
     <input type="text" id="eventTitle" placeholder="Título del evento">
     <textarea id="eventDesc" rows="3" placeholder="Descripción (opcional)"></textarea>
     <input type="time" id="eventTime">
+
+    <!-- ── NEW: Audience selector ── -->
+    <div>
+      <div class="fieldLabel">👤 Visible para</div>
+      <div class="selectWrapper">
+        <select id="eventAudience">
+          <option value="all">Todos</option>
+          <option value="andrew@tmk-agency.com">Andrew</option>
+          <option value="clifton@tmk-agency.com">Clifton</option>
+          <option value="fabricio@tmk-agency.com">Fabricio</option>
+          <option value="katherinemora@tmk-agency.com">Katherine</option>
+          <option value="michelle@tmk-agency.com">Michelle</option>
+          <option value="alanys@tmk-agency.com">Alanys</option>
+          <option value="breyner@tmk-agency.com">Breyner</option>
+          <option value="maria@tmk-agency.com">Maria Jose</option>
+          <option value="marcolamugue@tmk-agency.com">Marco</option>
+          <option value="danielaalvarez@tmk-agency.com">Daniela</option>
+        </select>
+      </div>
+    </div>
 
     <div class="modalBtns">
       <button class="btnCancel" onclick="closeModal()">Cancelar</button>
@@ -605,9 +653,23 @@ const SUPERVISORS = [
   "fabricio@tmk-agency.com"
 ]
 
+// Map email → display name for labels
+const USER_NAMES = {
+  "andrew@tmk-agency.com":       "Andrew",
+  "clifton@tmk-agency.com":      "Clifton",
+  "fabricio@tmk-agency.com":     "Fabricio",
+  "katherinemora@tmk-agency.com":"Katherine",
+  "michelle@tmk-agency.com":     "Michelle",
+  "alanys@tmk-agency.com":       "Alanys",
+  "breyner@tmk-agency.com":      "Breyner",
+  "maria@tmk-agency.com":        "Maria Jose",
+  "marcolamugue@tmk-agency.com": "Marco",
+  "danielaalvarez@tmk-agency.com":"Daniela"
+}
+
 let userEmail = null
 let currentYear, currentMonth
-let events = {}         // { "YYYY-MM-DD": [ {title, desc, time}, ... ] }
+let events = {}   // { "YYYY-MM-DD": [ {title, desc, time, audience}, ... ] }
 let selectedDate = null
 let editingIndex = null
 
@@ -657,6 +719,21 @@ function saveEvents() {
 }
 
 // ======================
+// VISIBILITY CHECK
+// Determine if an event should be visible to the current user.
+// audience = "all"  → visible to everyone
+// audience = email  → visible only to that user AND supervisors
+// no audience field → legacy events, treat as "all"
+// ======================
+
+function isVisible(ev) {
+  if(!ev.audience || ev.audience === "all") return true
+  if(ev.audience === userEmail) return true
+  if(SUPERVISORS.includes(userEmail)) return true
+  return false
+}
+
+// ======================
 // CALENDAR RENDER
 // ======================
 
@@ -699,12 +776,22 @@ function renderCalendar() {
 
     cell.innerHTML = `<div class="dayNum">${d}</div>`
 
-    const dayEvents = events[dateStr] || []
+    const dayEvents = (events[dateStr] || []).filter(isVisible)
+
     dayEvents.slice(0, 3).forEach(ev => {
       const dot = document.createElement("div")
       dot.className = "eventDot"
       dot.innerText = (ev.time ? ev.time + " " : "") + ev.title
-      cell.appendChild(dot)
+      // Small audience badge
+      if(ev.audience && ev.audience !== "all"){
+        const badge = document.createElement("div")
+        badge.className = "eventAudience"
+        badge.innerText = "→ " + (USER_NAMES[ev.audience] || ev.audience)
+        cell.appendChild(dot)
+        cell.appendChild(badge)
+      } else {
+        cell.appendChild(dot)
+      }
     })
     if(dayEvents.length > 3){
       const more = document.createElement("div")
@@ -747,11 +834,13 @@ function openModal(dateStr, index = null) {
     document.getElementById("eventTitle").value = ev.title || ""
     document.getElementById("eventDesc").value = ev.desc || ""
     document.getElementById("eventTime").value = ev.time || ""
+    document.getElementById("eventAudience").value = ev.audience || "all"
     document.getElementById("btnDelete").style.display = "inline-flex"
   } else {
     document.getElementById("eventTitle").value = ""
     document.getElementById("eventDesc").value = ""
     document.getElementById("eventTime").value = ""
+    document.getElementById("eventAudience").value = "all"
     document.getElementById("btnDelete").style.display = "none"
   }
 
@@ -770,9 +859,10 @@ function saveEvent() {
   if(!title){ alert("Escribe un título"); return }
 
   const ev = {
-    title: title,
-    desc: document.getElementById("eventDesc").value.trim(),
-    time: document.getElementById("eventTime").value
+    title:    title,
+    desc:     document.getElementById("eventDesc").value.trim(),
+    time:     document.getElementById("eventTime").value,
+    audience: document.getElementById("eventAudience").value  // "all" or specific email
   }
 
   if(!events[selectedDate]) events[selectedDate] = []
@@ -797,7 +887,6 @@ function deleteEvent() {
   renderCalendar()
 }
 
-// close modal on overlay click
 document.getElementById("modalOverlay").addEventListener("click", function(e){
   if(e.target === this) closeModal()
 })
@@ -822,11 +911,14 @@ function exportEvents() {
 
   let csv = `Eventos — ${monthName} ${currentYear}\n`
   csv += `Usuario,${userEmail}\n\n`
-  csv += `Fecha,Hora,Título,Descripción\n`
+  csv += `Fecha,Hora,Título,Descripción,Visible Para\n`
 
   monthEvents.forEach(([date, evs]) => {
     evs.forEach(ev => {
-      csv += `${date},${ev.time || "—"},"${ev.title.replace(/"/g,'""')}","${(ev.desc||"").replace(/"/g,'""')}"\n`
+      const audienceLabel = (!ev.audience || ev.audience === "all")
+        ? "Todos"
+        : (USER_NAMES[ev.audience] || ev.audience)
+      csv += `${date},${ev.time || "—"},"${ev.title.replace(/"/g,'""')}","${(ev.desc||"").replace(/"/g,'""')}","${audienceLabel}"\n`
     })
   })
 
