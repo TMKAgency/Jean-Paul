@@ -6,571 +6,401 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Poppins;
-}
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Poppins; }
 
 body {
-  min-height: 100vh;
-  min-height: 100dvh;
-  background: linear-gradient(135deg, #050505, #0e0e0e);
-  color: white;
+  min-height:100vh; min-height:100dvh;
+  background:linear-gradient(135deg,#050505,#0e0e0e);
+  color:white;
 }
 
-/* =====================
-   TOP BAR
-===================== */
-
+/* TOP BAR */
 .topBar {
-  height: 60px;
-  background: #0f0f0f;
-  border-bottom: 1px solid #1f1f1f;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  height:60px; background:#0f0f0f;
+  border-bottom:1px solid #1f1f1f;
+  display:flex; align-items:center;
+  justify-content:space-between; padding:0 20px;
+  position:sticky; top:0; z-index:100;
 }
-
 .hamburgerBtn {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 26px;
-  height: 18px;
-  cursor: pointer;
-  padding: 0;
-  background: none;
-  border: none;
-  flex-shrink: 0;
+  display:flex; flex-direction:column;
+  justify-content:space-between;
+  width:26px; height:18px; cursor:pointer;
+  padding:0; background:none; border:none; flex-shrink:0;
 }
-
 .hamburgerBtn span {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background: #d4af37;
-  border-radius: 2px;
-  transition: 0.3s;
+  display:block; height:2px; width:100%;
+  background:#d4af37; border-radius:2px; transition:0.3s;
 }
-
-.hamburgerBtn:hover span {
-  background: #f3d27a;
-}
-
+.hamburgerBtn:hover span { background:#f3d27a; }
 .topTitle {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #d4af37;
-  font-weight: 600;
-  font-size: 15px;
-  white-space: nowrap;
+  position:absolute; left:50%; transform:translateX(-50%);
+  color:#d4af37; font-weight:600; font-size:15px; white-space:nowrap;
 }
-
 .backBtn {
-  background: none;
-  border: 1px solid #2a2a2a;
-  color: #888;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: Poppins;
-  font-size: 13px;
-  transition: 0.2s;
-  flex-shrink: 0;
+  background:none; border:1px solid #2a2a2a; color:#888;
+  padding:6px 14px; border-radius:6px; cursor:pointer;
+  font-family:Poppins; font-size:13px; transition:0.2s; flex-shrink:0;
 }
+.backBtn:hover { border-color:#d4af37; color:#d4af37; }
 
-.backBtn:hover {
-  border-color: #d4af37;
-  color: #d4af37;
-}
-
-/* =====================
-   CALENDAR WRAPPER
-===================== */
-
-.calendarWrapper {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px 60px;
-}
-
-/* =====================
-   MONTH HEADER
-===================== */
-
+/* CALENDAR */
+.calendarWrapper { max-width:900px; margin:40px auto; padding:0 20px 60px; }
 .monthHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
+  display:flex; align-items:center;
+  justify-content:space-between; margin-bottom:30px;
 }
-
-.monthTitle {
-  font-size: 22px;
-  font-weight: 600;
-  color: #d4af37;
-  text-transform: capitalize;
-}
-
+.monthTitle { font-size:22px; font-weight:600; color:#d4af37; text-transform:capitalize; }
 .navBtn {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  color: #ccc;
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s;
+  background:#1a1a1a; border:1px solid #2a2a2a; color:#ccc;
+  width:38px; height:38px; border-radius:8px; cursor:pointer;
+  font-size:16px; display:flex; align-items:center; justify-content:center; transition:0.2s;
 }
-
-.navBtn:hover {
-  border-color: #d4af37;
-  color: #d4af37;
-}
-
-/* =====================
-   GRID
-===================== */
-
+.navBtn:hover { border-color:#d4af37; color:#d4af37; }
 .weekDays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-bottom: 8px;
+  display:grid; grid-template-columns:repeat(7,1fr);
+  gap:6px; margin-bottom:8px;
 }
-
 .weekDay {
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 6px 0;
+  text-align:center; font-size:12px; color:#666;
+  text-transform:uppercase; letter-spacing:1px; padding:6px 0;
 }
-
-.daysGrid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-}
-
+.daysGrid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
 .dayCell {
-  min-height: 90px;
-  background: #111;
-  border: 1px solid #1e1e1e;
-  border-radius: 8px;
-  padding: 8px;
-  cursor: pointer;
-  transition: 0.15s;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  position: relative;
+  min-height:90px; background:#111; border:1px solid #1e1e1e;
+  border-radius:8px; padding:8px; cursor:pointer; transition:0.15s;
+  display:flex; flex-direction:column; gap:4px; position:relative;
 }
-
-.dayCell:hover {
-  border-color: #d4af37;
-  background: #181808;
-}
-
-.dayCell.empty {
-  background: transparent;
-  border-color: transparent;
-  cursor: default;
-}
-
-.dayCell.today {
-  border-color: #d4af37;
-  background: #181505;
-}
-
+.dayCell:hover { border-color:#d4af37; background:#181808; }
+.dayCell.today { border-color:#d4af37; background:#181505; }
 .dayCell.today .dayNum {
-  background: #d4af37;
-  color: black;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background:#d4af37; color:black; border-radius:50%;
+  width:24px; height:24px; display:flex;
+  align-items:center; justify-content:center;
 }
-
-.dayNum {
-  font-size: 13px;
-  font-weight: 600;
-  color: #ccc;
-  line-height: 1;
-}
-
-.dayCell.other-month .dayNum {
-  color: #333;
-}
-
+.dayNum { font-size:13px; font-weight:600; color:#ccc; line-height:1; }
+.dayCell.other-month .dayNum { color:#333; }
 .eventDot {
-  font-size: 11px;
-  background: rgba(212,175,55,0.15);
-  border-left: 2px solid #d4af37;
-  color: #d4af37;
-  padding: 2px 5px;
-  border-radius: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  font-size:11px; background:rgba(212,175,55,0.15);
+  border-left:2px solid #d4af37; color:#d4af37;
+  padding:2px 5px; border-radius:3px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;
 }
 
-/* =====================
-   MODAL — Add event
-===================== */
-
-.modalOverlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  z-index: 4000;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.modalOverlay.active {
-  display: flex;
-}
-
-.modal {
-  background: #111;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 420px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.modal h3 {
-  color: #d4af37;
-  font-size: 16px;
-}
-
-.modal input,
-.modal textarea,
-.modal select {
-  width: 100%;
-  padding: 12px;
-  background: #1e1e1e;
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
-  color: white;
-  font-family: Poppins;
-  font-size: 14px;
-  resize: none;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.modal input:focus,
-.modal textarea:focus,
-.modal select:focus {
-  outline: none;
-  border-color: #d4af37;
-}
-
-/* Select arrow */
-.selectWrapper {
-  position: relative;
-}
-
-.selectWrapper::after {
-  content: "▾";
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #d4af37;
-  pointer-events: none;
-  font-size: 14px;
-}
-
-.selectWrapper select {
-  padding-right: 32px;
-  cursor: pointer;
-}
-
-.selectWrapper select option {
-  background: #1e1e1e;
-  color: white;
-}
-
-/* Field label */
-.fieldLabel {
-  font-size: 12px;
-  color: #888;
-  margin-bottom: -10px;
-  padding-left: 2px;
-}
-
-.modalBtns {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.modalBtns button {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-family: Poppins;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.btnCancel {
-  background: #1e1e1e;
-  color: #aaa;
-  border: 1px solid #333 !important;
-}
-
-.btnCancel:hover {
-  border-color: #666 !important;
-  color: #fff;
-}
-
-.btnSave {
-  background: linear-gradient(135deg, #d4af37, #f3d27a);
-  color: black;
-  font-weight: 600;
-}
-
-.btnDelete {
-  background: rgba(192,57,43,0.15);
-  color: #e74c3c;
-  border: 1px solid #c0392b !important;
-}
-
-.btnDelete:hover {
-  background: rgba(192,57,43,0.3);
-}
-
-/* =====================
-   SLIDE MENU (LEFT)
-===================== */
-
-.slideMenu {
-  position: fixed;
-  top: 0;
-  left: -320px;
-  width: 300px;
-  height: 100vh;
-  background: #0d0d0d;
-  border-right: 1px solid #222;
-  transition: left 0.3s ease;
-  z-index: 4000;
-  display: flex;
-  flex-direction: column;
-}
-
-.slideMenu.active {
-  left: 0;
-}
-
-.slideMenuHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #222;
-}
-
-.slideMenuHeader span {
-  font-weight: 600;
-  color: #d4af37;
-  font-size: 15px;
-}
-
-.slideMenuHeader button {
-  background: none;
-  border: 1px solid #444;
-  color: #aaa;
-  padding: 5px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: 0.2s;
-}
-
-.slideMenuHeader button:hover {
-  border-color: #d4af37;
-  color: #d4af37;
-}
-
-.slideMenuBody {
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.slideMenuBtn {
-  width: 100%;
-  padding: 13px 16px;
-  background: transparent;
-  border: 1px solid #2a2a2a;
-  color: #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: Poppins;
-  font-size: 14px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: 0.2s;
-}
-
-.slideMenuBtn:hover {
-  border-color: #d4af37;
-  color: #d4af37;
-  background: rgba(212,175,55,0.05);
-}
-
-.slideMenuBtn.danger {
-  border-color: #2a1a1a;
-  color: #c0392b;
-}
-
-.slideMenuBtn.danger:hover {
-  border-color: #c0392b;
-  background: rgba(192,57,43,0.05);
-}
-
-/* =====================
-   OVERLAY
-===================== */
-
+/* OVERLAY */
 .overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 3500;
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.65); z-index:3500;
+}
+.overlay.active { display:block; }
+
+/* =====================
+   DAY POPUP
+===================== */
+.dayPopupOverlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.8); z-index:4000;
+  justify-content:center; align-items:center; padding:20px;
+}
+.dayPopupOverlay.active { display:flex; }
+
+.dayPopup {
+  background:#111; border:1px solid #2a2a2a;
+  border-radius:14px; width:100%; max-width:440px;
+  max-height:85vh; display:flex; flex-direction:column;
+  overflow:hidden;
 }
 
-.overlay.active {
-  display: block;
+.dayPopupHeader {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:18px 20px; border-bottom:1px solid #222;
+  flex-shrink:0;
+}
+.dayPopupTitle {
+  font-weight:600; color:#d4af37; font-size:15px;
+  text-transform:capitalize;
+}
+.dayPopupActions { display:flex; gap:8px; align-items:center; }
+
+.btnAddEvent {
+  background:linear-gradient(135deg,#d4af37,#f3d27a);
+  border:none; color:black; font-weight:700;
+  width:34px; height:34px; border-radius:8px;
+  cursor:pointer; font-size:20px; display:flex;
+  align-items:center; justify-content:center;
+  transition:0.2s; flex-shrink:0; line-height:1;
+}
+.btnAddEvent:hover { opacity:0.85; transform:scale(1.05); }
+
+.btnClosePopup {
+  background:none; border:1px solid #444; color:#aaa;
+  padding:5px 12px; border-radius:6px; cursor:pointer;
+  font-size:13px; font-family:Poppins; transition:0.2s;
+}
+.btnClosePopup:hover { border-color:#d4af37; color:#d4af37; }
+
+.dayPopupBody {
+  overflow-y:auto; padding:16px; flex:1;
+  display:flex; flex-direction:column; gap:10px;
+}
+
+.noEventsMsg {
+  text-align:center; color:#555; font-size:13px;
+  padding:30px 0;
+}
+
+/* Event card in day popup */
+.eventCard {
+  background:#1a1a1a; border:1px solid #2a2a2a;
+  border-radius:10px; padding:12px 14px;
+  cursor:pointer; transition:0.2s;
+  border-left:3px solid #d4af37;
+}
+.eventCard:hover { border-color:#d4af37; background:#1f1f0f; }
+.eventCardTitle {
+  font-size:14px; font-weight:600; color:#fff; margin-bottom:4px;
+}
+.eventCardMeta {
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+}
+.eventCardTime {
+  font-size:11px; color:#888;
+  display:flex; align-items:center; gap:4px;
+}
+.eventCardAudience {
+  font-size:11px; padding:2px 8px; border-radius:10px;
+  background:rgba(212,175,55,0.12); color:#d4af37;
 }
 
 /* =====================
-   EVENT DOT — audience badge
+   EVENT DETAIL MODAL
 ===================== */
-
-.eventAudience {
-  font-size: 10px;
-  color: #888;
-  margin-top: 1px;
+.eventDetailOverlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.85); z-index:5000;
+  justify-content:center; align-items:center; padding:20px;
 }
+.eventDetailOverlay.active { display:flex; }
+
+.eventDetail {
+  background:#111; border:1px solid #2a2a2a;
+  border-radius:14px; width:100%; max-width:420px;
+  padding:24px; display:flex; flex-direction:column; gap:14px;
+}
+.eventDetailHeader {
+  display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+}
+.eventDetailTitle {
+  font-size:17px; font-weight:600; color:#d4af37; flex:1; line-height:1.3;
+}
+.eventDetailActions { display:flex; gap:8px; flex-shrink:0; }
+.btnDetailEdit {
+  background:#1e1e1e; border:1px solid #2a2a2a; color:#ccc;
+  padding:6px 12px; border-radius:6px; cursor:pointer;
+  font-size:12px; font-family:Poppins; transition:0.2s;
+}
+.btnDetailEdit:hover { border-color:#d4af37; color:#d4af37; }
+.btnDetailDelete {
+  background:rgba(192,57,43,0.12); border:1px solid #c0392b;
+  color:#e74c3c; padding:6px 12px; border-radius:6px;
+  cursor:pointer; font-size:12px; font-family:Poppins; transition:0.2s;
+}
+.btnDetailDelete:hover { background:rgba(192,57,43,0.3); }
+.eventDetailRow {
+  display:flex; gap:8px; align-items:center;
+  font-size:13px; color:#aaa;
+}
+.eventDetailRow span:first-child { font-size:16px; }
+.eventDetailDesc {
+  background:#1a1a1a; border:1px solid #222; border-radius:8px;
+  padding:12px; font-size:13px; color:#ccc; line-height:1.6;
+  min-height:60px;
+}
+.eventDetailNoDesc { font-size:12px; color:#444; font-style:italic; }
+.eventDetailAudienceBadge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.25);
+  color:#d4af37; padding:5px 12px; border-radius:20px; font-size:12px;
+  width:fit-content;
+}
+.btnDetailClose {
+  background:none; border:1px solid #333; color:#888;
+  padding:9px; border-radius:8px; cursor:pointer;
+  font-family:Poppins; font-size:13px; transition:0.2s; text-align:center;
+}
+.btnDetailClose:hover { border-color:#666; color:#fff; }
 
 /* =====================
-   RESPONSIVE
+   CREATE/EDIT MODAL
 ===================== */
+.modalOverlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.85); z-index:6000;
+  justify-content:center; align-items:center; padding:20px;
+}
+.modalOverlay.active { display:flex; }
+.modal {
+  background:#111; border:1px solid #2a2a2a;
+  border-radius:12px; width:100%; max-width:420px;
+  padding:24px; display:flex; flex-direction:column; gap:16px;
+}
+.modal h3 { color:#d4af37; font-size:16px; }
+.modal input, .modal textarea, .modal select {
+  width:100%; padding:12px; background:#1e1e1e;
+  border:1px solid #2a2a2a; border-radius:8px;
+  color:white; font-family:Poppins; font-size:14px;
+  resize:none; appearance:none; -webkit-appearance:none;
+}
+.modal input:focus, .modal textarea:focus, .modal select:focus {
+  outline:none; border-color:#d4af37;
+}
+.selectWrapper { position:relative; }
+.selectWrapper::after {
+  content:"▾"; position:absolute; right:12px; top:50%;
+  transform:translateY(-50%); color:#d4af37;
+  pointer-events:none; font-size:14px;
+}
+.selectWrapper select { padding-right:32px; cursor:pointer; }
+.selectWrapper select option { background:#1e1e1e; color:white; }
+.fieldLabel { font-size:12px; color:#888; margin-bottom:-10px; padding-left:2px; }
+.modalBtns { display:flex; gap:10px; justify-content:flex-end; }
+.modalBtns button {
+  padding:10px 20px; border-radius:8px; border:none;
+  cursor:pointer; font-family:Poppins; font-size:14px; transition:0.2s;
+}
+.btnCancel { background:#1e1e1e; color:#aaa; border:1px solid #333 !important; }
+.btnCancel:hover { border-color:#666 !important; color:#fff; }
+.btnSave {
+  background:linear-gradient(135deg,#d4af37,#f3d27a);
+  color:black; font-weight:600;
+}
+.btnDelete {
+  background:rgba(192,57,43,0.15); color:#e74c3c;
+  border:1px solid #c0392b !important;
+}
+.btnDelete:hover { background:rgba(192,57,43,0.3); }
 
-@media (max-width: 767px) {
-  .calendarWrapper {
-    margin: 20px auto;
-    padding: 0 12px 40px;
-  }
-  .dayCell {
-    min-height: 60px;
-    padding: 5px;
-  }
-  .eventDot {
-    font-size: 9px;
-    padding: 1px 3px;
-  }
-  .dayNum {
-    font-size: 11px;
-  }
-  .weekDay {
-    font-size: 10px;
-  }
-  .monthTitle {
-    font-size: 17px;
-  }
+/* SLIDE MENU */
+.slideMenu {
+  position:fixed; top:0; left:-320px; width:300px;
+  height:100vh; background:#0d0d0d; border-right:1px solid #222;
+  transition:left 0.3s ease; z-index:7000;
+  display:flex; flex-direction:column;
+}
+.slideMenu.active { left:0; }
+.slideMenuHeader {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px; border-bottom:1px solid #222;
+}
+.slideMenuHeader span { font-weight:600; color:#d4af37; font-size:15px; }
+.slideMenuHeader button {
+  background:none; border:1px solid #444; color:#aaa;
+  padding:5px 12px; border-radius:6px; cursor:pointer;
+  font-size:13px; transition:0.2s;
+}
+.slideMenuHeader button:hover { border-color:#d4af37; color:#d4af37; }
+.slideMenuBody { padding:24px 20px; display:flex; flex-direction:column; gap:12px; }
+.slideMenuBtn {
+  width:100%; padding:13px 16px; background:transparent;
+  border:1px solid #2a2a2a; color:#ccc; border-radius:8px;
+  cursor:pointer; font-family:Poppins; font-size:14px;
+  text-align:left; display:flex; align-items:center; gap:10px; transition:0.2s;
+}
+.slideMenuBtn:hover { border-color:#d4af37; color:#d4af37; background:rgba(212,175,55,0.05); }
+.slideMenuBtn.danger { border-color:#2a1a1a; color:#c0392b; }
+.slideMenuBtn.danger:hover { border-color:#c0392b; background:rgba(192,57,43,0.05); }
+
+/* ASSIGNED TASKS POPUP */
+#assignedPopupOverlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.75); z-index:5500;
+  justify-content:center; align-items:center; padding:20px;
 }
 
+/* RESPONSIVE */
+@media (max-width:767px) {
+  .calendarWrapper { margin:20px auto; padding:0 12px 40px; }
+  .dayCell { min-height:60px; padding:5px; }
+  .eventDot { font-size:9px; padding:1px 3px; }
+  .dayNum { font-size:11px; }
+  .weekDay { font-size:10px; }
+  .monthTitle { font-size:17px; }
+}
 </style>
 </head>
-
 <body>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
-<!-- ===========================
-     TOP BAR
-=========================== -->
+<!-- TOP BAR -->
 <div class="topBar">
-  <button class="hamburgerBtn" onclick="toggleSlideMenu()" title="Menú">
-    <span></span>
-    <span></span>
-    <span></span>
+  <button class="hamburgerBtn" onclick="toggleSlideMenu()">
+    <span></span><span></span><span></span>
   </button>
   <div class="topTitle">📅 Calendario</div>
   <button class="backBtn" onclick="window.location='index.html'">← Inicio</button>
 </div>
 
-<!-- ===========================
-     CALENDAR
-=========================== -->
+<!-- CALENDAR -->
 <div class="calendarWrapper">
-
   <div class="monthHeader">
     <button class="navBtn" onclick="changeMonth(-1)">‹</button>
     <div class="monthTitle" id="monthTitle"></div>
     <button class="navBtn" onclick="changeMonth(1)">›</button>
   </div>
-
   <div class="weekDays">
-    <div class="weekDay">Dom</div>
-    <div class="weekDay">Lun</div>
-    <div class="weekDay">Mar</div>
-    <div class="weekDay">Mié</div>
-    <div class="weekDay">Jue</div>
-    <div class="weekDay">Vie</div>
+    <div class="weekDay">Dom</div><div class="weekDay">Lun</div>
+    <div class="weekDay">Mar</div><div class="weekDay">Mié</div>
+    <div class="weekDay">Jue</div><div class="weekDay">Vie</div>
     <div class="weekDay">Sáb</div>
   </div>
-
   <div class="daysGrid" id="daysGrid"></div>
-
 </div>
 
-<!-- ===========================
-     MODAL — Add/Edit Event
-=========================== -->
+<!-- ========================
+     DAY POPUP
+======================== -->
+<div class="dayPopupOverlay" id="dayPopupOverlay">
+  <div class="dayPopup">
+    <div class="dayPopupHeader">
+      <div class="dayPopupTitle" id="dayPopupTitle"></div>
+      <div class="dayPopupActions">
+        <button class="btnAddEvent" onclick="openCreateModal()" title="Nuevo evento">+</button>
+        <button class="btnClosePopup" onclick="closeDayPopup()">✕</button>
+      </div>
+    </div>
+    <div class="dayPopupBody" id="dayPopupBody"></div>
+  </div>
+</div>
+
+<!-- ========================
+     EVENT DETAIL
+======================== -->
+<div class="eventDetailOverlay" id="eventDetailOverlay">
+  <div class="eventDetail">
+    <div class="eventDetailHeader">
+      <div class="eventDetailTitle" id="detailTitle"></div>
+      <div class="eventDetailActions">
+        <button class="btnDetailEdit" onclick="editFromDetail()">✏️ Editar</button>
+        <button class="btnDetailDelete" onclick="deleteFromDetail()">🗑</button>
+      </div>
+    </div>
+    <div class="eventDetailRow" id="detailTime"></div>
+    <div id="detailAudience"></div>
+    <div id="detailDescWrapper"></div>
+    <button class="btnDetailClose" onclick="closeEventDetail()">Cerrar</button>
+  </div>
+</div>
+
+<!-- ========================
+     CREATE / EDIT MODAL
+======================== -->
 <div class="modalOverlay" id="modalOverlay">
   <div class="modal">
     <h3 id="modalTitle">📝 Nuevo evento</h3>
-
     <input type="text" id="eventTitle" placeholder="Título del evento">
     <textarea id="eventDesc" rows="3" placeholder="Descripción (opcional)"></textarea>
     <input type="time" id="eventTime">
-
-    <!-- ── NEW: Audience selector ── -->
     <div>
       <div class="fieldLabel">👤 Visible para</div>
       <div class="selectWrapper">
@@ -589,62 +419,39 @@ body {
         </select>
       </div>
     </div>
-
     <div class="modalBtns">
       <button class="btnCancel" onclick="closeModal()">Cancelar</button>
-      <button class="btnDelete" id="btnDelete" style="display:none" onclick="deleteEvent()">🗑 Eliminar</button>
       <button class="btnSave" onclick="saveEvent()">Guardar</button>
     </div>
   </div>
 </div>
 
-<!-- ===========================
-     SLIDE MENU
-=========================== -->
+<!-- SLIDE MENU -->
 <div id="slideMenu" class="slideMenu">
-
   <div class="slideMenuHeader">
     <span>⚙ Opciones</span>
     <button onclick="closeSlideMenu()">✕</button>
   </div>
-
   <div class="slideMenuBody">
-
-    <button class="slideMenuBtn" onclick="window.location='index.html'">
-      🏠 Inicio / Chat IA
-    </button>
-
-    <button class="slideMenuBtn" id="assignedTasksBtn" style="display:none" onclick="openAssignedTasksPopup(); closeSlideMenu()">
-      👥 Ver tareas asignadas
-    </button>
-
-    <button class="slideMenuBtn" id="exportBtn" onclick="exportEvents(); closeSlideMenu()">
-      📊 Exportar eventos del mes
-    </button>
-
-    <button class="slideMenuBtn danger" onclick="logout()">
-      🔓 Cerrar sesión
-    </button>
-
+    <button class="slideMenuBtn" onclick="window.location='index.html'">🏠 Inicio / Chat IA</button>
+    <button class="slideMenuBtn" id="assignedTasksBtn" style="display:none" onclick="openAssignedTasksPopup();closeSlideMenu()">👥 Ver tareas asignadas</button>
+    <button class="slideMenuBtn" onclick="exportEvents();closeSlideMenu()">📊 Exportar eventos del mes</button>
+    <button class="slideMenuBtn danger" onclick="logout()">🔓 Cerrar sesión</button>
   </div>
-
 </div>
 
-<!-- ===========================
-     POPUP Tareas asignadas
-=========================== -->
-<div id="assignedPopupOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:5000; justify-content:center; align-items:center; padding:20px;">
-  <div style="background:#111; border:1px solid #2a2a2a; border-radius:12px; width:100%; max-width:520px; max-height:80vh; display:flex; flex-direction:column; overflow:hidden;">
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:18px 20px; border-bottom:1px solid #2a2a2a;">
-      <span style="font-weight:600; color:#d4af37; font-size:16px;">👥 Tareas asignadas</span>
-      <button onclick="closeAssignedTasksPopup()" style="background:none; border:1px solid #555; color:#aaa; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:13px; font-family:Poppins;">✕ Cerrar</button>
+<!-- ASSIGNED TASKS POPUP -->
+<div id="assignedPopupOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:5500;justify-content:center;align-items:center;padding:20px;">
+  <div style="background:#111;border:1px solid #2a2a2a;border-radius:12px;width:100%;max-width:520px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #2a2a2a;">
+      <span style="font-weight:600;color:#d4af37;font-size:16px;">👥 Tareas asignadas</span>
+      <button onclick="closeAssignedTasksPopup()" style="background:none;border:1px solid #555;color:#aaa;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:13px;font-family:Poppins;">✕ Cerrar</button>
     </div>
-    <div id="assignedTasksList" style="overflow-y:auto; padding:16px; flex:1;"></div>
+    <div id="assignedTasksList" style="overflow-y:auto;padding:16px;flex:1;"></div>
   </div>
 </div>
 
 <script>
-
 const API = "https://jean-paul.onrender.com"
 
 const SUPERVISORS = [
@@ -653,44 +460,35 @@ const SUPERVISORS = [
   "fabricio@tmk-agency.com"
 ]
 
-// Map email → display name for labels
 const USER_NAMES = {
-  "andrew@tmk-agency.com":       "Andrew",
-  "clifton@tmk-agency.com":      "Clifton",
-  "fabricio@tmk-agency.com":     "Fabricio",
-  "katherinemora@tmk-agency.com":"Katherine",
-  "michelle@tmk-agency.com":     "Michelle",
-  "alanys@tmk-agency.com":       "Alanys",
-  "breyner@tmk-agency.com":      "Breyner",
-  "maria@tmk-agency.com":        "Maria Jose",
-  "marcolamugue@tmk-agency.com": "Marco",
+  "andrew@tmk-agency.com":        "Andrew",
+  "clifton@tmk-agency.com":       "Clifton",
+  "fabricio@tmk-agency.com":      "Fabricio",
+  "katherinemora@tmk-agency.com": "Katherine",
+  "michelle@tmk-agency.com":      "Michelle",
+  "alanys@tmk-agency.com":        "Alanys",
+  "breyner@tmk-agency.com":       "Breyner",
+  "maria@tmk-agency.com":         "Maria Jose",
+  "marcolamugue@tmk-agency.com":  "Marco",
   "danielaalvarez@tmk-agency.com":"Daniela"
 }
 
 let userEmail = null
 let currentYear, currentMonth
-let events = {}   // { "YYYY-MM-DD": [ {title, desc, time, audience}, ... ] }
+let events = {}
 let selectedDate = null
 let editingIndex = null
+let detailIndex = null  // index being viewed in detail modal
 
 // ======================
 // INIT
 // ======================
-
 window.onload = () => {
   userEmail = localStorage.getItem("email")
-  if(!userEmail){
-    alert("Debes iniciar sesión")
-    window.location = "login.html"
-    return
-  }
-
-  if(SUPERVISORS.includes(userEmail)){
+  if(!userEmail){ alert("Debes iniciar sesión"); window.location="login.html"; return }
+  if(SUPERVISORS.includes(userEmail))
     document.getElementById("assignedTasksBtn").style.display = "flex"
-  }
-
   loadEvents()
-
   const now = new Date()
   currentYear = now.getFullYear()
   currentMonth = now.getMonth()
@@ -698,35 +496,19 @@ window.onload = () => {
 }
 
 // ======================
-// EVENTS — localStorage
+// STORAGE
 // ======================
-
-function eventsKey() {
-  return "tmk_events_" + userEmail
+function eventsKey(){ return "tmk_events_" + userEmail }
+function loadEvents(){
+  try { const r = localStorage.getItem(eventsKey()); events = r ? JSON.parse(r) : {} }
+  catch(e){ events = {} }
 }
-
-function loadEvents() {
-  try {
-    const raw = localStorage.getItem(eventsKey())
-    events = raw ? JSON.parse(raw) : {}
-  } catch(e) {
-    events = {}
-  }
-}
-
-function saveEvents() {
-  localStorage.setItem(eventsKey(), JSON.stringify(events))
-}
+function saveEvents(){ localStorage.setItem(eventsKey(), JSON.stringify(events)) }
 
 // ======================
-// VISIBILITY CHECK
-// Determine if an event should be visible to the current user.
-// audience = "all"  → visible to everyone
-// audience = email  → visible only to that user AND supervisors
-// no audience field → legacy events, treat as "all"
+// VISIBILITY
 // ======================
-
-function isVisible(ev) {
+function isVisible(ev){
   if(!ev.audience || ev.audience === "all") return true
   if(ev.audience === userEmail) return true
   if(SUPERVISORS.includes(userEmail)) return true
@@ -736,133 +518,215 @@ function isVisible(ev) {
 // ======================
 // CALENDAR RENDER
 // ======================
-
-function changeMonth(dir) {
+function changeMonth(dir){
   currentMonth += dir
-  if(currentMonth > 11){ currentMonth = 0; currentYear++ }
-  if(currentMonth < 0){ currentMonth = 11; currentYear-- }
+  if(currentMonth > 11){ currentMonth=0; currentYear++ }
+  if(currentMonth < 0){ currentMonth=11; currentYear-- }
   renderCalendar()
 }
 
-function renderCalendar() {
-  const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-  document.getElementById("monthTitle").innerText = monthNames[currentMonth] + " " + currentYear
+function renderCalendar(){
+  const names = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+  document.getElementById("monthTitle").innerText = names[currentMonth] + " " + currentYear
 
   const grid = document.getElementById("daysGrid")
   grid.innerHTML = ""
 
-  const firstDay = new Date(currentYear, currentMonth, 1).getDay()
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-  const daysInPrev = new Date(currentYear, currentMonth, 0).getDate()
+  const firstDay   = new Date(currentYear, currentMonth, 1).getDay()
+  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate()
+  const daysInPrev  = new Date(currentYear, currentMonth, 0).getDate()
+  const now = new Date()
+  const todayStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`
 
-  const today = new Date()
-  const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`
-
-  // prev month padding
-  for(let i = 0; i < firstDay; i++){
-    const day = daysInPrev - firstDay + i + 1
-    const cell = document.createElement("div")
-    cell.className = "dayCell other-month"
-    cell.innerHTML = `<div class="dayNum">${day}</div>`
+  for(let i=0; i<firstDay; i++){
+    const cell = mkCell("other-month")
+    cell.innerHTML = `<div class="dayNum">${daysInPrev-firstDay+i+1}</div>`
     grid.appendChild(cell)
   }
 
-  // current month days
-  for(let d = 1; d <= daysInMonth; d++){
-    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`
-    const cell = document.createElement("div")
-    cell.className = "dayCell" + (dateStr === todayStr ? " today" : "")
-    cell.onclick = () => openModal(dateStr)
-
+  for(let d=1; d<=daysInMonth; d++){
+    const dateStr = `${currentYear}-${pad(currentMonth+1)}-${pad(d)}`
+    const cell = mkCell(dateStr===todayStr ? "today" : "")
+    cell.onclick = () => openDayPopup(dateStr)
     cell.innerHTML = `<div class="dayNum">${d}</div>`
 
-    const dayEvents = (events[dateStr] || []).filter(isVisible)
-
-    dayEvents.slice(0, 3).forEach(ev => {
+    const visible = (events[dateStr]||[]).filter(isVisible)
+    visible.slice(0,3).forEach(ev => {
       const dot = document.createElement("div")
       dot.className = "eventDot"
-      dot.innerText = (ev.time ? ev.time + " " : "") + ev.title
-      // Small audience badge
-      if(ev.audience && ev.audience !== "all"){
-        const badge = document.createElement("div")
-        badge.className = "eventAudience"
-        badge.innerText = "→ " + (USER_NAMES[ev.audience] || ev.audience)
-        cell.appendChild(dot)
-        cell.appendChild(badge)
-      } else {
-        cell.appendChild(dot)
-      }
+      dot.innerText = (ev.time ? ev.time+" " : "") + ev.title
+      cell.appendChild(dot)
     })
-    if(dayEvents.length > 3){
-      const more = document.createElement("div")
-      more.className = "eventDot"
-      more.style.color = "#888"
-      more.innerText = `+${dayEvents.length - 3} más`
-      cell.appendChild(more)
+    if(visible.length > 3){
+      const m = document.createElement("div")
+      m.className = "eventDot"; m.style.color="#888"
+      m.innerText = `+${visible.length-3} más`
+      cell.appendChild(m)
     }
-
     grid.appendChild(cell)
   }
 
-  // next month padding
-  const totalCells = firstDay + daysInMonth
-  const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7)
-  for(let i = 1; i <= remaining; i++){
-    const cell = document.createElement("div")
-    cell.className = "dayCell other-month"
+  const total = firstDay + daysInMonth
+  const rem = total%7===0 ? 0 : 7-(total%7)
+  for(let i=1; i<=rem; i++){
+    const cell = mkCell("other-month")
     cell.innerHTML = `<div class="dayNum">${i}</div>`
     grid.appendChild(cell)
   }
 }
 
-// ======================
-// MODAL
-// ======================
+function mkCell(cls){
+  const d = document.createElement("div")
+  d.className = "dayCell" + (cls ? " "+cls : "")
+  return d
+}
+function pad(n){ return String(n).padStart(2,"0") }
 
-function openModal(dateStr, index = null) {
+// ======================
+// DAY POPUP
+// ======================
+function openDayPopup(dateStr){
   selectedDate = dateStr
-  editingIndex = index
+  editingIndex = null
 
-  const parts = dateStr.split("-")
-  const d = new Date(parts[0], parts[1]-1, parts[2])
-  const label = d.toLocaleDateString("es-CR", { weekday:"long", day:"numeric", month:"long" })
+  const [y,m,d] = dateStr.split("-")
+  const date = new Date(y, m-1, d)
+  const label = date.toLocaleDateString("es-CR",{weekday:"long",day:"numeric",month:"long",year:"numeric"})
 
-  document.getElementById("modalTitle").innerText = index !== null ? "✏️ Editar evento" : "📝 " + label
+  document.getElementById("dayPopupTitle").innerText = "📅 " + label
 
-  if(index !== null && events[dateStr] && events[dateStr][index]){
-    const ev = events[dateStr][index]
-    document.getElementById("eventTitle").value = ev.title || ""
-    document.getElementById("eventDesc").value = ev.desc || ""
-    document.getElementById("eventTime").value = ev.time || ""
-    document.getElementById("eventAudience").value = ev.audience || "all"
-    document.getElementById("btnDelete").style.display = "inline-flex"
-  } else {
-    document.getElementById("eventTitle").value = ""
-    document.getElementById("eventDesc").value = ""
-    document.getElementById("eventTime").value = ""
-    document.getElementById("eventAudience").value = "all"
-    document.getElementById("btnDelete").style.display = "none"
-  }
-
-  document.getElementById("modalOverlay").classList.add("active")
-  setTimeout(() => document.getElementById("eventTitle").focus(), 100)
+  renderDayPopupBody()
+  document.getElementById("dayPopupOverlay").classList.add("active")
 }
 
-function closeModal() {
-  document.getElementById("modalOverlay").classList.remove("active")
+function renderDayPopupBody(){
+  const body = document.getElementById("dayPopupBody")
+  body.innerHTML = ""
+
+  const visible = (events[selectedDate]||[])
+    .map((ev,i) => ({ev, i}))
+    .filter(({ev}) => isVisible(ev))
+
+  if(visible.length === 0){
+    body.innerHTML = `<div class="noEventsMsg">No hay eventos para este día.<br><span style="font-size:12px;color:#444;">Presiona + para agregar uno.</span></div>`
+    return
+  }
+
+  visible.forEach(({ev, i}) => {
+    const card = document.createElement("div")
+    card.className = "eventCard"
+    card.onclick = () => openEventDetail(i)
+
+    const audienceLabel = (!ev.audience || ev.audience==="all")
+      ? "Todos" : (USER_NAMES[ev.audience] || ev.audience)
+
+    card.innerHTML = `
+      <div class="eventCardTitle">${ev.title}</div>
+      <div class="eventCardMeta">
+        ${ev.time ? `<div class="eventCardTime">🕐 ${ev.time}</div>` : ""}
+        <div class="eventCardAudience">👤 ${audienceLabel}</div>
+      </div>
+    `
+    body.appendChild(card)
+  })
+}
+
+function closeDayPopup(){
+  document.getElementById("dayPopupOverlay").classList.remove("active")
   selectedDate = null
   editingIndex = null
 }
 
-function saveEvent() {
+// ======================
+// EVENT DETAIL
+// ======================
+function openEventDetail(idx){
+  detailIndex = idx
+  const ev = events[selectedDate][idx]
+
+  document.getElementById("detailTitle").innerText = ev.title
+
+  const timeEl = document.getElementById("detailTime")
+  timeEl.innerHTML = ev.time
+    ? `<span>🕐</span><span>${ev.time}</span>`
+    : `<span>🕐</span><span style="color:#444">Sin hora</span>`
+
+  const audienceLabel = (!ev.audience || ev.audience==="all")
+    ? "Todos" : (USER_NAMES[ev.audience] || ev.audience)
+
+  document.getElementById("detailAudience").innerHTML =
+    `<div class="eventDetailAudienceBadge">👤 ${audienceLabel}</div>`
+
+  const descW = document.getElementById("detailDescWrapper")
+  if(ev.desc && ev.desc.trim()){
+    descW.innerHTML = `<div class="eventDetailDesc">${ev.desc.replace(/\n/g,"<br>")}</div>`
+  } else {
+    descW.innerHTML = `<div class="eventDetailNoDesc">Sin descripción.</div>`
+  }
+
+  document.getElementById("eventDetailOverlay").classList.add("active")
+}
+
+function closeEventDetail(){
+  document.getElementById("eventDetailOverlay").classList.remove("active")
+  detailIndex = null
+}
+
+function editFromDetail(){
+  closeEventDetail()
+  openEditModal(detailIndex)
+}
+
+function deleteFromDetail(){
+  if(detailIndex===null || !events[selectedDate]) return
+  if(!confirm("¿Eliminar este evento?")) return
+  events[selectedDate].splice(detailIndex, 1)
+  if(events[selectedDate].length===0) delete events[selectedDate]
+  saveEvents()
+  renderCalendar()
+  renderDayPopupBody()
+  closeEventDetail()
+}
+
+// ======================
+// CREATE / EDIT MODAL
+// ======================
+function openCreateModal(){
+  editingIndex = null
+  document.getElementById("modalTitle").innerText = "📝 Nuevo evento"
+  document.getElementById("eventTitle").value = ""
+  document.getElementById("eventDesc").value = ""
+  document.getElementById("eventTime").value = ""
+  document.getElementById("eventAudience").value = "all"
+  document.getElementById("modalOverlay").classList.add("active")
+  setTimeout(() => document.getElementById("eventTitle").focus(), 100)
+}
+
+function openEditModal(idx){
+  editingIndex = idx
+  const ev = events[selectedDate][idx]
+  document.getElementById("modalTitle").innerText = "✏️ Editar evento"
+  document.getElementById("eventTitle").value = ev.title || ""
+  document.getElementById("eventDesc").value = ev.desc || ""
+  document.getElementById("eventTime").value = ev.time || ""
+  document.getElementById("eventAudience").value = ev.audience || "all"
+  document.getElementById("modalOverlay").classList.add("active")
+  setTimeout(() => document.getElementById("eventTitle").focus(), 100)
+}
+
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("active")
+}
+
+function saveEvent(){
   const title = document.getElementById("eventTitle").value.trim()
   if(!title){ alert("Escribe un título"); return }
 
   const ev = {
-    title:    title,
+    title,
     desc:     document.getElementById("eventDesc").value.trim(),
     time:     document.getElementById("eventTime").value,
-    audience: document.getElementById("eventAudience").value  // "all" or specific email
+    audience: document.getElementById("eventAudience").value
   }
 
   if(!events[selectedDate]) events[selectedDate] = []
@@ -874,83 +738,64 @@ function saveEvent() {
   }
 
   saveEvents()
-  closeModal()
   renderCalendar()
-}
-
-function deleteEvent() {
-  if(editingIndex === null || !events[selectedDate]) return
-  events[selectedDate].splice(editingIndex, 1)
-  if(events[selectedDate].length === 0) delete events[selectedDate]
-  saveEvents()
+  renderDayPopupBody()
   closeModal()
-  renderCalendar()
 }
 
 document.getElementById("modalOverlay").addEventListener("click", function(e){
-  if(e.target === this) closeModal()
+  if(e.target===this) closeModal()
+})
+document.getElementById("dayPopupOverlay").addEventListener("click", function(e){
+  if(e.target===this) closeDayPopup()
+})
+document.getElementById("eventDetailOverlay").addEventListener("click", function(e){
+  if(e.target===this) closeEventDetail()
 })
 
 // ======================
 // EXPORT
 // ======================
-
-function exportEvents() {
-  const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-  const monthName = monthNames[currentMonth]
-  const prefix = `${currentYear}-${String(currentMonth+1).padStart(2,"0")}`
+function exportEvents(){
+  const names = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+  const monthName = names[currentMonth]
+  const prefix = `${currentYear}-${pad(currentMonth+1)}`
 
   const monthEvents = Object.entries(events)
-    .filter(([date]) => date.startsWith(prefix))
+    .filter(([d]) => d.startsWith(prefix))
     .sort(([a],[b]) => a.localeCompare(b))
 
-  if(monthEvents.length === 0){
-    alert("No hay eventos en este mes.")
-    return
-  }
+  if(monthEvents.length===0){ alert("No hay eventos en este mes."); return }
 
-  let csv = `Eventos — ${monthName} ${currentYear}\n`
-  csv += `Usuario,${userEmail}\n\n`
-  csv += `Fecha,Hora,Título,Descripción,Visible Para\n`
-
-  monthEvents.forEach(([date, evs]) => {
+  let csv = `Eventos — ${monthName} ${currentYear}\nUsuario,${userEmail}\n\nFecha,Hora,Título,Descripción,Visible Para\n`
+  monthEvents.forEach(([date,evs]) => {
     evs.forEach(ev => {
-      const audienceLabel = (!ev.audience || ev.audience === "all")
-        ? "Todos"
-        : (USER_NAMES[ev.audience] || ev.audience)
-      csv += `${date},${ev.time || "—"},"${ev.title.replace(/"/g,'""')}","${(ev.desc||"").replace(/"/g,'""')}","${audienceLabel}"\n`
+      const lbl = (!ev.audience||ev.audience==="all") ? "Todos" : (USER_NAMES[ev.audience]||ev.audience)
+      csv += `${date},${ev.time||"—"},"${ev.title.replace(/"/g,'""')}","${(ev.desc||"").replace(/"/g,'""')}","${lbl}"\n`
     })
   })
 
-  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" })
+  const blob = new Blob(["\uFEFF"+csv], {type:"text/csv;charset=utf-8;"})
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
-  a.href = url
-  a.download = `calendario_${monthName}_${currentYear}_${userEmail.split("@")[0]}.csv`
-  a.click()
-  URL.revokeObjectURL(url)
+  a.href=url; a.download=`calendario_${monthName}_${currentYear}_${userEmail.split("@")[0]}.csv`
+  a.click(); URL.revokeObjectURL(url)
 }
 
 // ======================
 // SLIDE MENU
 // ======================
-
-function toggleSlideMenu() {
-  const menu = document.getElementById("slideMenu")
-  const isOpen = menu.classList.contains("active")
+function toggleSlideMenu(){
+  const m = document.getElementById("slideMenu")
+  const open = m.classList.contains("active")
   closeAll()
-  if(!isOpen){
-    menu.classList.add("active")
-    document.getElementById("overlay").classList.add("active")
-  }
+  if(!open){ m.classList.add("active"); document.getElementById("overlay").classList.add("active") }
 }
-
-function closeSlideMenu() {
+function closeSlideMenu(){
   document.getElementById("slideMenu").classList.remove("active")
   document.getElementById("overlay").classList.remove("active")
 }
-
-function closeAll() {
+function closeAll(){
   document.getElementById("slideMenu").classList.remove("active")
   document.getElementById("overlay").classList.remove("active")
 }
@@ -958,94 +803,69 @@ function closeAll() {
 // ======================
 // ASSIGNED TASKS POPUP
 // ======================
-
-async function openAssignedTasksPopup() {
+async function openAssignedTasksPopup(){
   document.getElementById("assignedPopupOverlay").style.display = "flex"
   document.getElementById("assignedTasksList").innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>Cargando...</p>"
-
   try {
-    const res = await fetch(API + "/get-assigned-tasks", {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email: userEmail })
+    const res = await fetch(API+"/get-assigned-tasks",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:userEmail})
     })
     const data = await res.json()
     const list = document.getElementById("assignedTasksList")
     list.innerHTML = ""
-
-    if(!data.tasks || data.tasks.length === 0){
+    if(!data.tasks||data.tasks.length===0){
       list.innerHTML = "<p style='color:#888;text-align:center;padding:20px;'>No has asignado tareas aún.</p>"
       return
     }
-
     const grouped = {}
     data.tasks.forEach(t => {
-      if(!grouped[t.assigned_to]) grouped[t.assigned_to] = []
+      if(!grouped[t.assigned_to]) grouped[t.assigned_to]=[]
       grouped[t.assigned_to].push(t)
     })
-
-    Object.entries(grouped).forEach(([email, tasks]) => {
-      const userName = email.split("@")[0]
-      const completadas = tasks.filter(t => t.completed).length
-      const total = tasks.length
-
-      const section = document.createElement("div")
-      section.style.cssText = "margin-bottom:20px;"
-      section.innerHTML = `
+    Object.entries(grouped).forEach(([email,tasks])=>{
+      const uName = email.split("@")[0]
+      const done = tasks.filter(t=>t.completed).length
+      const sec = document.createElement("div")
+      sec.style.cssText = "margin-bottom:20px;"
+      sec.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">
-          <span style="font-weight:600;color:#d4af37;font-size:15px;">👤 ${userName}</span>
-          <span style="font-size:12px;color:#888;">${completadas}/${total} completadas</span>
-        </div>
-      `
-
-      tasks.forEach(t => {
+          <span style="font-weight:600;color:#d4af37;font-size:15px;">👤 ${uName}</span>
+          <span style="font-size:12px;color:#888;">${done}/${tasks.length} completadas</span>
+        </div>`
+      tasks.forEach(t=>{
         const item = document.createElement("div")
-        item.style.cssText = `
-          display:flex; align-items:center; gap:10px;
-          padding:10px 12px; border-radius:8px; margin-bottom:8px;
-          background:${t.completed ? '#1a2a1a' : '#1e1e1e'};
-          border-left:3px solid ${t.completed ? '#4caf50' : '#d4af37'};
-        `
-        item.innerHTML = `
-          <span style="font-size:16px;">${t.completed ? '✅' : '⏳'}</span>
+        item.style.cssText=`display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:8px;background:${t.completed?'#1a2a1a':'#1e1e1e'};border-left:3px solid ${t.completed?'#4caf50':'#d4af37'};`
+        item.innerHTML=`
+          <span style="font-size:16px;">${t.completed?'✅':'⏳'}</span>
           <div style="flex:1;">
-            <div style="font-size:13px;color:${t.completed ? '#888' : '#fff'};${t.completed ? 'text-decoration:line-through;' : ''}">${t.task}</div>
+            <div style="font-size:13px;color:${t.completed?'#888':'#fff'};${t.completed?'text-decoration:line-through;':''}">${t.task}</div>
             <div style="font-size:11px;color:#555;margin-top:2px;">${t.date}</div>
           </div>
-          <span style="font-size:11px;padding:3px 8px;border-radius:12px;background:${t.completed ? '#1f3a1f' : '#2a2200'};color:${t.completed ? '#4caf50' : '#d4af37'};">
-            ${t.completed ? 'Completada' : 'Pendiente'}
-          </span>
-        `
-        section.appendChild(item)
+          <span style="font-size:11px;padding:3px 8px;border-radius:12px;background:${t.completed?'#1f3a1f':'#2a2200'};color:${t.completed?'#4caf50':'#d4af37'};">${t.completed?'Completada':'Pendiente'}</span>`
+        sec.appendChild(item)
       })
-
-      list.appendChild(section)
+      list.appendChild(sec)
     })
-
-  } catch(err) {
-    console.error(err)
-    document.getElementById("assignedTasksList").innerHTML = "<p style='color:red;text-align:center;padding:20px;'>Error cargando tareas.</p>"
+  } catch(err){
+    document.getElementById("assignedTasksList").innerHTML="<p style='color:red;text-align:center;padding:20px;'>Error cargando tareas.</p>"
   }
 }
-
-function closeAssignedTasksPopup() {
-  document.getElementById("assignedPopupOverlay").style.display = "none"
+function closeAssignedTasksPopup(){
+  document.getElementById("assignedPopupOverlay").style.display="none"
 }
-
-document.addEventListener("click", function(e){
-  const overlay = document.getElementById("assignedPopupOverlay")
-  if(e.target === overlay) closeAssignedTasksPopup()
+document.addEventListener("click", e=>{
+  const ov = document.getElementById("assignedPopupOverlay")
+  if(e.target===ov) closeAssignedTasksPopup()
 })
 
 // ======================
 // LOGOUT
 // ======================
-
-function logout() {
+function logout(){
   localStorage.removeItem("email")
-  window.location = "login.html"
+  window.location="login.html"
 }
-
 </script>
 </body>
 </html>
