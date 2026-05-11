@@ -2438,6 +2438,8 @@ CONTEXTO DEL USUARIO:
 
                 return {"response": f"Tarea asignada a {name}"}
 
+
+
     # =========================
     # 🎨 GENERACIÓN DE IMAGEN
     # =========================
@@ -2445,19 +2447,140 @@ CONTEXTO DEL USUARIO:
         try:
             import base64
 
-            prompt_final = message
+            # =====================
+            # 🏷️ DETECTAR MARCA
+            # =====================
+            brand_guidelines = ""
+            lower = lower_msg
 
-            if GEMINI_AVAILABLE:
+            if any(w in lower for w in ["memorial", "coope pets", "mascota", "pets"]):
+                brand_guidelines = """
+    MARCA: Memorial Pets / Coope Pets
+    PALETA PRIMARIA:
+    - Azul oscuro: #193D70 (Pantone 654C)
+    - Celeste: #4DB8DA (Pantone 2985C)
+    - Crema: #FFF6E7 (Pantone 155C al 25%)
+    PALETA SECUNDARIA:
+    - Negro: #101018
+    - Oro: #CEA907 (Pantone 110C)
+    - Gris: #706F6F
+    TIPOGRAFÍAS: Helvetica Bold, Helvetica Regular, Helvetica Light
+    ESTILO FOTOGRÁFICO: Tono emotivo y limpio, calidez humana y sensibilidad.
+    Imágenes de mascotas y personas. Sin escenas morbosas. Banco de fotos libre de derechos.
+    MOOD: Emotivo, cálido, sensible, familiar.
+    """
+
+            elif any(w in lower for w in ["valle de paz", "funeraria", "camposanto", "crematorio"]):
+                brand_guidelines = """
+    MARCA: Valle de Paz
+    PALETA PRIMARIA:
+    - Azul marino: #003A6E
+    - Azul medio: #0060A1
+    - Azul claro: #3B92CE
+    - Celeste muy claro: #C1D4E8
+    COLORES ASOCIADOS: #B1B277, #3F5F3D, #136B86, #8AC0CB, #162338
+    TIPOGRAFÍAS: Edwardian Script (logotipo), Baroque Script (eslogan), Montserrat, Open Sans
+    ESTILO: Sobrio, elegante, sereno. Naturaleza en armonía (jardines, cielos, paz).
+    MOOD: Tranquilidad, dignidad, confianza, serenidad.
+    """
+
+            elif any(w in lower for w in ["escapaditas", "vacacion", "turismo", "viaje", "isla chira", "tamarindo", "turrubares"]):
+                brand_guidelines = """
+    MARCA: Escapaditas Planes Vacacionales
+    PALETA PRIMARIA:
+    - Turquesa: #009bb1 (Pantone 3135C)
+    - Azul marino: #00466e (Pantone 295C)
+    - Amarillo dorado: #ffd700 (Pantone 123C)
+    PALETAS POR ZONA:
+    - Isla Chira → azul cielo
+    - Tamarindo → naranja/terracota
+    - Turrubares → verde lima
+    - Santa María de Dota → verde oscuro
+    TIPOGRAFÍAS: Cream Cake, HERO, Montserrat SemiBold
+    ESTILO FOTOGRÁFICO: Casas reales, piscinas, interiores, paisajes, familias felices, parejas, surf.
+    MOOD: Divertido, llamativo, vacacional, familiar, alegre.
+    """
+
+            elif any(w in lower for w in ["coopeprofa", "cooperativa", "coope profa", "proteccion familiar"]):
+                brand_guidelines = """
+    MARCA: Coopeprofa (Cooperativa de Protección Familiar)
+    PALETA: Tonos azul y celeste (confianza y seguridad), blanco (pureza y transparencia).
+    - Azul principal: #04328C — RGB 4,50,140
+    - Azul medio: #076ED3 — RGB 7,110,211
+    - Celeste: #45B0FB — RGB 69,176,251
+    - Azul muy claro: #B4DCED — RGB 180,220,237
+    TIPOGRAFÍAS: Helvetica, Arial, Calibri, Montserrat
+    ESTILO: Institucional, claro, profesional, familiar.
+    MOOD: Confianza, seguridad, bienestar familiar, unión.
+    """
+
+            elif any(w in lower for w in ["body", "esthetic", "bmec", "clinica", "estetica", "liposuccion", "botox"]):
+                brand_guidelines = """
+    MARCA: Body Medical Esthetic Center (BMEC)
+    PALETA PRINCIPAL:
+    - Beige muy claro: #E5D5C3
+    - Beige claro: #CCB8A2
+    - Beige medio: #D7C3AF
+    - Marrón beige: #9C826C
+    PALETA SECUNDARIA:
+    - Terracota: #9E543F
+    - Negro: #000000
+    - Blanco: #FFFFFF
+    TIPOGRAFÍAS: Masqualero (titulares), Helvetica Neue (cuerpo)
+    ESTILO FOTOGRÁFICO: Look & feel limpio, tonalidades cálidas. Detalles de cuerpos, pieles y texturas.
+    Fotografías conceptuales, artísticas, con enfoque estético y bello.
+    MOOD: Premium, limpio, sofisticado, confianza médica, elegancia.
+    """
+
+            # =====================
+            # 🧠 CONSTRUIR PROMPT
+            # =====================
+            if brand_guidelines and GEMINI_AVAILABLE:
+                try:
+                    model = genai.GenerativeModel("gemini-1.5-flash")
+                    res = model.generate_content(f"""
+    Eres un director creativo experto en identidad de marca.
+
+    El usuario quiere generar esta imagen: "{message}"
+
+    Debes crear un prompt detallado para DALL-E que respete EXACTAMENTE estos lineamientos de marca:
+
+    {brand_guidelines}
+
+    REGLAS:
+    - Usa los colores exactos de la paleta de la marca
+    - Respeta el mood y estilo fotográfico definido
+    - El resultado debe verse como material oficial de la marca
+    - Sé muy específico con iluminación, colores, composición y atmósfera
+    - Responde SOLO con el prompt en inglés, sin explicaciones
+
+    Prompt:
+    """)
+                    if res.text:
+                        prompt_final = res.text.strip()
+                    else:
+                        prompt_final = message
+                except Exception as e:
+                    print("⚠️ Gemini falló generando prompt de marca:", e)
+                    prompt_final = message
+
+            elif GEMINI_AVAILABLE:
+                # Sin marca detectada → mejora genérica
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")
                     res = model.generate_content(
                         f"Convierte esto en un prompt hiper realista para generar una imagen: {message}"
                     )
-                    if res.text:
-                        prompt_final = res.text
+                    prompt_final = res.text.strip() if res.text else message
                 except Exception as e:
                     print("⚠️ Gemini falló:", e)
+                    prompt_final = message
+            else:
+                prompt_final = message
 
+            # =====================
+            # 🖼️ GENERAR IMAGEN
+            # =====================
             img = client.images.generate(
                 model="gpt-image-1",
                 prompt=prompt_final,
@@ -2484,14 +2607,14 @@ CONTEXTO DEL USUARIO:
 
         except Exception as err:
             print("❌ ERROR IMAGEN:", err)
-
             cursor.execute(
                 "INSERT INTO Conversations (email, message, response) VALUES (%s,%s,%s)",
                 (user_email, message, "Error generando imagen")
             )
             conn.commit()
-
             return {"response": "Error generando imagen"}
+
+
 
     # =========================
     # 🧠 TEXTO IA
