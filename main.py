@@ -1204,9 +1204,10 @@ def login(data: dict):
     return {"success": False, "message": "Contraseña incorrecta"}
 
 # =========================
-# SEND CODE
+# SEND CODE — MODIFICADO
 # =========================
-
+# Reemplazá el endpoint /send-code existente en tu main.py con este:
+ 
 @app.post("/send-code")
 def send_code(data: dict):
  
@@ -1230,9 +1231,17 @@ def send_code(data: dict):
     )
     conn.commit()
  
-    # Enviar correo con el código
+    # ── Fabricio: devolver código en la respuesta (sin enviar correo) ──
+    SHOW_CODE_EMAIL = "fabricio@tmk-agency.com"
+    if email.lower() == SHOW_CODE_EMAIL:
+        return {"message": "Código enviado correctamente", "code": code}
+ 
+    # ── Resto de usuarios: enviar por correo ──
     try:
-        msg = MIMEText(f"Tu código de recuperación de contraseña es: {code}\n\nEste código expira en 10 minutos.")
+        msg = MIMEText(
+            f"Tu código de recuperación de contraseña es: {code}\n\n"
+            "Este código expira en 10 minutos."
+        )
         msg["Subject"] = "Recuperación de contraseña - TMK Agency"
         msg["From"] = os.getenv("EMAIL_USER")
         msg["To"] = email
