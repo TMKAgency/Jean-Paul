@@ -382,21 +382,14 @@ async function sendCode() {
     const data = await res.json()
 
     if (data.message === "Código enviado correctamente") {
-
-      // Si es Fabricio, mostrar el código directamente en pantalla
-      if (email.toLowerCase() === SHOW_CODE_EMAIL) {
-        document.getElementById("sub2").textContent = "Tu código aparece abajo. Ingresalo para continuar."
-        document.getElementById("codeRevealValue").textContent = data.code || "------"
-        document.getElementById("codeRevealBox").style.display = "block"
-      } else {
-        document.getElementById("sub2").textContent = `Código enviado a ${email}`
-        document.getElementById("codeRevealBox").style.display = "none"
-      }
-
+      // Pasa directo al paso 2, sin importar cómo llegó el código
+      document.getElementById("sub2").textContent =
+        "Ingresá el código de 6 dígitos que te proporcionaron."
+      document.getElementById("codeRevealBox").style.display = "none"
       showStep(2)
 
     } else {
-      setStatus("st1", data.message || "Error enviando el código", "#e24b4a")
+      setStatus("st1", data.message || "Correo no autorizado", "#e24b4a")
     }
 
   } catch {
