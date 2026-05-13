@@ -3073,3 +3073,34 @@ def delete_event(data: dict):
     cursor.execute("DELETE FROM CalendarEvents WHERE id=%s", (event_id,))
     conn.commit()
     return {"message": "ok"} 
+
+
+
+@app.post("/get-pending-code")
+def get_pending_code(data: dict):
+    email = data["email"]
+    
+    # Solo Fabricio puede consultar códigos pendientes
+    if email != "fabricio@tmk-agency.com":
+        return {"code": None}
+    
+    cursor.execute("""
+        SELECT u.reset_code, u.code_expiration, u.email
+        FROM Users u
+        WHERE u.reset_code IS NOT NULL
+          AND u.code_expiration > NOW()
+          AND u.email != %s
+        ORDER BY u.code_expiration DESC
+        LIMIT 1
+    """, (email,))
+    
+    row = cursor.fetchone()
+    
+    if not row:
+        return {"code": None}
+    
+    return {
+        "code": row[0],
+        "expires": row[1].strftime("%H:%M"),
+        "for_email": row[2]
+    }

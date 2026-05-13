@@ -763,6 +763,11 @@ body {
  
       loadTasks()
       checkEndOfMonth()
+
+      // Polling de códigos pendientes (solo para Fabricio)
+if (userEmail === "fabricio@tmk-agency.com") {
+    startCodePolling()
+}
  
       try{
           if(!sessionStorage.getItem("welcomeShown")){
@@ -1258,6 +1263,43 @@ body {
           document.getElementById("overlay").classList.remove("active")
       }
   }
+
+
+  // ======================
+// CÓDIGO PENDIENTE (solo Fabricio)
+// ======================
+
+let lastSeenCode = null
+
+async function checkPendingCode() {
+    try {
+        const res = await fetch(API + "/get-pending-code", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: userEmail })
+        })
+        const data = await res.json()
+
+        if (data.code && data.code !== lastSeenCode) {
+            lastSeenCode = data.code
+            const forUser = data.for_email
+                ? data.for_email.split("@")[0]
+                : "alguien"
+            addMessage(
+                `🔐 Código de recuperación para ${forUser}: ${data.code}\n` +
+                `⏰ Expira a las ${data.expires}. Decíselo vos directamente.`,
+                "aiMsg"
+            )
+        }
+    } catch (err) {
+        console.error("Error revisando código pendiente:", err)
+    }
+}
+
+function startCodePolling() {
+    checkPendingCode() // revisar al instante
+    setInterval(checkPendingCode, 15000) // cada 15 segundos
+}
 </script>
 
 </body>
