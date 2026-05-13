@@ -366,38 +366,26 @@ async function sendCode() {
     return
   }
 
-  userEmail = email
-  const btn = document.getElementById("btn1")
-  btn.disabled = true
-  btn.textContent = "Enviando..."
-  setStatus("st1", "", "")
-
-  try {
-    const res = await fetch(`${API}/send-code`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
-    })
-
-    const data = await res.json()
-
-    if (data.message === "Código enviado correctamente") {
-      // Pasa directo al paso 2, sin importar cómo llegó el código
-      document.getElementById("sub2").textContent =
-        "Ingresá el código de 6 dígitos que te proporcionaron."
-      document.getElementById("codeRevealBox").style.display = "none"
-      showStep(2)
-
-    } else {
-      setStatus("st1", data.message || "Correo no autorizado", "#e24b4a")
-    }
-
-  } catch {
-    setStatus("st1", "Error de conexión. Intentá de nuevo.", "#e24b4a")
+  // Validar que sea un correo de TMK
+  if (!email.endsWith("@tmk-agency.com")) {
+    setStatus("st1", "Correo no autorizado", "#e24b4a")
+    return
   }
 
-  btn.disabled = false
-  btn.textContent = "Enviar código"
+  userEmail = email
+
+  // Llamar al backend en segundo plano (sin esperar)
+  fetch(`${API}/send-code`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email })
+  }).catch(() => {}) // ignorar errores, no nos importa la respuesta
+
+  // Pasar directo al step 2 sin esperar nada
+  document.getElementById("sub2").textContent =
+    "Ingresá el código de 6 dígitos que te fue proporcionado."
+  document.getElementById("codeRevealBox").style.display = "none"
+  showStep(2)
 }
 
 // =========================
